@@ -1,5 +1,5 @@
 <?php
-include 'design/side.php';
+include 'design/siddebarmain.php';
 ?>
 
 

@@ -2,64 +2,72 @@
 session_start();
 include '../connection/connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the client ID and the step from the form
-    $clientId = $_POST['client_id'];
-    $step = $_POST['step'];
-    $updateDate = $_POST['update_date'];
-    $updateTime = $_POST['update_time'];
+// ✅ Update description logic (edit form)
+if (isset($_POST['update_description'])) {
+    $update_id = (int)$_POST['update_id'];
+    $description = trim($_POST['description']);
 
-    // Check if the client has already completed the previous step
-    $stmt = $conn->prepare("SELECT MAX(step) AS last_completed_step FROM step_updates WHERE client_id = ?");
-    $stmt->bind_param("i", $clientId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $lastStep = $result->fetch_assoc()['last_completed_step'];
+    // Ensure description is not empty
+    if (!empty($description)) {
+        $stmt = $conn->prepare("UPDATE step_updates SET description = ? WHERE id = ?");
+        $stmt->bind_param("si", $description, $update_id);
 
-    // If no steps are completed yet, lastStep will be NULL, set it to 0
-    if ($lastStep === NULL) {
-        $lastStep = 0;
-    }
-
-    // Check if the client is trying to skip steps
-    if ($step !== $lastStep + 1) {
-        $_SESSION['error'] = "You must complete the previous step before updating this one.";
-        header("Location: client_update.php?id=$clientId");
-        exit;
-    }
-
-    // Check if the step has already been updated for this client
-    $stmt = $conn->prepare("SELECT * FROM step_updates WHERE client_id = ? AND step = ?");
-    $stmt->bind_param("ii", $clientId, $step);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    // If the step has already been updated, show an error and prevent update
-    if ($result->num_rows > 0) {
-        $_SESSION['error'] = "This step has already been updated.";
-        header("Location: client_update.php?id=$clientId");
-        exit;
-    }
-
-    // Otherwise, proceed with saving the update
-    $stmt = $conn->prepare("INSERT INTO step_updates (client_id, step, update_time) VALUES (?, ?, ?)");
-    $updateTimeFull = $updateDate . ' ' . $updateTime;
-    $stmt->bind_param("iis", $clientId, $step, $updateTimeFull);
-    
-    if ($stmt->execute()) {
-        // Update the client's status if the step is the last step
-        $lastStep = 9; // Assuming the last step is 'Completed'
-        if ($step === $lastStep) {
-            $updateStatusStmt = $conn->prepare("UPDATE user_info SET updatestatus = 2 WHERE id = ?");
-            $updateStatusStmt->bind_param("i", $clientId);
-            $updateStatusStmt->execute();
+        if ($stmt->execute()) {
+            $_SESSION['success'] = "Description updated successfully!";
+        } else {
+            $_SESSION['error'] = "Error updating description: " . $stmt->error;
         }
-        $_SESSION['success'] = "Step updated successfully!";
+
+        $stmt->close();
     } else {
-        $_SESSION['error'] = "There was an error updating the step.";
+        $_SESSION['error'] = "Description cannot be empty.";
     }
 
-    header("Location: client_update.php?id=$clientId");
+    // Redirect back to the client update page after update
+    header("Location: client_update.php?id=" . (int)$_POST['client_id']);
+    exit;
+}
+
+// ✅ New step insert logic
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sanitize inputs
+    $client_id = isset($_POST['client_id']) ? (int)$_POST['client_id'] : 0;
+    $step = isset($_POST['step']) ? (int)$_POST['step'] : 0;
+    $update_date = $_POST['update_date'] ?? '';
+    $update_time = $_POST['update_time'] ?? '';
+    $update_datetime = $update_date . ' ' . $update_time;
+    $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : null;
+    $description = !empty($_POST['description']) ? trim($_POST['description']) : null;
+
+    // Ensure required fields are provided
+    if ($client_id && $step && $update_date && $update_time) {
+        // Insert new update record even for duplicate steps
+        $stmt = $conn->prepare("INSERT INTO step_updates (client_id, step, update_time, end_date, description) VALUES (?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisss", $client_id, $step, $update_datetime, $end_date, $description);
+
+        if ($stmt->execute()) {
+            // Optional: Update overall status if it's the final step (step 9)
+            if ($step === 9) {
+                $statusStmt = $conn->prepare("UPDATE user_info SET updatestatus = 2 WHERE id = ?");
+                $statusStmt->bind_param("i", $client_id);
+                if (!$statusStmt->execute()) {
+                    $_SESSION['error'] = "Error updating client status: " . $statusStmt->error;
+                }
+                $statusStmt->close();
+            }
+
+            $_SESSION['success'] = "Step added successfully!";
+        } else {
+            $_SESSION['error'] = "Error inserting step update: " . $stmt->error;
+        }
+
+        $stmt->close();
+    } else {
+        $_SESSION['error'] = "Missing required data.";
+    }
+
+    // Redirect back to the client update page after inserting step
+    header("Location: client_update.php?id=$client_id");
+    exit;
 }
 ?>
-
