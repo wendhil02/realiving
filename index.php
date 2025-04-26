@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_id'] = $row['id'];
                 $_SESSION['admin_email'] = $row['email'];
 
-                header("Location: admin/mainpage.php");
+                header("Location: admin/mainpage");
                 exit();
             } else {
                 // Password wrong
@@ -49,6 +49,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -87,13 +88,13 @@ $conn->close();
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
         <!-- Logos Centered -->
-        <div class="absolute top-16 flex justify-center items-center space-x-6 w-full">
-            <img src="logo/mmone.png" alt="Logo 1" class="h-20 object-contain drop-shadow-lg" />
-            <img src="logo/noblebg.png" alt="Logo 2" class="h-20 object-contain drop-shadow-lg" />
+        <div class="absolute top-16 flex justify-center items-center space-x-6">
+            <img src="logo/mmone.png" alt="Logo 1" class="relative h-20 max-w-sm object-contain drop-shadow-lg" />
+            <img src="logo/noblebg.png" alt="Logo 2" class="relative h-20 max-w-sm object-contain drop-shadow-lg" />
         </div>
 
         <!-- Login Form -->
-        <div class="relative w-full max-w-sm p-5 rounded-xl bg-gray-200/90 backdrop-blur-md shadow-lg">
+        <div class="relative w-auto max-w-sm p-5 rounded-xl bg-gray-200/90 backdrop-blur-md shadow-lg">
             <!-- Error Message -->
             <?php if (!empty($error_message)): ?>
                 <div class="mb-4 text-red-600 text-sm text-center font-semibold">
@@ -164,31 +165,29 @@ $conn->close();
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const togglePassword = document.getElementById("togglePassword");
+            const passwordInput = document.getElementById("password");
 
-document.addEventListener("DOMContentLoaded", function () {
-        const togglePassword = document.getElementById("togglePassword");
-        const passwordInput = document.getElementById("password");
+            togglePassword.addEventListener("click", function() {
+                const type =
+                    passwordInput.getAttribute("type") === "password" ? "text" : "password";
+                passwordInput.setAttribute("type", type);
 
-        togglePassword.addEventListener("click", function () {
-          const type =
-            passwordInput.getAttribute("type") === "password" ? "text" : "password";
-          passwordInput.setAttribute("type", type);
-
-          if (type === "password") {
-            togglePassword.classList.remove("ri-eye-line");
-            togglePassword.classList.add("ri-eye-off-line");
-          } else {
-            togglePassword.classList.remove("ri-eye-off-line");
-            togglePassword.classList.add("ri-eye-line");
-          }
+                if (type === "password") {
+                    togglePassword.classList.remove("ri-eye-line");
+                    togglePassword.classList.add("ri-eye-off-line");
+                } else {
+                    togglePassword.classList.remove("ri-eye-off-line");
+                    togglePassword.classList.add("ri-eye-line");
+                }
+            });
         });
-      });
-
 
         const slides = [{
                 title: `<img src="logo/new.png" alt="Noble Home Logo" class="h-[150px] object-contain" />`,
                 subtitle: "",
-                bgImage: "url('logo/hometwo.jpg')" // Sample building image
+                bgImage: "url('code/images/background-image2.jpg')" // Sample building image
             },
             {
                 title: `<img src="logo/mmone.png" alt="Real Living Logo" class="h-[150px] object-contain" />`,
