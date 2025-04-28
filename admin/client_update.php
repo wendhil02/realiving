@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     exit();
 }
 
-include 'design/siddebarmain.php';
+include 'design/mainbody.php';
 include '../connection/connection.php';
 
 // Reset AUTO_INCREMENT if empty
@@ -88,7 +88,7 @@ function getStepUpdateDetails($conn, $clientId, $step)
     </style>
 </head>
 
-<body class="flex min-h-screen bg-gray-200">
+<body class=" min-h-screen bg-gray-200">
     <div class="flex flex-col lg:flex-row w-full gap-4 p-4">
 
         <!-- Client Tracker Section -->
@@ -224,7 +224,7 @@ function getStepUpdateDetails($conn, $clientId, $step)
 
         </script>
 
-        <<div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
+        <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
     <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm mx-auto">
         <h2 class="text-lg font-semibold text-center text-gray-800 mb-4">Update Client Status</h2>
 

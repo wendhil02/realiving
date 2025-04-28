@@ -14,7 +14,7 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-include 'design/siddebarmain.php';
+include 'design/mainbody.php';
 
 // Check if there are appointments for today and display the notice
 $today = date("Y-m-d");
@@ -159,7 +159,7 @@ if (count($futureAppointments) > 0) {
     </style>
 </head>
 
-<body class="flex min-h-screen">
+<body class="min-h-screen">
 <main class="flex w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="w-full">
         <!-- Top Bar -->

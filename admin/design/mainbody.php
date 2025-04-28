@@ -1,3 +1,8 @@
+<?php
+ob_start();
+  
+?>
+
 <!DOCTYPE html>
 <html lang="tl">
 
@@ -114,7 +119,22 @@
 
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex lg:items-center lg:space-x-8">
-                <a href="mainpage.php" class="nav-link active text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">Dashboard</a>
+                <a href="mainpage.php" class="nav-link  text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium"> Dashboard </a>
+                
+                <div class="dropdown-trigger relative">
+                    <button class="nav-link flex items-center text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">
+                        Client Management
+                        <div class="w-4 h-4 flex items-center justify-center ml-1">
+                            <i class="ri-arrow-down-s-line"></i>
+                        </div>
+                    </button>
+                    <div class="dropdown bg-white shadow-lg rounded p-2 mt-1">
+                        <a href="allclient.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Add New Client </a>
+                        <a href="calendar.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Appointment</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">sample</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">sample</a>
+                    </div>
+                </div>
 
                 <div class="dropdown-trigger relative">
                     <button class="nav-link flex items-center text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">
@@ -146,18 +166,12 @@
                 </div>
 
                 <a href="#" class="nav-link text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">Progress Client</a>
-                <a href="dashboard.php" class="nav-link text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">Edit</a>
             </div>
 
             <!-- Right Side Actions -->
             <div class="flex items-center space-x-4">
                 <!-- Search -->
-                <div class="search-container flex items-center relative">
-                    <input type="text" placeholder="search..." class="text-sm border-none bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-primary">
-                    <button id="searchToggle" class="w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary focus:outline-none !rounded-button">
-                        <i class="ri-search-line text-lg"></i>
-                    </button>
-                </div>
+
 
                 <!-- User Profile -->
                 <div class="dropdown-trigger relative">
@@ -173,7 +187,7 @@
                             <div class="w-4 h-4 flex items-center justify-center mr-2">
                                 <i class="ri-user-settings-line"></i>
                             </div>
-                          Profile
+                            Profile
                         </a>
                         <a href="dashboard.php" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">
                             <div class="w-4 h-4 flex items-center justify-center mr-2">
@@ -209,9 +223,9 @@
             </button>
         </div>
         <div class="p-4">
-            <div class="mb-4">
-                <input type="text" placeholder="Maghanap..." class="w-full text-sm border-none bg-gray-100 rounded-full p-2 focus:outline-none focus:ring-2 focus:ring-primary">
-            </div>
+
+
+
             <nav class="space-y-1">
                 <a href="#" class="block px-3 py-2 text-base font-medium text-primary bg-gray-100 rounded">Tahanan</a>
 
@@ -278,15 +292,7 @@
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         // Search toggle
-        const searchToggle = document.getElementById('searchToggle');
-        const searchContainer = document.querySelector('.search-container');
 
-        searchToggle.addEventListener('click', function() {
-            searchContainer.classList.toggle('active');
-            if (searchContainer.classList.contains('active')) {
-                searchContainer.querySelector('input').focus();
-            }
-        });
 
         // Mobile menu
         const mobileMenuButton = document.getElementById('mobileMenuButton');

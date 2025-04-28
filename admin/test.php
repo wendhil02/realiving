@@ -1,30 +1,29 @@
-<?php
+<body class="flex bg-gray-100">
+    <div id="mainContent" class="main-content flex-1 transition-all">
+        <nav class="bg-[#0077b6] shadow-md mt-3 mr-2 ml-2 p-2 flex items-center justify-between rounded-lg max-w-auto mx-auto">
+            <!--  Button -->
+            <button id="toggleSidebar" class="text-white text-lg px-2 py-1 hover:bg-blue-100 rounded-md border border-transparent">
+                ☰
+            </button>
 
+            <div class="flex items-center gap-4 flex-grow">
+                <!-- Current Time and Date -->
+                <span id="currentTime" class="text-white font-semibold text-sm md:text-base lg:text-lg"></span>
+                <div id="currentDate" class="text-white font-semibold text-sm md:text-base lg:text-lg"></div>
+            </div>
 
-include 'design/mainbody.php';
+            <div class="flex items-center gap-4">
+                <!-- Welcome Message -->
+                <span class="font-bold text-white text-sm md:text-base lg:text-lg">
+                    Welcome, <?= htmlspecialchars($email) ?>
+                </span>
+            </div>
+        </nav>
 
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body class="bg-gray-50">
-
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <form action="insert_news.php" method="POST" enctype="multipart/form-data" class="space-y-4">
-  <input type="text" name="title" placeholder="News Title" required class="border p-2 w-full">
-  <textarea name="summary" placeholder="Summary" required class="border p-2 w-full"></textarea>
-  <input type="file" name="image" accept="image/*" required class="border p-2 w-full">
-  <input type="text" name="link" placeholder="Link (e.g. news1.php)" required class="border p-2 w-full">
-  <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Insert News</button>
-</form>
-
-    </main>
+        <div class="flex justify-center items-center bg-gray-100 px-4 w-full">
+            
+        </div>
+    </div>
 
 </body>
 </html>

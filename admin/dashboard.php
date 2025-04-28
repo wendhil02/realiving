@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     exit();
 }
 
-include 'design/siddebarmain.php';
+include 'design/mainbody.php';
 include '../connection/connection.php';
 
 // Function to calculate progress
@@ -49,7 +49,7 @@ $result = $conn->query("SELECT id, clientname FROM user_info ORDER BY created_at
         }
     </style>
 </head>
-<body class="flex bg-gray-100">
+<body class="bg-gray-100">
 
     <div class="flex-1 flex flex-col items-center justify-start px-4 py-12">
         <main class="w-full max-w-6xl bg-white p-8 rounded-xl shadow-md">
