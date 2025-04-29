@@ -24,8 +24,19 @@
         </div>
       </div>
 
+
       <a href="#" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform">News</a>
 
       <a href="contact.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform">Contact</a>
+
+      <div class="relative group">
+        <a href="" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform cursor-pointer flex items-center gap-1">
+          Portal <span class="text-xs">▾</span>
+        </a>
+        <div class="hidden group-hover:block absolute top-full left-0 mt-2 w-72 bg-white shadow-2xl rounded-lg z-50 p-2 max-h-72 overflow-y-auto border border-gray-200">
+          <a href="../index.php" class="block px-4 py-2 text-gray-900 hover:bg-yellow-100 rounded-md text-sm transition">return</a>
+        </div>
+      </div>
+
     </nav>
   </header>

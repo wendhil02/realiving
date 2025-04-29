@@ -10,49 +10,35 @@
       margin: 0;
       padding: 0;
       height: 100%;
+      font-family: 'Poppins', sans-serif;
     }
 
-    @keyframes flicker {
-      0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-        opacity: 1;
-      }
-      20%, 24%, 55% {
-        opacity: 0;
-      }
-    }
-
-    .flicker {
-      animation: flicker 1.5s infinite;
-    }
-
-    .glow {
-      text-shadow: 0 0 5px #fff, 0 0 10px #ff0000, 0 0 15px #ff0000, 0 0 20px #ff0000;
+    .overlay {
+      background: rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
-<body class="h-screen w-screen overflow-hidden">
+<body class="h-screen w-screen overflow-hidden bg-gray-900">
 
-  <div class="relative h-full w-full flex">
-    
+  <div class="flex flex-col md:flex-row h-full w-full">
+
     <!-- Left Side -->
-    <div class="w-1/2 h-full relative">
-      <img src="code/images/background-image.jpg" alt="Nature" class="w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center z-20">
-        <div class="text-center">
-          <img src="logo/noblebg.png" alt="Nature Logo" class="w-28 h-28 mx-auto mb-4 object-contain animate-bounce" />
-          <h1 class="text-white text-3xl md:text-4xl font-bold glow flicker">Under Maintenance</h1>
-        </div>
+    <div class="relative w-full md:w-1/2 h-1/2 md:h-full">
+      <img src="code/images/background-image.jpg" alt="Background Nature" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 overlay flex flex-col items-center justify-center text-center p-6">
+        <img src="logo/noblebg.png" alt="Logo 1" class="w-24 h-24 mb-6 object-contain" />
+        <h1 class="text-white text-3xl md:text-4xl font-semibold tracking-wide mb-2">Site Under Maintenance</h1>
+        <p class="text-gray-300 text-base md:text-lg">We are currently performing scheduled maintenance. Thank you for your patience.</p>
       </div>
     </div>
 
     <!-- Right Side -->
-    <div class="w-1/2 h-full relative">
-      <img src="code/images/background-image2.jpg" alt="City" class="w-full h-full object-cover" />
-      <div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center z-20">
-        <div class="text-center">
-          <img src="logo/mmone.png" alt="City Logo" class="w-auto h-14 mx-auto mb-4 object-contain animate-bounce" />
-          <h1 class="text-white text-3xl md:text-4xl font-bold glow flicker">Under Maintenance</h1>
-        </div>
+    <div class="relative w-full md:w-1/2 h-1/2 md:h-full">
+      <img src="code/images/background-image2.jpg" alt="Background City" class="w-full h-full object-cover" />
+      <div class="absolute inset-0 overlay flex flex-col items-center justify-center text-center p-6">
+        <img src="logo/mmone.png" alt="Logo 2" class="w-24 h-24 mb-6 object-contain" />
+        <h1 class="text-white text-3xl md:text-4xl font-semibold tracking-wide mb-2">We’ll Be Back Soon</h1>
+        <p class="text-gray-300 text-base md:text-lg">Our website is currently undergoing improvements. We appreciate your understanding.</p>
       </div>
     </div>
 
@@ -60,3 +46,4 @@
 
 </body>
 </html>
+

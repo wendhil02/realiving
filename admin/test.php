@@ -19,9 +19,9 @@
                 </span>
             </div>
         </nav>
-
+        <script id="chatway" async="true" src="https://cdn.chatway.app/widget.js?id=yWTxPbdPYsqH"></script>
         <div class="flex justify-center items-center bg-gray-100 px-4 w-full">
-            
+       
         </div>
     </div>
 

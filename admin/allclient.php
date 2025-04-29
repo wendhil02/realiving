@@ -61,7 +61,7 @@ $result = $conn->query($sql);
 
 $tableRows = '';
 while ($row = $result->fetch_assoc()) {
-    $status_display = $row["status"] === "New" ? "Old Client" : $row["status"];
+    $status_display = $row["status"] === "New " ? "Old Client" : $row["status"];
     $tableRows .= '
         <tr class="hover:bg-gray-50 transition">
 
@@ -105,7 +105,7 @@ $conn->close();
             <div class="col-span-1">
                 <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
                 <select name="status" id="status" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
-                    <option value="New">New</option>
+                    <option value="New Client">New</option>
                     <option value="Old Client">Old Client</option>
                 </select>
             </div>

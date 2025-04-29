@@ -2,7 +2,7 @@
 session_start();
 
 if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
-    header("Location: ../index.php");
+    header("Location: ../loginpage/index.php");
     exit();
 }
 
@@ -155,7 +155,7 @@ function getStepUpdateDetails($conn, $clientId, $step)
         <div class="w-full lg:w-1/2 flex flex-col p-2">
             <main class="w-full max-w-full">
                 <div class="w-full bg-white rounded-lg shadow-xl p-4 space-y-4">
-                    <h2 class="text-xl font-bold text-center text-green-700">Order Processing Tracker</h2>
+                    <h2 class="text-xl font-bold text-center text-green-700">Order Processing</h2>
                     <div class="text-sm space-y-1">
                         <p class="text-gray-600"><span class="font-semibold text-red-600">Reference No:</span> <?= htmlspecialchars($referenceNumber) ?></p>
                         <p class="text-gray-600"><span class="font-semibold">Client Name:</span> <?= htmlspecialchars($clientName) ?></p>
