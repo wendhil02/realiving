@@ -2,6 +2,10 @@
 session_start();
 include '../../connection/connection.php';
 
+include '../checkrole.php';
+// Allow only admin5
+require_role(['admin1','superadmin']);
+
 // Handle delete request with prepared statement
 if (isset($_POST['delete_id'])) {
     $deleteId = $_POST['delete_id'];

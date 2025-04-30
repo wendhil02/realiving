@@ -2,39 +2,99 @@
 session_start();
 include '../connection/connection.php';
 
-// Initialize error message
+// Prevent page caching
+header("Cache-Control: no-cache, no-store, must-revalidate");
+header("Pragma: no-cache");
+header("Expires: 0");
+
 $error_message = "";
 
-// Handle form submit
+// Redirect to main page if already logged in
+if (isset($_SESSION['admin_id'])) {
+    header("Location: ../admin/admin_mainpage/mainpage.php");
+    exit();
+}
+
+// Auto-login with remember_token from cookie
+if (!isset($_SESSION['admin_id']) && isset($_COOKIE['remember_token'])) {
+    $token = $_COOKIE['remember_token'];
+    $stmt = $conn->prepare("SELECT id, email, role FROM account WHERE remember_token = ? LIMIT 1");
+    $stmt->bind_param("s", $token);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result && $result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        $_SESSION['admin_id'] = $row['id'];
+        $_SESSION['admin_email'] = $row['email'];
+        $_SESSION['admin_role'] = $row['role'];
+
+        header("Location: ../admin/admin_mainpage/mainpage.php");
+        exit();
+    }
+}
+
+// Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
+    $email = strtolower(trim($_POST['email']));
     $password_input = $_POST['password'];
+    $remember_me = isset($_POST['remember']);
 
     if (!empty($email) && !empty($password_input)) {
-        // Prepare a safe SQL statement
-        $stmt = $conn->prepare("SELECT id, email, password FROM account WHERE email = ? LIMIT 1");
+        $stmt = $conn->prepare("SELECT id, email, password, role FROM account WHERE email = ? LIMIT 1");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Check if email exists
-        if ($result->num_rows === 1) {
+        if ($result && $result->num_rows === 1) {
             $row = $result->fetch_assoc();
 
-            // Verify password
             if (password_verify($password_input, $row['password'])) {
-                // Login success
                 $_SESSION['admin_id'] = $row['id'];
                 $_SESSION['admin_email'] = $row['email'];
+                $_SESSION['admin_role'] = $row['role'];
 
-                header("Location: ../admin/admin_mainpage/mainpage.php");
+                if ($remember_me) {
+                    $token = bin2hex(random_bytes(32));
+                    $hashed_token = password_hash($token, PASSWORD_DEFAULT);
+
+                    $update_stmt = $conn->prepare("UPDATE account SET remember_token = ? WHERE id = ?");
+                    $update_stmt->bind_param("si", $hashed_token, $row['id']);
+                    $update_stmt->execute();
+                    $update_stmt->close();
+
+                    setcookie("remember_token", $token, time() + (30 * 24 * 60 * 60), "/", "", false, true);
+                }
+
+                // Handle role-based redirection
+                switch ($row['role']) {
+                    case 'admin1':
+                        header("Location: ../admin/admin_mainpage/mainpage.php");
+                        break;
+                    case 'admin2':
+                        header("Location: ../admin/admin_mainpage/mainpage.php");
+                        break;
+                    case 'admin3':
+                        header("Location: ../admin/admin_mainpage/mainpage.php");
+                        break;
+                    case 'admin4':
+                        header("Location: ../admin/admin_mainpage/mainpage.php");
+                        break;
+                    case 'admin5':
+                        header("Location: ../admin/admin_mainpage/mainpage.php");
+                        break;
+                    case 'superadmin':
+                        header("Location: ../admin/admin_mainpage/mainpage.php");
+                        break;
+                    default:
+                        $error_message = "Unknown role. Access denied.";
+                        break;
+                }
                 exit();
             } else {
-                // Password wrong
                 $error_message = "Incorrect password. Please try again.";
             }
         } else {
-            // Email not found
             $error_message = "No account found with that email.";
         }
 
@@ -46,6 +106,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -146,6 +208,9 @@ $conn->close();
                     class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">
                     Sign in
                 </button>
+                <input type="checkbox" name="remember" id="remember">
+<label for="remember">Remember me</label>
+
             </form>
         </div>
     </div>
@@ -164,76 +229,9 @@ $conn->close();
 
     </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const togglePassword = document.getElementById("togglePassword");
-            const passwordInput = document.getElementById("password");
-
-            togglePassword.addEventListener("click", function() {
-                const type =
-                    passwordInput.getAttribute("type") === "password" ? "text" : "password";
-                passwordInput.setAttribute("type", type);
-
-                if (type === "password") {
-                    togglePassword.classList.remove("ri-eye-line");
-                    togglePassword.classList.add("ri-eye-off-line");
-                } else {
-                    togglePassword.classList.remove("ri-eye-off-line");
-                    togglePassword.classList.add("ri-eye-line");
-                }
-            });
-        });
-
-        const slides = [{
-                title: `<img src="../logo/new.png" alt="Noble Home Logo" class="h-[150px] object-contain" />`,
-                subtitle: "",
-                bgImage: "url('../code/images/background-image2.jpg')" // Sample building image
-            },
-            {
-                title: `<img src="../logo/mmone.png" alt="Real Living Logo" class="h-[150px] object-contain" />`,
-                subtitle: "",
-                bgImage: "url('../logo/rlthree.jpg')" // Sample real estate image
-            }
-        ];
-
-        let currentSlide = 0;
-        const titleText = document.getElementById('title-text');
-        const subtitleText = document.getElementById('subtitle-text');
-        const slideContainer = document.getElementById('slide-container');
-        const bgSlideContainer = document.getElementById('bg-slide-container');
-
-        // Initialize first background
-        bgSlideContainer.style.backgroundImage = slides[currentSlide].bgImage;
-        bgSlideContainer.style.backgroundSize = 'cover';
-        bgSlideContainer.style.backgroundPosition = 'center';
-
-        setInterval(() => {
-            slideContainer.classList.add('opacity-0');
-
-            setTimeout(() => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                titleText.innerHTML = slides[currentSlide].title;
-                subtitleText.textContent = slides[currentSlide].subtitle;
-
-                // Update background image
-                bgSlideContainer.style.backgroundImage = slides[currentSlide].bgImage;
-                bgSlideContainer.style.backgroundSize = 'cover';
-                bgSlideContainer.style.backgroundPosition = 'center';
-
-                slideContainer.classList.remove('opacity-0');
-            }, 500);
-        }, 4000);
-    </script>
-
-
-    <script>
-        const menuBtn = document.getElementById("menu-btn");
-        const mobileMenu = document.getElementById("mobile-menu");
-
-        menuBtn.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
-        });
-    </script>
+   <script src="../js/indexofloginpage.js"></script>
+      
+    
 </body>
 
 </html>

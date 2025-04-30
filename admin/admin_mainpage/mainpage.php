@@ -1,15 +1,12 @@
 <?php
 session_start();
 
-// Check if the user is logged in
-if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
-    // Redirect to login page if not logged in
-    header("Location: ../../loginpage/index.php");
-    exit();
-}
-
 include '../design/mainbody.php';
+include '../checkrole.php';
 include '../../connection/connection.php';
+
+// Allow only admin5
+require_role(['admin5','superadmin']);
 
 ?>
 
@@ -31,7 +28,7 @@ include '../../connection/connection.php';
     <div class="flex flex-wrap justify-between gap-4">
 
       <!-- Pie Chart: New vs Old Clients -->
-      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%]">
+      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%] ml-4">
         <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Client Type</h2>
         <canvas id="combinedClientChart" width="150" height="150"></canvas>
       </div>
@@ -43,7 +40,7 @@ include '../../connection/connection.php';
       </div>
 
       <!-- Pie Chart: Completed vs Incomplete Clients -->
-      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%]">
+      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%] mr-4">
         <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Status Overview</h2>
         <canvas id="statusClientChart" width="150" height="150"></canvas>
       </div>

@@ -1,15 +1,17 @@
 <?php
+session_start();
 include 'connection/connection.php';
 
-session_start();  // Start the session
+if (isset($_SESSION['admin_id'])) {
+    $stmt = $conn->prepare("UPDATE account SET remember_token = NULL WHERE id = ?");
+    $stmt->bind_param("i", $_SESSION['admin_id']);
+    $stmt->execute();
+}
 
-// Destroy all session variables
 session_unset();
-
-// Destroy the session
 session_destroy();
+setcookie('remember_token', '', time() - 3600, "/");
 
-// Redirect the user to the login page
 header("Location: loginpage/index.php");
 exit();
 ?>
