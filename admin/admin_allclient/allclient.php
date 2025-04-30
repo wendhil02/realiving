@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connection/connection.php';
+include '../../connection/connection.php';
 
 // Handle delete request with prepared statement
 if (isset($_POST['delete_id'])) {
@@ -10,7 +10,7 @@ if (isset($_POST['delete_id'])) {
     $stmt->execute();
     $stmt->close();
 }
-include 'design/mainbody.php';
+include '../design/mainbody.php';
 // Update client status (using a prepared statement is optional here for efficiency)
 $conn->query("UPDATE user_info SET status = 'Old Client' 
     WHERE created_at <= DATE_SUB(CURDATE(), INTERVAL 1 YEAR) AND status != 'Old Client'");

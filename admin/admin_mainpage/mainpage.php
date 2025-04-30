@@ -4,12 +4,12 @@ session_start();
 // Check if the user is logged in
 if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     // Redirect to login page if not logged in
-    header("Location: ../loginpage/index.php");
+    header("Location: ../../loginpage/index.php");
     exit();
 }
 
-include 'design/mainbody.php';
-include '../connection/connection.php';
+include '../design/mainbody.php';
+include '../../connection/connection.php';
 
 ?>
 
@@ -26,34 +26,31 @@ include '../connection/connection.php';
 
 <body class="bg-gray-200">
 
-<section class="py-12">
+<section class="py-5">
   <div class="max-w-7xl mx-auto">
-    <div class="flex flex-wrap justify-between gap-6">
+    <div class="flex flex-wrap justify-between gap-4">
 
       <!-- Pie Chart: New vs Old Clients -->
-      <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center w-full sm:w-[32%]">
-        <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Client Type</h2>
-        <canvas id="combinedClientChart" width="200" height="200"></canvas>
+      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%]">
+        <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Client Type</h2>
+        <canvas id="combinedClientChart" width="150" height="150"></canvas>
       </div>
 
       <!-- Total Clients Counter -->
-      <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center justify-center w-full sm:w-[32%]">
-        <h2 class="text-2xl font-semibold text-gray-700 mb-4">Total Clients</h2>
-        <span id="totalClientsNumber" class="text-4xl font-bold text-gray-900">0</span>
+      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center justify-center w-full sm:w-[30%] md:w-[28%]">
+        <h2 class="text-xl font-semibold text-gray-700 mb-2">Total Clients</h2>
+        <span id="totalClientsNumber" class="text-3xl font-bold text-gray-900">0</span>
       </div>
 
       <!-- Pie Chart: Completed vs Incomplete Clients -->
-      <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center w-full sm:w-[32%]">
-        <h2 class="text-2xl font-semibold text-center text-gray-700 mb-6">Status Overview</h2>
-        <canvas id="statusClientChart" width="200" height="200"></canvas>
+      <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%]">
+        <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Status Overview</h2>
+        <canvas id="statusClientChart" width="150" height="150"></canvas>
       </div>
 
     </div>
   </div>
 </section>
-
-
-
 
     <div class="flex justify-center">
         <div class="mb-5 w-full max-w-md mt-2">

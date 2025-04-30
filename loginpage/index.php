@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['admin_id'] = $row['id'];
                 $_SESSION['admin_email'] = $row['email'];
 
-                header("Location: ../admin/mainpage");
+                header("Location: ../admin/admin_mainpage/mainpage.php");
                 exit();
             } else {
                 // Password wrong

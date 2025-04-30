@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../connection/connection.php';
+include '../../connection/connection.php';
 
 // ✅ Update description logic (edit form)
 if (isset($_POST['update_description'])) {

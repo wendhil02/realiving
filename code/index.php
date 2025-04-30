@@ -118,73 +118,41 @@ include 'htmldesign/top.php';
   </div>
 </section>
 
-  <section class="py-16 bg-cover bg-center relative" style="background-image: url('./images/background-image2.jpg');">
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
+<section class="py-16 bg-cover bg-center relative" style="background-image: url('../uploads/home.jpg');">
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
-    <!-- Content -->
-    <div class="relative z-10">
-      <!-- Section Title -->
-      <h2 class="text-3xl font-semibold text-center text-white mb-6">Latest News</h2>
-      <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-8 border-0 rounded">
+  <!-- Content -->
+  <div class="relative z-10">
+    <!-- Section Title -->
+    <h2 class="text-3xl font-semibold text-center text-white mb-6">Latest News</h2>
+    <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-8 border-0 rounded">
 
-      <div class="overflow-hidden relative px-4">
-        <div class="flex gap-6 news-container transition-transform duration-1000 ease-in-out">
-          <?php while ($row = $result->fetch_assoc()): ?>
-            <div class="min-w-[280px] bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-              <!-- News Image -->
-              <img src="<?= $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover rounded-t-xl">
+    <div class="overflow-hidden relative px-4">
+      <div class="flex gap-6 news-container transition-transform duration-1000 ease-in-out">
+        <?php while ($row = $result->fetch_assoc()): ?>
+          <div class="min-w-[280px] bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
+            <!-- News Image -->
+            <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover rounded-t-xl">
 
-              <!-- Title -->
-              <h3 class="mt-6 text-xl font-semibold text-center text-gray-800"><?= htmlspecialchars($row['title']) ?></h3>
+            <!-- Title -->
+            <h3 class="mt-6 text-xl font-semibold text-center text-gray-800"><?= htmlspecialchars($row['title']) ?></h3>
 
-              <!-- Summary -->
-              <p class="p-4 text-sm text-gray-600"><?= htmlspecialchars($row['summary']) ?></p>
+            <!-- Summary -->
+            <p class="p-4 text-sm text-gray-600"><?= htmlspecialchars($row['summary']) ?></p>
 
-              <!-- View More Button -->
-              <a href="<?= $row['link'] ?>" class="inline-block mb-4 px-4 py-2 bg-yellow-500 text-white rounded-b-lg text-center w-full hover:bg-yellow-600 transition duration-200 montserrat">
-                View More
-              </a>
-            </div>
-          <?php endwhile; ?>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-20 bg-gray-100 text-center">
-    <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-4xl font-semibold mb-2 text-gray-800 font-serif italic">Contact Us</h2>
-      <p class="mb-10 text-gray-600 text-lg">We would love to speak with you about your space.</p>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start text-left">
-        <!-- Contact Form -->
-        <form class="bg-white shadow-xl rounded-2xl p-8 space-y-6">
-          <input type="text" placeholder="Your Full Name" required class="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300">
-          <input type="text" placeholder="Mobile Number (e.g. +63 912 345 6789)" required class="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300">
-          <input type="email" placeholder="Email Address" required class="border border-gray-300 rounded-lg p-4 w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 transition duration-300">
-
-          <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-3 rounded-lg transition duration-300">
-            Next
-          </button>
-        </form>
-
-        <!-- Map and Location Info -->
-        <div class="space-y-4">
-          <p class="text-lg text-gray-700 font-medium">📍 MC Premier – EDSA Balintawak, Quezon City</p>
-          <div class="w-full h-[350px] rounded-xl overflow-hidden shadow-lg">
-            <!-- OLD MAP EMBED -->
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1929.9894422897767!2d121.00198911044158!3d14.657139783226667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b712dc89bb99%3A0x935f93a6e49ab912!2sMC%20Premiere!5e0!3m2!1sen!2sph!4v1745547865596!5m2!1sen!2sph"
-              width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-
+            <!-- View More Button -->
+            <a href="<?= $row['link'] ?>" class="inline-block mb-4 px-4 py-2 bg-yellow-500 text-white rounded-b-lg text-center w-full hover:bg-yellow-600 transition duration-200 montserrat">
+              View More
+            </a>
           </div>
-        </div>
+        <?php endwhile; ?>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+
 
 
   <!-- Footer Section -->

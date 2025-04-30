@@ -2,12 +2,12 @@
 session_start();
 
 if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
-    header("Location: ../loginpage/index.php");
+    header("Location: ../../loginpage/index.php");
     exit();
 }
 
-include 'design/mainbody.php';
-include '../connection/connection.php';
+include '../design/mainbody.php';
+include '../../connection/connection.php';
 
 // Reset AUTO_INCREMENT if empty
 $result = $conn->query("SELECT COUNT(*) AS count FROM step_updates");
@@ -279,7 +279,7 @@ function getStepUpdateDetails($conn, $clientId, $step)
 </div>
 
 
-        <script src="../js/clientupdate.js"></script>
+        <script src="../../js/clientupdate.js"></script>
 
         <script>
             document.addEventListener('DOMContentLoaded', function() {

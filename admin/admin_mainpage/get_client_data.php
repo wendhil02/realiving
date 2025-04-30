@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include '../connection/connection.php';
+include '../../connection/connection.php';
 
 // Initialize client counts for status and steps
 $newClientCount = 0;

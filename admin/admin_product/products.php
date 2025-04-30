@@ -1,12 +1,12 @@
 <?php
-include '../connection/connection.php';
+include '../../connection/connection.php';
 
 function h($str)
 {
     return htmlspecialchars($str ?? '');
 }
 
-include 'design/mainbody.php';
+include '../design/mainbody.php';
 
 $action = $_GET['action'] ?? 'list';
 $id = $_GET['id'] ?? null;
@@ -20,7 +20,7 @@ if ($action === 'delete' && $id) {
     $product = $res->fetch_assoc();
 
     if ($product && !empty($product['image'])) {
-        $imagePath = "uploads/" . $product['image'];
+        $imagePath = "../uploads/" . $product['image'];
         if (file_exists($imagePath)) {
             unlink($imagePath);
         }
@@ -119,7 +119,7 @@ if ($action === 'delete' && $id) {
                     }
                     $imagePath = '';
                     if (!empty($image)) {
-                        $target = "uploads/" . basename($image);
+                        $target = "../uploads/" . basename($image);
                         if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                             $imagePath = $image;
                         }
@@ -381,7 +381,7 @@ if ($action === 'delete' && $id) {
                         <div class="product-tile bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full cursor-pointer opacity-0 translate-y-5 transition-all duration-700 
             hover:shadow-lg hover:brightness-95 hover:-translate-y-3 transition duration-150 ease-in-out transform active:scale-95"
                             onclick="handleCardClick(event, <?= $row['id'] ?>, 
-                                'uploads/<?= h($row['image'] ?? 'default.png') ?>', 
+                                '../uploads/<?= h($row['image'] ?? 'default.png') ?>', 
                                 '<?= h($row['name']) ?>', 
                                 '<?= h($row['description']) ?>', 
                                 '<?= h($row['size']) ?>',
@@ -390,7 +390,7 @@ if ($action === 'delete' && $id) {
                                 '<?= h($row['contact']) ?>', 
                                 '<?= h($row['serial_number']) ?>')">
                             <img class="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
-                                src="uploads/<?= h($row['image'] ?? 'default.png') ?>" alt="<?= h($row['name']) ?>">
+                                src="../uploads/<?= h($row['image'] ?? 'default.png') ?>" alt="<?= h($row['name']) ?>">
                             <div class="flex flex-col flex-grow p-4">
                                 <h2 class="text-xl font-semibold"><?= h($row['name']) ?></h2>
                                 <p class="text-gray-600 flex-grow"><?= h($row['description']) ?></p>
@@ -430,8 +430,8 @@ if ($action === 'delete' && $id) {
                 <?php endfor; ?>
             </div>
 
-            <?php include 'components/product_modal.php'; ?>
-            <script src="assets/js/product_modal.js"></script>
+            <?php include '../components/product_modal.php'; ?>
+            <script src="../assets/js/product_modal.js"></script>
             <script>
                 function handleCardClick(e, id, image, name, description, size, price, supplier, contact, serial_number) {
                     // Check if the click was on an action button (Edit or Delete)

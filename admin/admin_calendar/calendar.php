@@ -1,8 +1,14 @@
 <?php
 session_start();
-include '../connection/connection.php'; // database connection
+include '../../connection/connection.php'; // database connection
 
 $appointments = [];
+
+if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
+    // Redirect to login page if not logged in
+    header("Location: ../../loginpage/index.php");
+    exit();
+}
 
 // Fetch appointments that are not marked as "done"
 $sql = "SELECT * FROM appointments WHERE status != 'done'";
@@ -14,7 +20,7 @@ if ($result && $result->num_rows > 0) {
     }
 }
 
-include 'design/mainbody.php';
+include '../design/mainbody.php';
 
 // Check if there are appointments for today and display the notice
 $today = date("Y-m-d");
@@ -161,6 +167,7 @@ if (count($futureAppointments) > 0) {
 
 <body class="min-h-screen">
 <main class="flex w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
     <div class="w-full">
         <!-- Top Bar -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
