@@ -29,6 +29,140 @@ include 'htmldesign/top.php';
     </div>
 
   </section>
+
+
+  <section class="py-16 bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4 text-center">
+    <h2 class="text-3xl font-bold text-sky-600 mb-4">Accomplished Projects</h2>
+    <hr class="w-24 border-b-4 border-sky-600 mx-auto mb-10">
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      <!-- Project 1 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-1.png" alt="Project 1" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 2 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-2.png" alt="Project 2" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 3 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-3.png" alt="Project 3" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 4 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-4.png" alt="Project 4" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 5 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-5.png" alt="Project 5" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 6 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-6.png" alt="Project 6" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 7 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-7.png" alt="Project 7" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 8 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-8.png" alt="Project 8" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 9 -->
+      <a href="project-template-example.html" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-9.png" alt="Project 9" class="w-full h-32 object-cover rounded">
+        
+        </div>
+      </a>
+
+      <!-- Project 10 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-10.png" alt="Project 10" class="w-full h-32 object-cover rounded">
+          
+        </div>
+      </a>
+
+      <!-- Project 11 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-11.png" alt="Project 11" class="w-full h-32 object-cover rounded">
+          
+        </div>
+      </a>
+
+      <!-- Project 12 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-12.png" alt="Project 12" class="w-full h-32 object-cover rounded">
+          
+        </div>
+      </a>
+
+      <!-- Project 13 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-13.png" alt="Project 13" class="w-full h-32 object-cover rounded">
+          
+        </div>
+      </a>
+
+      <!-- Project 14 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-14.png" alt="Project 14" class="w-full h-32 object-cover rounded">
+          
+        </div>
+      </a>
+
+      <!-- Project 15 -->
+      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
+        <div class="mb-2">
+          <img src="./images/project-15.png" alt="Project 15" class="w-full h-32 object-cover rounded">
+          
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+
   <section class="py-16 bg-gray-300 relative">
   <!-- Background Image with Overlay -->
   <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('../code/images/background-image2.jpg');"></div>

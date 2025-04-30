@@ -24,8 +24,9 @@ include 'htmldesign/top.php';
 
 <body class="text-[#333] leading-relaxed bg-gray-100 ">
 
+
   <!-- Contact Section -->
-  <section class="py-16 px-6 flex justify-center mt-20">
+  <section class="py-10 px-6 flex justify-center mt-20">
     <div class="max-w-6xl w-full flex flex-wrap gap-12 justify-between">
 
       <!-- Contact Info -->
@@ -47,9 +48,37 @@ include 'htmldesign/top.php';
       </div>
 
       <!-- Contact Form -->
-      <form class="flex-1 min-w-[280px] bg-[#fdfdfd] p-6 rounded-lg shadow-lg flex flex-col gap-5">
+      <form action="contactfunction/contact_process.php" method="POST" class="flex-1 min-w-[280px] bg-[#fdfdfd] p-6 rounded-lg shadow-lg flex flex-col gap-5">
+        <?php if (isset($_GET['status'])): ?>
+          <div id="notif" class="text-sm w-fit mx-auto mt-4 px-3 py-2 rounded shadow
+      <?php echo $_GET['status'] == 'success'
+            ? 'bg-green-100 border border-green-400 text-green-700'
+            : 'bg-red-100 border border-red-400 text-red-700'; ?>">
+            <?php echo $_GET['status'] == 'success'
+              ? 'Thank you! Your message has been received.'
+              : 'Sorry, there was an error sending your message. Please try again later.'; ?>
+          </div>
+
+          <script>
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+              const notif = document.getElementById('notif');
+              if (notif) notif.style.display = 'none';
+            }, 3000);
+
+            // Clean URL so ?status=success doesn't stay on refresh
+            if (window.history.replaceState) {
+              const cleanUrl = window.location.origin + window.location.pathname;
+              window.history.replaceState(null, '', cleanUrl);
+            }
+          </script>
+        <?php endif; ?>
+
+
+
+
         <!-- Inquiry Type -->
-        <div class="flex flex-col items-center gap-2 mb-4">
+        <div class="flex flex-col items-center gap-2 mb-4 mt-10">
           <div class="flex justify-between w-full max-w-[400px] text-lg  font-montserrat">
             <span>Contact</span>
             <span>Inquiry</span>
@@ -57,11 +86,22 @@ include 'htmldesign/top.php';
           <input type="range" disabled class="w-full max-w-[400px] accent-[#a3844d] pointer-events-none" />
         </div>
 
-        <input type="text" placeholder="Full Name" required class="p-3 border border-gray-300 rounded-lg font-montserrat focus:outline-none focus:ring-2 focus:ring-[#1f96c9]" />
-        <input type="text" placeholder="Phone Number" required class="p-3 border border-gray-300 rounded-lg font-montserrat focus:outline-none focus:ring-2 focus:ring-[#1f96c9]" />
-        <input type="email" placeholder="Email Address" required class="p-3 border border-gray-300 rounded-lg font-montserrat focus:outline-none focus:ring-2 focus:ring-[#1f96c9]" />
+        <!-- Full Name -->
+        <input type="text" name="full_name" placeholder="E.g. Juan Dela Cruz" required
+          class="p-3 border border-gray-300 rounded-lg font-montserrat focus:outline-none focus:ring-2 focus:ring-[#1f96c9]" />
 
-        <button type="submit" class="p-3 rounded-full bg-[#e4a314] text-white uppercase font-montserrat tracking-widest hover:bg-[#c58d0e] transition-all">Next</button>
+        <!-- Phone Number (max 11 digits) -->
+        <input type="text" name="phone_number" placeholder="E.g. (+63) 923 456 789" required
+          maxlength="11" pattern="^09\d{9}$"
+          title="Enter a valid 11-digit mobile number starting with 09"
+          class="p-3 border border-gray-300 rounded-lg font-montserrat focus:outline-none focus:ring-2 focus:ring-[#1f96c9]" />
+
+        <!-- Email (HTML5 validation handles most cases) -->
+        <input type="email" name="email" placeholder="E.g. juan.delacruz@gmail.com" required
+          class="p-3 border border-gray-300 rounded-lg font-montserrat focus:outline-none focus:ring-2 focus:ring-[#1f96c9]" />
+
+
+        <button type="submit" class="p-3 rounded-full bg-[#e4a314] text-white uppercase font-montserrat tracking-widest hover:bg-[#c58d0e] transition-all">Submit</button>
       </form>
     </div>
   </section>

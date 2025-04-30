@@ -124,8 +124,10 @@ ob_start();
             <div class="flex-shrink-0 flex items-center space-x-3 p-4">
                 <img src="../../logo/picart.png" alt="Logo" class="h-[40px] w-full object-cover">
                 <img src="../../logo/noblebg.png" alt="Logo" class="h-[40px] w-full object-cover">
+                
             </div>
 
+            <span class="text-lg font-semibold text-gray-800 ml-2">Admin Panel</span>
 
             <!-- Desktop Navigation -->
             <div class="hidden lg:flex lg:items-center lg:space-x-8">
@@ -172,7 +174,7 @@ ob_start();
                     </div>
                 </div>
 
-                <a href="#" class="nav-link text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">Progress Client</a>
+                <a href="../admin_inquireclient/inquireclient.php" class="nav-link text-gray-900 hover:text-primary px-2 py-1 text-sm font-medium">Client inquire</a>
             </div>
 
             <!-- Right Side Actions -->
