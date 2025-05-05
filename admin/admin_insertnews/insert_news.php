@@ -1,7 +1,11 @@
 <?php
+session_start();
 include '../../connection/connection.php';
-
+include '../checkrole.php';
 include '../design/mainbody.php';
+
+require_role(['superadmin']);
+
 $message = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

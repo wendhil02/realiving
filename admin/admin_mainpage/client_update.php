@@ -1,5 +1,7 @@
 <?php
 session_start();
+include '../checkrole.php';
+require_role(['admin1','superadmin']);
 
 if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     header("Location: ../../loginpage/index.php");
@@ -79,6 +81,8 @@ function getStepUpdateDetails($conn, $clientId, $step)
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Real Living Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
@@ -133,7 +137,11 @@ function getStepUpdateDetails($conn, $clientId, $step)
                                         <?php endif; ?>
                                     </div>
                                     <div>
-                                        <?= $hasTime ? '<span class="text-green-500 text-lg">✔️</span>' : '<span class="text-gray-400 text-lg">⬜</span>' ?>
+                                    <?= $hasTime
+    ? '<i class="fas fa-check text-green-500 text-lg"></i>'
+    : '<i class="far fa-square text-gray-400 text-lg"></i>'
+?>
+
                                     </div>
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../../connection/connection.php'; // database connection
-
+include '../checkrole.php';
 $appointments = [];
 
 if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
@@ -9,6 +9,9 @@ if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     header("Location: ../../loginpage/index.php");
     exit();
 }
+
+// Allow only admin5
+require_role(['admin1','superadmin']);
 
 // Fetch appointments that are not marked as "done"
 $sql = "SELECT * FROM appointments WHERE status != 'done'";

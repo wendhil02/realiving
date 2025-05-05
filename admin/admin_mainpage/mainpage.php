@@ -6,7 +6,7 @@ include '../checkrole.php';
 include '../../connection/connection.php';
 
 // Allow only admin5
-require_role(['admin5','superadmin']);
+require_role(['admin1','admin2','admin3','admin4','admin5','superadmin']);
 
 ?>
 
@@ -22,6 +22,28 @@ require_role(['admin5','superadmin']);
 </head>
 
 <body class="bg-gray-200">
+
+<?php
+if (isset($_SESSION['admin_email'])) {
+    echo "<div class='text-right p-4 text-gray-600'>👤 Logged in as: <strong>" . htmlspecialchars($_SESSION['admin_email']) . "</strong></div>";
+}
+?>
+
+<?php if (isset($_SESSION['noti'])): ?>
+    <div id="notifBox" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-200 text-yellow-800 p-4 rounded shadow-lg w-80 text-center">
+        <?= $_SESSION['noti']; ?>
+    </div>
+    <script>
+        // Auto-hide after 3 seconds
+        setTimeout(function() {
+            var notif = document.getElementById("notifBox");
+            if (notif) {
+                notif.style.display = "none";
+            }
+        }, 3000);
+    </script>
+    <?php unset($_SESSION['noti']); ?>
+<?php endif; ?>
 
 <section class="py-5">
   <div class="max-w-7xl mx-auto">

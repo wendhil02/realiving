@@ -109,11 +109,11 @@ ob_start();
 
 <!-- Loading Screen -->
 <div id="loadingScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-white">
-  <div class="flex flex-col items-center">
-    <!-- Spinner -->
-    <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
-    <p class="mt-4 text-lg text-blue-600 font-semibold">Loading...</p>
-  </div>
+    <div class="flex flex-col items-center">
+        <!-- Spinner -->
+        <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-4 text-lg text-blue-600 font-semibold">Loading...</p>
+    </div>
 </div>
 
 
@@ -124,7 +124,6 @@ ob_start();
             <div class="flex-shrink-0 flex items-center space-x-3 p-4">
                 <img src="../../logo/picart.png" alt="Logo" class="h-[40px] w-full object-cover">
                 <img src="../../logo/noblebg.png" alt="Logo" class="h-[40px] w-full object-cover">
-                
             </div>
 
             <span class="text-lg font-semibold text-gray-800 ml-2">Admin Panel</span>
@@ -140,11 +139,12 @@ ob_start();
                             <i class="ri-arrow-down-s-line"></i>
                         </div>
                     </button>
+
                     <div class="dropdown bg-white shadow-lg rounded p-2 mt-1">
                         <a href="../admin_allclient/allclient.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Add New Client </a>
                         <a href="../admin_calendar/calendar.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Appointment</a>
                         <a href="../admin_insertnews/insert_news.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Latest New Edit</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">sample</a>
+                        <a href="../adminstatus/adminstatusforclient.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">sample</a>
                     </div>
                 </div>
 
@@ -181,15 +181,16 @@ ob_start();
             <div class="flex items-center space-x-4">
 
                 <!-- User Profile -->
-                <!-- User Profile -->
                 <div class="dropdown-trigger relative">
                     <button class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none !rounded-button" id="dropdownButton">
                         <i class="ri-user-line text-lg text-gray-600"></i>
                     </button>
                     <div class="dropdown absolute hidden right-0 left-auto bg-white shadow-lg rounded p-2 mt-1 w-48" id="dropdownMenu">
                         <div class="px-4 py-2 border-b border-gray-100">
-                            <p class="text-sm font-medium">Magandang araw!</p>
-                            <p class="text-xs text-gray-500">Maria Santos</p>
+                            <p class="text-sm font-semibold text-gray-800 break-words max-w-[180px]">
+                                <?= isset($_SESSION['admin_email']) ? htmlspecialchars($_SESSION['admin_email']) : 'Unknown'; ?>
+                            </p>
+
                         </div>
                         <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">
                             <div class="w-4 h-4 flex items-center justify-center mr-2">
@@ -258,7 +259,7 @@ ob_start();
                     </button>
                     <div class="mobile-dropdown-content hidden pl-4 mt-1 space-y-1">
                         <a href="../admin_product/products.php" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Inventory</a>
-                        
+
                     </div>
                 </div>
 
@@ -267,39 +268,49 @@ ob_start();
             </nav>
 
             <div class="mt-6 pt-6 border-t border-gray-200">
-                <div class="flex items-center px-3 py-2">
+                <div class="flex items-center px-4 py-3">
                     <div class="flex-shrink-0">
                         <div class="w-10 h-10 flex items-center justify-center bg-gray-200 rounded-full">
-                            <i class="ri-user-line text-lg text-gray-600"></i>
+                            <i class="ri-user-line text-xl text-gray-600"></i>
                         </div>
                     </div>
                     <div class="ml-3">
-                        <p class="text-sm font-medium text-gray-900">Maria Santos</p>
-                        <p class="text-xs text-gray-500">maria.santos@email.com</p>
+                        <p class="text-sm text-gray-600">👤 Logged in as:</p>
+                        <p class="text-sm font-semibold text-gray-800">
+                            <?= isset($_SESSION['admin_email']) ? htmlspecialchars($_SESSION['admin_email']) : 'Unknown'; ?>
+                        </p>
                     </div>
                 </div>
-                <div class="mt-3 space-y-1">
-                    <a href="#" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Aking Profile</a>
-                    <a href="#" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Mga Setting</a>
-                    <a href="../../logout.php" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Mag-logout</a>
+
+                <div class="mt-3 space-y-1 px-4">
+                    <a href="#" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded">
+                        Aking Profile
+                    </a>
+                    <a href="#" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded">
+                        Mga Setting
+                    </a>
+                    <a href="../../logout.php" class="block px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-red-600 rounded">
+                        Mag-logout
+                    </a>
                 </div>
             </div>
+
         </div>
     </div>
-   
+
     <!-- Mobile Menu Overlay -->
     <div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
-    
+
 
 </header>
 <script>
-  window.addEventListener('load', function () {
-    const loadingScreen = document.getElementById('loadingScreen');
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => {
-      loadingScreen.style.display = 'none';
-    }, 500); // Optional fade-out delay
-  });
+    window.addEventListener('load', function() {
+        const loadingScreen = document.getElementById('loadingScreen');
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => {
+            loadingScreen.style.display = 'none';
+        }, 500); // Optional fade-out delay
+    });
 </script>
 
 
