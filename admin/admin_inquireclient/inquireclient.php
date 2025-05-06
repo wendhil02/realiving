@@ -3,8 +3,23 @@ include '../design/mainbody.php';
 include '../../connection/connection.php';
 session_start();
 
-// Fetch inquiries
-$inquiries = $conn->query("SELECT * FROM contact_inquiries ORDER BY created_at DESC");
+// Check if the 'status' filter is set
+$status_filter = isset($_GET['status']) ? $_GET['status'] : '';
+
+// Modify the query based on the filter
+$query = "SELECT * FROM contact_inquiries";
+
+// Add the WHERE clause only if the filter is applied
+if ($status_filter == 'new') {
+    $query .= " WHERE sent_to_admin = 0"; // 0 means not sent to admin (new inquiries)
+} elseif ($status_filter == 'sent') {
+    $query .= " WHERE sent_to_admin = 1"; // 1 means sent to admin
+}
+
+$query .= " ORDER BY created_at DESC"; // Ensure ordering always happens
+
+$inquiries = $conn->query($query);
+
 
 // Fetch admin emails, client_status, and role
 $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
@@ -24,12 +39,27 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
         }
     </style>
 </head>
-
 <body class="bg-gray-50 min-h-screen">
-    <div class="max-w-2xl mx-auto p-6">
-        <h1 class="text-3xl font-bold text-center mb-8 text-blue-800">📥 New Inquiries</h1>
+    <div class="max-w-7xl mx-auto p-6 flex flex-col lg:flex-row gap-6">
+        <!-- Left: Inquiries Section -->
+        <div class="w-full lg:w-2/3 space-y-6">
+            <h1 class="text-3xl font-bold text-center mb-6 text-blue-800">📥 New Inquiries</h1>
 
-        <div class="space-y-6">
+            <!-- Filter Form -->
+            <form method="GET" action="" class="mb-6 flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <label for="status" class="text-sm font-medium text-gray-700">Filter by Status:</label>
+                    <select name="status" id="status" class="border rounded p-2 focus:ring focus:ring-blue-200">
+                        <option value="">All</option>
+                        <option value="new" <?= isset($_GET['status']) && $_GET['status'] == 'new' ? 'selected' : '' ?>>New Inquiries</option>
+                        <option value="sent" <?= isset($_GET['status']) && $_GET['status'] == 'sent' ? 'selected' : '' ?>>Sent to Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-sm">
+                    Filter
+                </button>
+            </form>
+
             <?php while ($row = $inquiries->fetch_assoc()): ?>
                 <div class="bg-white shadow rounded-lg p-6 border border-gray-200">
                     <p class="text-gray-700"><strong>Name:</strong> <?= htmlspecialchars($row['full_name']) ?></p>
@@ -62,8 +92,25 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
                 </div>
             <?php endwhile; ?>
         </div>
+
+        <!-- Right: Admins Sidebar -->
+        <div class="w-full lg:w-1/3">
+            <div class="bg-white border border-gray-200 rounded-lg shadow p-5 h-fit">
+                <h2 class="text-xl font-semibold text-blue-700 mb-4">👤 Admins & Client Status</h2>
+                <ul class="space-y-3">
+                    <?php
+                    // Re-execute the query for sidebar if $admins is exhausted
+                    $admins_sidebar = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
+                    while ($admin = $admins_sidebar->fetch_assoc()):
+                    ?>
+                        <li class="text-sm text-gray-800 border-b pb-2">
+                            <span class="block font-medium"><?= htmlspecialchars($admin['email']) ?></span>
+                            <span class="text-xs text-gray-600">Status: <?= htmlspecialchars($admin['client_status']) ?> | Role: <?= htmlspecialchars($admin['role']) ?></span>
+                        </li>
+                    <?php endwhile; ?>
+                </ul>
+            </div>
+        </div>
     </div>
 </body>
 </html>
-
-

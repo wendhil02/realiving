@@ -4,13 +4,62 @@ $result = $conn->query("SELECT * FROM news ORDER BY created_at DESC");
 include 'htmldesign/mainhead.php';
 include 'htmldesign/top.php';
 ?>
+<style>
+  @keyframes slide {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+/* Typing and Erasing Animation */
+@keyframes typing-and-erasing {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 31%;
+  }
+
+}
+
+.typing-animation {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  animation: typing-and-erasing 6s steps(30) infinite; /* Looping typing/erasing */
+  border-right: 2px solid white; /* Cursor effect */
+  font-family: 'Courier New', monospace; /* Adjust for monospace type */
+  font-size: 1.25rem; /* Adjust for your font size */
+}
+
+/* Blinking Cursor Effect */
+@keyframes blink {
+  50% {
+    border-color: transparent;
+  }
+}
+
+.typing-animation::after {
+  content: '';
+  display: inline-block;
+  margin-left: 5px;
+  border-right: 1px solid white;
+  animation: blink 0.75s step-end infinite;
+}
+
+</style>
 
 <body class="text-gray-800 leading-relaxed">
   <!-- Hero Section -->
   <section class="pt-12 relative w-full h-[700px] overflow-hidden">
     <div class="relative w-full h-full" id="blurTarget">
-      <!-- Overlay -->
-      <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+      <!-- Full Overlay (covering the entire section including left and right) -->
+      <div class="absolute inset-0 bg-black bg-opacity-60 z-20"></div>
 
       <!-- Slides -->
       <div class="absolute w-full h-full opacity-100 transition-opacity duration-1000 hero-slide">
@@ -24,270 +73,219 @@ include 'htmldesign/top.php';
       </div>
     </div>
 
-    <div class="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 drop-shadow-lg">
-      <img src="../logo/mmone.png" alt="Center Image" class="max-w-full h-auto w-72 md:w-96 mb-4">
-    </div>
+    <!-- Center Content with Rectangular Overlay Effect -->
+    <div class="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-6 md:px-8  bg-opacity-60 rounded-lg bg-gray-800 py-8 w-full max-w-4xl">
+      <!-- Logo Image -->
+      <img src="../logo/mmone.png" alt="Center Image" class="max-w-full h-auto w-64 md:w-80 mb-6 md:mb-10 mx-auto transform transition-all duration-300 hover:scale-105">
 
+      <!-- Typing Effect Text -->
+      <p class="text-white text-lg font-semibold typing-animation">Welcome to realiving</p>
+
+    </div>
   </section>
 
 
-  <section class="py-16 bg-gray-100">
-  <div class="max-w-7xl mx-auto px-4 text-center">
-    <h2 class="text-3xl font-bold text-sky-600 mb-4">Accomplished Projects</h2>
-    <hr class="w-24 border-b-4 border-sky-600 mx-auto mb-10">
 
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-      <!-- Project 1 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-1.png" alt="Project 1" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
+  <section class="py-16 bg-gray-100" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold text-sky-600 mb-4">Accomplished Projects</h2>
+      <hr class="w-24 border-b-4 border-sky-600 mx-auto mb-10">
 
-      <!-- Project 2 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-2.png" alt="Project 2" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <!-- Project Item -->
+        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
+          <img src="./images/project-1.png" alt="Project 1" class="w-20 h-20 object-contain mb-3">
+          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Modern Kitchen Design</p>
+        </a>
 
-      <!-- Project 3 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-3.png" alt="Project 3" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
+        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
+          <img src="./images/project-2.png" alt="Project 2" class="w-20 h-20 object-contain mb-3">
+          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Custom Living Room</p>
+        </a>
 
-      <!-- Project 4 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-4.png" alt="Project 4" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
+        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
+          <img src="./images/project-3.png" alt="Project 3" class="w-20 h-20 object-contain mb-3">
+          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Minimalist Office Setup</p>
+        </a>
 
-      <!-- Project 5 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-5.png" alt="Project 5" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
+        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
+          <img src="./images/project-4.png" alt="Project 4" class="w-20 h-20 object-contain mb-3">
+          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Industrial Bar Counter</p>
+        </a>
 
-      <!-- Project 6 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-6.png" alt="Project 6" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
+        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
+          <img src="./images/project-5.png" alt="Project 5" class="w-20 h-20 object-contain mb-3">
+          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Cozy Bedroom Cabinetry</p>
+        </a>
 
-      <!-- Project 7 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-7.png" alt="Project 7" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
-
-      <!-- Project 8 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-8.png" alt="Project 8" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
-
-      <!-- Project 9 -->
-      <a href="project-template-example.html" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-9.png" alt="Project 9" class="w-full h-32 object-cover rounded">
-        
-        </div>
-      </a>
-
-      <!-- Project 10 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-10.png" alt="Project 10" class="w-full h-32 object-cover rounded">
-          
-        </div>
-      </a>
-
-      <!-- Project 11 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-11.png" alt="Project 11" class="w-full h-32 object-cover rounded">
-          
-        </div>
-      </a>
-
-      <!-- Project 12 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-12.png" alt="Project 12" class="w-full h-32 object-cover rounded">
-          
-        </div>
-      </a>
-
-      <!-- Project 13 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-13.png" alt="Project 13" class="w-full h-32 object-cover rounded">
-          
-        </div>
-      </a>
-
-      <!-- Project 14 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-14.png" alt="Project 14" class="w-full h-32 object-cover rounded">
-          
-        </div>
-      </a>
-
-      <!-- Project 15 -->
-      <a href="#" target="_blank" class="transform hover:scale-105 transition duration-300 shadow-md bg-white rounded-lg p-2">
-        <div class="mb-2">
-          <img src="./images/project-15.png" alt="Project 15" class="w-full h-32 object-cover rounded">
-          
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-
-
-
-  <section class="py-16 bg-gray-300 relative">
-  <!-- Background Image with Overlay -->
-  <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('../code/images/background-image2.jpg');"></div>
-
-  <div class="container mx-auto px-6 relative z-10">
-    <div class="text-center">
-      <h2 class="text-3xl font-bold text-white">Services</h2>
-      <hr class="w-10 h-1 bg-yellow-500 mx-auto my-4 border-0 rounded">
-    </div>
-
-    <div class="relative max-w-5xl mx-auto mt-16">
-      <!-- Vertical center line -->
-      <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-black"></div>
-
-      <div class="space-y-16">
-
-        <!-- DESIGN - Left -->
-        <div class="relative flex justify-start items-center" data-aos="fade-right">
-          <div class="w-1/2 pr-8 text-right">
-            <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-              <h3 class="text-xl font-bold montserrat text-black">DESIGN</h3>
-              <p class="text-black mt-2">We create smart, space-saving, and stylish designs tailored to your space and lifestyle needs.</p>
-              <a href="#design" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-            </div>
-          </div>
-          <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-          <div class="w-1/2 ml-[50px] relative group">
-            <img src="../logo/.png" alt="Design Service" class="w-full h-auto rounded-lg shadow-md" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"></div>
-          </div>
-        </div>
-
-        <!-- FABRICATE - Right -->
-        <div class="relative flex justify-end items-center" data-aos="fade-left">
-          <div class="w-1/2 relative group">
-            <img src="fabricate-image.jpg" alt="Fabricate Service" class="w-full h-auto rounded-lg shadow-md" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"></div>
-          </div>
-          <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-          <div class="w-1/2 pl-8 text-left">
-            <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-              <h3 class="text-xl font-semibold montserrat text-black">FABRICATE</h3>
-              <p class="text-black mt-2">Using quality materials, we build each piece with precision to ensure durability and a modern finish.</p>
-              <a href="#fabricate" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- DELIVERED - Left -->
-        <div class="relative flex justify-start items-center" data-aos="fade-right">
-          <div class="w-1/2 pr-8 text-right">
-            <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-              <h3 class="text-xl font-semibold montserrat text-black">DELIVERED</h3>
-              <p class="text-black mt-2">We transport your furniture safely and on time—straight to your doorstep.</p>
-              <a href="#delivered" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-            </div>
-          </div>
-          <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-          <div class="w-1/2 ml-[50px] relative group">
-            <img src="../logo/deli.png" alt="Delivered Service" class="w-full h-[300px] rounded-lg shadow-md object-cover" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex items-center justify-center">
-              <span class="text-white text-lg font-semibold montserrat">Delivered</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- INSTALLATION - Right -->
-        <div class="relative flex justify-end items-center" data-aos="fade-left">
-          <div class="w-1/2 mr-[50px] relative group">
-            <img src="../logo/insta.png" alt="Installation Service" class="w-full h-[250px] rounded-lg shadow-md" />
-            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex items-center justify-center">
-              <span class="text-white text-lg font-semibold montserrat">INSTALLATION</span>
-            </div>
-          </div>
-          <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-          <div class="w-1/2 pl-8 text-left">
-            <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-              <h3 class="text-xl font-semibold montserrat text-black">INSTALLATION</h3>
-              <p class="text-black mt-2">Our team handles the setup efficiently, making sure everything is perfectly fitted and ready to use.</p>
-              <a href="#installation" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-            </div>
-          </div>
-        </div>
-
+        <!-- Duplicate this block for other projects -->
+        <!-- Just change the image and the text -->
       </div>
     </div>
+  </section>
+
+
+  <section class="relative py-24 px-6 md:px-20 bg-gradient-to-br from-white via-slate-100 to-white" data-aos="fade-up">
+  <!-- Decorative Element (Optional Background Circle or Shape) -->
+  <div class="absolute top-0 left-0 w-32 h-32 bg-sky-100 rounded-full opacity-30 blur-2xl -z-10"></div>
+  <div class="absolute bottom-0 right-0 w-40 h-40 bg-blue-200 rounded-full opacity-30 blur-3xl -z-10"></div>
+
+  <div class="max-w-5xl mx-auto text-center bg-white bg-opacity-80 backdrop-blur-md p-10 rounded-3xl shadow-xl border border-slate-200">
+    <h2 class="text-4xl md:text-5xl font-extrabold text-sky-700 mb-6 tracking-tight">
+      Who We Are
+    </h2>
+    <p class="text-lg md:text-xl text-gray-700 leading-relaxed">
+      <span class="block mb-4">
+        <strong class="text-sky-600">Realiving Design Center Corp.</strong> is a leading architectural fit-out company specializing in design, manufacturing, and installation of premium modular cabinets. We are driven by a passion for creating beautifully functional spaces that enhance the lives of our clients.
+      </span>
+      <span>
+        Realiving was duly incorporated under the trade name <strong class="text-sky-600">Brava Homes</strong> situated at Warehouse 5, Sunhope Compound, Purok 7, Brgy. Calasag, San Ildefonso, Bulacan. It primarily engages in wholesale and retail of competitively priced, high-quality construction, plumbing, and decorative materials.
+      </span>
+    </p>
   </div>
 </section>
 
-<section class="py-16 bg-cover bg-center relative" style="background-image: url('../uploads/home.jpg');">
-  <!-- Overlay -->
-  <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
-  <!-- Content -->
-  <div class="relative z-10">
-    <!-- Section Title -->
-    <h2 class="text-3xl font-semibold text-center text-white mb-6">Latest News</h2>
-    <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-8 border-0 rounded">
+  <section class="py-16 bg-gray-300 relative" data-aos="fade-up">
+    <!-- Background Image with Overlay -->
+    <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('../realivingpage/images/background-image2.jpg');"></div>
 
-    <div class="overflow-hidden relative px-4">
-      <div class="flex gap-6 news-container transition-transform duration-1000 ease-in-out">
-        <?php while ($row = $result->fetch_assoc()): ?>
-          <div class="min-w-[280px] bg-white rounded-xl overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300">
-            <!-- News Image -->
-            <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover rounded-t-xl">
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold text-white">Services</h2>
+        <hr class="w-10 h-1 bg-yellow-500 mx-auto my-4 border-0 rounded">
+      </div>
 
-            <!-- Title -->
-            <h3 class="mt-6 text-xl font-semibold text-center text-gray-800"><?= htmlspecialchars($row['title']) ?></h3>
+      <div class="relative max-w-5xl mx-auto mt-16">
+        <!-- Vertical center line -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-black"></div>
 
-            <!-- Summary -->
-            <p class="p-4 text-sm text-gray-600"><?= htmlspecialchars($row['summary']) ?></p>
+        <div class="space-y-16">
 
-            <!-- View More Button -->
-            <a href="<?= $row['link'] ?>" class="inline-block mb-4 px-4 py-2 bg-yellow-500 text-white rounded-b-lg text-center w-full hover:bg-yellow-600 transition duration-200 montserrat">
-              View More
-            </a>
+          <!-- DESIGN - Left -->
+          <div class="relative flex justify-start items-center" data-aos="fade-right">
+            <div class="w-1/2 pr-8 text-right">
+              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
+                <h3 class="text-xl font-bold montserrat text-black">DESIGN</h3>
+                <p class="text-black mt-2">We create smart, space-saving, and stylish designs tailored to your space and lifestyle needs.</p>
+                <a href="#design" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
+              </div>
+            </div>
+            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
+            <div class="w-1/2 ml-[50px] relative group">
+              <img src="../logo/.png" alt="Design Service" class="w-full h-auto rounded-lg shadow-md" />
+              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"></div>
+            </div>
           </div>
-        <?php endwhile; ?>
+
+          <!-- FABRICATE - Right -->
+          <div class="relative flex justify-end items-center" data-aos="fade-left">
+            <div class="w-1/2 relative group">
+              <img src="fabricate-image.jpg" alt="Fabricate Service" class="w-full h-auto rounded-lg shadow-md" />
+              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg"></div>
+            </div>
+            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
+            <div class="w-1/2 pl-8 text-left">
+              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
+                <h3 class="text-xl font-semibold montserrat text-black">FABRICATE</h3>
+                <p class="text-black mt-2">Using quality materials, we build each piece with precision to ensure durability and a modern finish.</p>
+                <a href="#fabricate" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- DELIVERED - Left -->
+          <div class="relative flex justify-start items-center" data-aos="fade-right">
+            <div class="w-1/2 pr-8 text-right">
+              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
+                <h3 class="text-xl font-semibold montserrat text-black">DELIVERED</h3>
+                <p class="text-black mt-2">We transport your furniture safely and on time—straight to your doorstep.</p>
+                <a href="#delivered" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
+              </div>
+            </div>
+            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
+            <div class="w-1/2 ml-[50px] relative group">
+              <img src="../logo/deli.png" alt="Delivered Service" class="w-full h-[300px] rounded-lg shadow-md object-cover" />
+              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex items-center justify-center">
+                <span class="text-white text-lg font-semibold montserrat">Delivered</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- INSTALLATION - Right -->
+          <div class="relative flex justify-end items-center" data-aos="fade-left">
+            <div class="w-1/2 mr-[50px] relative group">
+              <img src="../logo/insta.png" alt="Installation Service" class="w-full h-[250px] rounded-lg shadow-md" />
+              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex items-center justify-center">
+                <span class="text-white text-lg font-semibold montserrat">INSTALLATION</span>
+              </div>
+            </div>
+            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
+            <div class="w-1/2 pl-8 text-left">
+              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
+                <h3 class="text-xl font-semibold montserrat text-black">INSTALLATION</h3>
+                <p class="text-black mt-2">Our team handles the setup efficiently, making sure everything is perfectly fitted and ready to use.</p>
+                <a href="#installation" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section class="py-20 bg-gray-50 px-6 md:px-20" data-aos="fade-up">
+    <h2 class="text-3xl font-bold text-center mb-10">What Clients Say</h2>
+    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      <div class="bg-white p-6 rounded shadow">
+        <p class="italic">“Realiving turned our empty unit into a beautiful, functional space. Their team was professional and creative from start to finish.”</p>
+        <p class="mt-4 font-semibold">– Janelle M., Homeowner</p>
+      </div>
+      <div class="bg-white p-6 rounded shadow">
+        <p class="italic">“Excellent service and amazing results. Our office renovation was seamless and exceeded expectations.”</p>
+        <p class="mt-4 font-semibold">– Carlo D., Business Owner</p>
+      </div>
+    </div>
+  </section>
 
+  <section class="py-16 bg-cover bg-center relative" data-aos="fade-up" style="background-image: url('../uploads/home.jpg');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
+    <div class="relative z-10">
+      <!-- Title -->
+      <h2 class="text-3xl font-semibold text-center text-white mb-6">Latest News</h2>
+      <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-8 border-0 rounded">
+
+      <!-- News Slider -->
+      <div class="relative overflow-hidden px-4">
+        <div id="slider" class="flex transition-transform duration-500" style="width: max-content;">
+          <?php
+          $news = [];
+          while ($row = $result->fetch_assoc()) {
+            $news[] = $row;
+          }
+          foreach ($news as $row):
+          ?>
+            <div class="min-w-[300px] max-w-sm mx-2 bg-white rounded-xl overflow-hidden shadow-lg">
+              <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover rounded-t-xl">
+              <h3 class="mt-4 text-xl font-semibold text-center text-gray-800"><?= htmlspecialchars($row['title']) ?></h3>
+              <p class="p-4 text-sm text-gray-600"><?= htmlspecialchars($row['summary']) ?></p>
+              <a href="<?= $row['link'] ?>" class="inline-block mb-4 px-4 py-2 bg-yellow-500 text-white rounded-b-lg text-center w-full hover:bg-yellow-600 transition duration-200 montserrat">View More</a>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <!-- Dots -->
+      <div class="flex justify-center mt-6 space-x-2">
+        <?php for ($i = 0; $i < count($news); $i++): ?>
+          <button class="dot w-3 h-3 rounded-full bg-white opacity-50 hover:opacity-100 transition duration-200" onclick="goToSlide(<?= $i ?>)"></button>
+        <?php endfor; ?>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer Section -->
   <footer class="flex flex-wrap justify-between p-8 bg-[#ffefd8] text-black">
@@ -335,27 +333,84 @@ include 'htmldesign/top.php';
 
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
+  <script>
+    AOS.init();
+  </script>
   <!-- JavaScript for Sliding News -->
   <script>
-    const slides = document.querySelectorAll('.hero-slide');
-    let current = 0;
+    const slidess = document.querySelectorAll('.hero-slide');
+    let currentHeroIndex = 0;
 
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('opacity-100');
-        slide.classList.add('opacity-0');
+    function showHeroSlide(index) {
+      slidess.forEach((slide, i) => {
+        slide.classList.remove('opacity-100', 'z-20');
+        slide.classList.add('opacity-0', 'z-10');
         if (i === index) {
           slide.classList.remove('opacity-0');
-          slide.classList.add('opacity-100');
+          slide.classList.add('opacity-100', 'z-20');
         }
       });
     }
 
-    setInterval(() => {
-      current = (current + 1) % slides.length;
-      showSlide(current);
-    }, 4000); // every 4 seconds
+    function nextHeroSlide() {
+      currentHeroIndex = (currentHeroIndex + 1) % slidess.length;
+      showHeroSlide(currentHeroIndex);
+    }
 
+    showHeroSlide(currentHeroIndex);
+    setInterval(nextHeroSlide, 5000);
+
+
+
+    let currentSlide = 0;
+    let direction = 1; // 1 for forward, -1 for backward
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('#slider > div');
+    const dotButtons = document.querySelectorAll('.dot');
+    const totalSlides = slides.length;
+    const slideWidth = slides[0].offsetWidth + 16; // +gap (mx-2 = 8px on each side)
+
+    function goToSlide(index) {
+      currentSlide = index;
+      slider.style.transform = `translateX(-${slideWidth * index}px)`;
+
+      dotButtons.forEach((dot, i) => {
+        dot.classList.toggle('opacity-100', i === index);
+        dot.classList.toggle('opacity-50', i !== index);
+      });
+    }
+
+    function autoSlide() {
+      if (currentSlide === totalSlides - 1) {
+        direction = -1; // reverse
+      } else if (currentSlide === 0) {
+        direction = 1; // forward again
+      }
+      currentSlide += direction;
+      goToSlide(currentSlide);
+    }
+
+    let slideInterval = setInterval(autoSlide, 5000);
+
+    // Pause on hover
+    slider.addEventListener('mouseover', () => clearInterval(slideInterval));
+    slider.addEventListener('mouseout', () => {
+      slideInterval = setInterval(autoSlide, 5000);
+    });
+
+    // Dot click handler (with reset)
+    dotButtons.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        currentSlide = index;
+        direction = (index === 0) ? 1 : (index === totalSlides - 1) ? -1 : direction;
+        clearInterval(slideInterval);
+        slideInterval = setInterval(autoSlide, 5000);
+      });
+    });
+
+    // Initialize
+    goToSlide(0);
 
     let newsContainer = document.querySelector('.news-container');
     let newsItems = document.querySelectorAll('.news-container > div');

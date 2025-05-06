@@ -8,6 +8,14 @@ include '../../connection/connection.php';
 // Allow only admin5
 require_role(['admin1','admin2','admin3','admin4','admin5','superadmin']);
 
+
+// Fetch inquiries
+$inquiries = $conn->query("SELECT * FROM contact_inquiries ORDER BY created_at DESC");
+
+// Fetch admin emails, client_status, and role
+$admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
+
+
 ?>
 
 <!DOCTYPE html>
@@ -18,16 +26,24 @@ require_role(['admin1','admin2','admin3','admin4','admin5','superadmin']);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Font Awesome CDN (latest version) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 </head>
 
 <body class="bg-gray-200">
 
 <?php
-if (isset($_SESSION['admin_email'])) {
-    echo "<div class='text-right p-4 text-gray-600'>👤 Logged in as: <strong>" . htmlspecialchars($_SESSION['admin_email']) . "</strong></div>";
+if (isset($_SESSION['admin_email']) && isset($_SESSION['admin_role'])) {
+    echo "<div class='text-right p-4 text-blue-900'>
+            <i class='fas fa-user mr-2'></i>
+            Logged in as: <strong>" . htmlspecialchars($_SESSION['admin_email']) . "</strong> 
+            <span class='ml-2 text-sm text-gray-600'>(Role: " . htmlspecialchars($_SESSION['admin_role']) . ")</span>
+          </div>";
 }
 ?>
+
+
 
 <?php if (isset($_SESSION['noti'])): ?>
     <div id="notifBox" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-200 text-yellow-800 p-4 rounded shadow-lg w-80 text-center">
@@ -45,7 +61,7 @@ if (isset($_SESSION['admin_email'])) {
     <?php unset($_SESSION['noti']); ?>
 <?php endif; ?>
 
-<section class="py-5">
+<section class="py-2">
   <div class="max-w-7xl mx-auto">
     <div class="flex flex-wrap justify-between gap-4">
 

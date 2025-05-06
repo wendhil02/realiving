@@ -8,12 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Datamatrix' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
-    'GPBMetadata\\GrpcGcp' => $vendorDir . '/google/grpc-gcp/src/generated/GPBMetadata/GrpcGcp.php',
-    'Grpc\\Gcp\\AffinityConfig' => $vendorDir . '/google/grpc-gcp/src/generated/Grpc/Gcp/AffinityConfig.php',
-    'Grpc\\Gcp\\AffinityConfig_Command' => $vendorDir . '/google/grpc-gcp/src/generated/Grpc/Gcp/AffinityConfig_Command.php',
-    'Grpc\\Gcp\\ApiConfig' => $vendorDir . '/google/grpc-gcp/src/generated/Grpc/Gcp/ApiConfig.php',
-    'Grpc\\Gcp\\ChannelPoolConfig' => $vendorDir . '/google/grpc-gcp/src/generated/Grpc/Gcp/ChannelPoolConfig.php',
-    'Grpc\\Gcp\\MethodConfig' => $vendorDir . '/google/grpc-gcp/src/generated/Grpc/Gcp/MethodConfig.php',
+    'Dompdf\\Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
     'PDF417' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
     'QRcode' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
     'TCPDF' => $vendorDir . '/tecnickcom/tcpdf/tcpdf.php',

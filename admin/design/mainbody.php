@@ -116,8 +116,8 @@ ob_start();
     </div>
 </div>
 
+<header class="bg-white shadow-sm sticky top-0 z-50">
 
-<header class="bg-white shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center justify-between h-16">
             <!-- Logo -->
@@ -144,7 +144,7 @@ ob_start();
                         <a href="../admin_allclient/allclient.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Add New Client </a>
                         <a href="../admin_calendar/calendar.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Appointment</a>
                         <a href="../admin_insertnews/insert_news.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Latest New Edit</a>
-                        <a href="../adminstatus/adminstatusforclient.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">sample</a>
+                        <a href="../adminstatus/adminstatusforclient.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Update status</a>
                     </div>
                 </div>
 
@@ -168,9 +168,7 @@ ob_start();
                         </div>
                     </button>
                     <div class="dropdown bg-white shadow-lg rounded p-2 mt-1">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Konsultasyon</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Pagdisenyo</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">Pagbuo ng Website</a>
+                        <a href="../installation_quotation/quotation.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">computation</a>
                     </div>
                 </div>
 

@@ -27,20 +27,19 @@
         <a href="allofproject.php" class="block px-4 py-2 text-gray-900 hover:bg-yellow-100 rounded-md text-sm transition">Accomplish Project</a>
       </div>
     </div>
-
-    <a href="#" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform">News</a>
-
-    <a href="contact.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform">Contact</a>
-
-    <!-- Portal Dropdown (clickable) -->
+    <!-- Gallery Dropdown (clickable) -->
     <div class="relative">
-      <button onclick="toggleDropdown('portalDropdown')" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 focus:after:scale-x-100 after:origin-left after:transition-transform cursor-pointer flex items-center gap-1">
-        Portal <span class="text-xs">▾</span>
+      <button onclick="toggleDropdown('galleryDropdown')" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 focus:after:scale-x-100 after:origin-left after:transition-transform cursor-pointer flex items-center gap-1">
+        What's New <span class="text-xs">▾</span>
       </button>
-      <div id="portalDropdown" class="hidden absolute top-full left-0 mt-2 w-72 bg-white shadow-2xl rounded-lg z-50 p-2 max-h-72 overflow-y-auto border border-gray-200">
-        <a href="../index.php" class="block px-4 py-2 text-gray-900 hover:bg-yellow-100 rounded-md text-sm transition">Return</a>
+      <div id="galleryDropdown" class="hidden absolute top-full left-0 mt-2 w-72 bg-white shadow-2xl rounded-lg z-50 p-2 max-h-72 overflow-y-auto border border-gray-200">
+        <a href="photos.php" class="block px-4 py-2 text-gray-900 hover:bg-yellow-100 rounded-md text-sm transition">news</a>
+        <a href="videos.php" class="block px-4 py-2 text-gray-900 hover:bg-yellow-100 rounded-md text-sm transition">Videos</a>
       </div>
     </div>
+
+    <a href="contact.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 relative after:block after:h-0.5 after:bg-yellow-500 after:scale-x-0 hover:after:scale-x-100 after:origin-left after:transition-transform">Contact</a>
+   
   </nav>
 </header>
 
@@ -48,7 +47,7 @@
 
 <script>
   // Mobile menu toggle
-  document.getElementById('navToggle').addEventListener('click', function () {
+  document.getElementById('navToggle').addEventListener('click', function() {
     const nav = document.getElementById('mainNav');
     nav.classList.toggle('hidden');
   });
@@ -60,7 +59,7 @@
   }
 
   // Optional: close dropdowns on outside click
-  document.addEventListener('click', function (e) {
+  document.addEventListener('click', function(e) {
     ['projectsDropdown', 'portalDropdown'].forEach(id => {
       const trigger = document.querySelector(`button[onclick="toggleDropdown('${id}')"]`);
       const dropdown = document.getElementById(id);
@@ -70,5 +69,3 @@
     });
   });
 </script>
-
-
