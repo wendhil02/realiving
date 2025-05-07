@@ -1,10 +1,10 @@
 <?php
 session_start();
 include '../../connection/connection.php';
-
+include '../design/mainbody.php';
 include '../checkrole.php';
-// Allow only admin5
-require_role(['admin1','superadmin']);
+// Allow only admin1 and superadmin
+require_role(['admin1', 'superadmin']);
 
 // Handle delete request with prepared statement
 if (isset($_POST['delete_id'])) {
@@ -14,23 +14,23 @@ if (isset($_POST['delete_id'])) {
     $stmt->execute();
     $stmt->close();
 }
-include '../design/mainbody.php';
-// Update client status (using a prepared statement is optional here for efficiency)
+
+// Automatically update old clients
 $conn->query("UPDATE user_info SET status = 'Old Client' 
     WHERE created_at <= DATE_SUB(CURDATE(), INTERVAL 1 YEAR) AND status != 'Old Client'");
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['status'], $_POST['nameproject'])) {
+// Handle new client form submission
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['status'], $_POST['nameproject'], $_POST['client_type']) && !isset($_POST['export'])) {
     $clientname = $_POST['clientname'];
     $status = $_POST['status'];
     $nameproject = $_POST['nameproject'];
+    $client_type = $_POST['client_type'];
     $updateTime = date('Y-m-d H:i:s');
 
-    // ✅ Generate unique reference number
     $reference_number = "REF" . date("YmdHis") . strtoupper(substr(md5(uniqid()), 0, 4));
 
-    // Insert into database (with reference_number)
-    $stmt = $conn->prepare("INSERT INTO user_info (clientname, status, nameproject, updatestatus, update_time, reference_number) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $clientname, $status, $nameproject, $status, $updateTime, $reference_number);
+    $stmt = $conn->prepare("INSERT INTO user_info (clientname, status, nameproject, updatestatus, update_time, reference_number, client_type) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssss", $clientname, $status, $nameproject, $status, $updateTime, $reference_number, $client_type);
 
     if ($stmt->execute()) {
         header("Location: " . $_SERVER['PHP_SELF']);
@@ -44,13 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['
 
 // Export logic
 if (isset($_POST['export'])) {
-    $sql = "SELECT clientname, reference_number, nameproject FROM user_info";
+    $sql = "SELECT clientname, reference_number, nameproject, client_type FROM user_info";
     $result = $conn->query($sql);
 
     header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="clientRerf.csv"');
+    header('Content-Disposition: attachment; filename="clientRef.csv"');
     $output = fopen("php://output", "w");
-    fputcsv($output, ['Client Name', 'Reference Number', 'Project Name']);
+    fputcsv($output, ['Client Name', 'Reference Number', 'Project Name', 'Client Type']);
 
     while ($row = $result->fetch_assoc()) {
         fputcsv($output, $row);
@@ -60,6 +60,7 @@ if (isset($_POST['export'])) {
     exit();
 }
 
+// Load clients
 $sql = "SELECT * FROM user_info";
 $result = $conn->query($sql);
 
@@ -68,11 +69,11 @@ while ($row = $result->fetch_assoc()) {
     $status_display = $row["status"] === "New " ? "Old Client" : $row["status"];
     $tableRows .= '
         <tr class="hover:bg-gray-50 transition">
-
             <td class="py-3 px-6">' . $row["clientname"] . '</td>
             <td class="py-3 px-6">' . $status_display . '</td>
             <td class="py-3 px-6">' . $row["reference_number"] . '</td>
             <td class="py-3 px-6">' . $row["nameproject"] . '</td>
+            <td class="py-3 px-6">' . $row["client_type"] . '</td>
             <td class="py-3 px-6 text-center">
                 <form method="post">
                     <input type="hidden" name="delete_id" value="' . $row["id"] . '" />
@@ -96,41 +97,58 @@ $conn->close();
 
 <body class="bg-gray-300">
     <div class="container mx-auto p-6">
-    <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
-    <h2 class="text-2xl font-semibold text-center mb-4">Client Management</h2>
+    <div class="bg-white p-8 rounded-2xl shadow-xl mb-8">
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Client Management</h2>
 
     <!-- Form to add new client -->
-    <form method="post" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="col-span-1">
-                <label for="clientname" class="block text-sm font-medium text-gray-700">Client Name</label>
-                <input type="text" name="clientname" id="clientname" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
+    <form method="post" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div>
+                <label for="clientname" class="block text-sm font-medium text-gray-700 mb-1">Client Name</label>
+                <input type="text" name="clientname" id="clientname"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
             </div>
-            <div class="col-span-1">
-                <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                <select name="status" id="status" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
-                    <option value="New Client">New</option>
+            <div>
+                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                <select name="status" id="status"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
+                    <option value="New Client">New Client</option>
                     <option value="Old Client">Old Client</option>
                 </select>
             </div>
-            <div class="col-span-1">
-                <label for="nameproject" class="block text-sm font-medium text-gray-700">Project Name</label>
-                <input type="text" name="nameproject" id="nameproject" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md" required>
+            <div>
+                <label for="nameproject" class="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
+                <input type="text" name="nameproject" id="nameproject"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
+            </div>
+            <div>
+                <label for="client_type" class="block text-sm font-medium text-gray-700 mb-1">Client Type</label>
+                <select name="client_type" id="client_type"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required>
+                    <option value="Noblehome">Noblehome</option>
+                    <option value="Realiving">Realiving</option>
+                </select>
             </div>
         </div>
 
-        <div class="text-center">
-            <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center justify-center">
-                <i class="ri-add-line mr-2"></i> Add Client
+        <div class="flex justify-center mt-4">
+            <button type="submit"
+                class="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition">
+                <i class="ri-add-line text-lg"></i> Add Client
             </button>
         </div>
     </form>
 
     <!-- Export Button -->
-    <div class="text-center mt-4">
+    <div class="flex justify-center mt-6">
         <form method="post">
-            <button type="submit" name="export" class="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 flex items-center justify-center">
-                <i class="ri-export-2-line mr-2"></i> Export Clients
+            <button type="submit" name="export"
+                class="flex items-center gap-2 px-6 py-2 bg-green-600 text-white font-medium rounded-lg shadow hover:bg-green-700 transition">
+                <i class="ri-export-2-line text-lg"></i> Export Clients
             </button>
         </form>
     </div>
@@ -146,11 +164,11 @@ $conn->close();
                         <th class="py-3 px-6 font-semibold text-sm text-gray-600">Status</th>
                         <th class="py-3 px-6 font-semibold text-sm text-gray-600">Reference Number</th>
                         <th class="py-3 px-6 font-semibold text-sm text-gray-600">Project Name</th>
+                        <th class="py-3 px-6 font-semibold text-sm text-gray-600">Client Type</th>
                         <th class="py-3 px-6 font-semibold text-sm text-gray-600">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- PHP will generate table rows here -->
                     <?php echo $tableRows; ?>
                 </tbody>
             </table>

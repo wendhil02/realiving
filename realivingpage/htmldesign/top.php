@@ -1,8 +1,11 @@
 <header class="fixed top-0 left-0 w-full h-16 px-6 md:px-12 flex items-center justify-between bg-white border-t-4 border-yellow-500 shadow-md z-50">
   <!-- Logo -->
   <div class="flex items-center gap-2">
-    <img src="images/logo.png" alt="Logo" class="h-9">
-  </div>
+    <a href="index.php">
+        <img src="images/logo.png" alt="Logo" class="h-9">
+    </a>
+</div>
+
 
   <!-- Mobile Toggle Button -->
   <button id="navToggle" class="md:hidden text-gray-700 focus:outline-none">

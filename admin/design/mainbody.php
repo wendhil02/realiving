@@ -179,39 +179,36 @@ ob_start();
             <div class="flex items-center space-x-4">
 
                 <!-- User Profile -->
-                <div class="dropdown-trigger relative">
-                    <button class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none !rounded-button" id="dropdownButton">
-                        <i class="ri-user-line text-lg text-gray-600"></i>
+                <div class="relative">
+                    <!-- Trigger Button -->
+                    <button class="w-10 h-10 flex items-center justify-center bg-gray-100 rounded-full hover:bg-gray-200 focus:outline-none" id="dropdownButton">
+                        <i class="ri-user-line text-xl text-gray-600"></i>
                     </button>
-                    <div class="dropdown absolute hidden right-0 left-auto bg-white shadow-lg rounded p-2 mt-1 w-48" id="dropdownMenu">
-                        <div class="px-4 py-2 border-b border-gray-100">
-                            <p class="text-sm font-semibold text-gray-800 break-words max-w-[180px]">
+
+                    <!-- Dropdown Menu -->
+                    <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-md shadow-xl z-50">
+                        <!-- User Info -->
+                        <div class="px-4 py-3 border-b border-gray-200">
+                            <p class="text-sm text-gray-700 font-semibold">
                                 <?= isset($_SESSION['admin_email']) ? htmlspecialchars($_SESSION['admin_email']) : 'Unknown'; ?>
                             </p>
-
                         </div>
-                        <a href="#" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">
-                            <div class="w-4 h-4 flex items-center justify-center mr-2">
-                                <i class="ri-user-settings-line"></i>
-                            </div>
+
+                        <!-- Menu Buttons -->
+                        <button onclick="location.href='#'" class="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center text-sm text-gray-800">
+                            <i class="ri-user-settings-line mr-3 text-lg"></i>
                             Profile
-                        </a>
-                        <a href="dashboard.php" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">
-                            <div class="w-4 h-4 flex items-center justify-center mr-2">
-                                <i class="ri-settings-3-line"></i>
-                            </div>
+                        </button>
+                        <button onclick="location.href='dashboard.php'" class="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center text-sm text-gray-800">
+                            <i class="ri-settings-3-line mr-3 text-lg"></i>
                             Setting
-                        </a>
-                        <a href="../../logout.php" class="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded">
-                            <div class="w-4 h-4 flex items-center justify-center mr-2">
-                                <i class="ri-logout-box-line"></i>
-                            </div>
+                        </button>
+                        <button onclick="location.href='../../logout.php'" class="w-full text-left px-4 py-3 hover:bg-gray-100 flex items-center text-sm text-gray-800">
+                            <i class="ri-logout-box-line mr-3 text-lg"></i>
                             Logout
-                        </a>
+                        </button>
                     </div>
                 </div>
-
-                <!-- Dropdown Button Script -->
                 <!-- Mobile Menu Button -->
                 <button id="mobileMenuButton" class="lg:hidden w-10 h-10 flex items-center justify-center text-gray-500 hover:text-primary focus:outline-none !rounded-button">
                     <i class="ri-menu-line text-xl"></i>
@@ -314,10 +311,21 @@ ob_start();
 
 
 <script>
+    const dropdownBtn = document.getElementById('dropdownButton');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+
+    dropdownBtn.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Optional: Close dropdown when clicking outside
+    window.addEventListener('click', function(e) {
+        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function() {
-        // Search toggle
-
-
         // Mobile menu
         const mobileMenuButton = document.getElementById('mobileMenuButton');
         const closeMenu = document.getElementById('closeMenu');

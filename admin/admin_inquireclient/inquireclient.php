@@ -20,13 +20,13 @@ $query .= " ORDER BY created_at DESC"; // Ensure ordering always happens
 
 $inquiries = $conn->query($query);
 
-
 // Fetch admin emails, client_status, and role
 $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -39,6 +39,7 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
         }
     </style>
 </head>
+
 <body class="bg-gray-50 min-h-screen">
     <div class="max-w-7xl mx-auto p-6 flex flex-col lg:flex-row gap-6">
         <!-- Left: Inquiries Section -->
@@ -65,6 +66,27 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
                     <p class="text-gray-700"><strong>Name:</strong> <?= htmlspecialchars($row['full_name']) ?></p>
                     <p class="text-gray-700"><strong>Phone:</strong> <?= htmlspecialchars($row['phone_number']) ?></p>
                     <p class="text-gray-700"><strong>Email:</strong> <?= htmlspecialchars($row['email']) ?></p>
+
+                    <!-- Conditional styling for client_type -->
+                    <p class="text-gray-700">
+                        <strong>Client Type:</strong>
+                        <?php
+                        $client_type = htmlspecialchars($row['client_type'] ?? 'N/A');
+                        $client_type_class = '';
+
+                        // Apply different colors based on client_type
+                        if (strtolower($client_type) == 'noblehome') {
+                            $client_type_class = 'bg-orange-600 text-white';
+                        } elseif (strtolower($client_type) == 'realiving') {
+                            $client_type_class = 'bg-yellow-600 text-white';
+                        }
+                        ?>
+                        <span class="px-1 py-0.5 rounded <?= $client_type_class ?>">
+                            <?= $client_type ?>
+                        </span>
+                    </p>
+
+
                     <p class="text-gray-600 text-sm italic mt-1">
                         <strong>Submitted:</strong>
                         <?= date('F j, Y \a\t g:i A', strtotime($row['created_at'])) ?>
@@ -85,18 +107,19 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
                                 <?php endforeach; ?>
                             </select>
                             <button type="submit" class="mt-3 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow-sm">
-                                Send 
+                                Send
                             </button>
                         </form>
                     <?php endif; ?>
                 </div>
             <?php endwhile; ?>
+
         </div>
 
         <!-- Right: Admins Sidebar -->
-        <div class="w-full lg:w-1/3">
+        <div class="w-full lg:w-1/3 sticky top-0">
             <div class="bg-white border border-gray-200 rounded-lg shadow p-5 h-fit">
-                <h2 class="text-xl font-semibold text-blue-700 mb-4">👤 Admins & Client Status</h2>
+                <h2 class="text-xl font-semibold text-blue-700 mb-4">Admins & Client Status</h2>
                 <ul class="space-y-3">
                     <?php
                     // Re-execute the query for sidebar if $admins is exhausted
@@ -112,5 +135,7 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
             </div>
         </div>
     </div>
+
 </body>
+
 </html>

@@ -11,18 +11,10 @@ include 'htmldesign/top.php';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Realiving Design Center</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Playfair Display', serif;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      background-color: #a3844d;
-    }
-  </style>
+  
 </head>
 
-<body class="text-[#333] leading-relaxed bg-gray-100 ">
+<body class="text-[#333] leading-relaxed bg-gray-200 ">
 
 
   <!-- Contact Section -->
