@@ -18,26 +18,29 @@ if (isset($_SESSION['admin_id'])) {
 // Auto-login with remember_token from cookie
 if (!isset($_SESSION['admin_id']) && isset($_COOKIE['remember_token'])) {
     $token = $_COOKIE['remember_token'];
-    $stmt = $conn->prepare("SELECT id, email, role FROM account WHERE remember_token = ? LIMIT 1");
-    $stmt->bind_param("s", $token);
+    $stmt = $conn->prepare("SELECT id, email, role, remember_token FROM account WHERE remember_token IS NOT NULL");
     $stmt->execute();
     $result = $stmt->get_result();
 
-    if ($result && $result->num_rows === 1) {
-        $row = $result->fetch_assoc();
-        $_SESSION['admin_id'] = $row['id'];
-        $_SESSION['admin_email'] = $row['email'];
-        $_SESSION['admin_role'] = $row['role'];
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            if (password_verify($token, $row['remember_token'])) {
+                $_SESSION['admin_id'] = $row['id'];
+                $_SESSION['admin_email'] = $row['email'];
+                $_SESSION['admin_role'] = $row['role'];
 
-        header("Location: ../admin/admin_mainpage/mainpage.php");
-        exit();
+                header("Location: ../admin/admin_mainpage/mainpage.php");
+                exit();
+            }
+        }
     }
 }
 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = strtolower(trim($_POST['email']));
-    $password_input = $_POST['password'];
+    // Check if 'email' and 'password' exist in the POST array
+    $email = isset($_POST['email']) ? strtolower(trim($_POST['email'])) : '';
+    $password_input = isset($_POST['password']) ? $_POST['password'] : '';
     $remember_me = isset($_POST['remember']);
 
     if (!empty($email) && !empty($password_input)) {
@@ -66,30 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     setcookie("remember_token", $token, time() + (30 * 24 * 60 * 60), "/", "", false, true);
                 }
 
-                // Handle role-based redirection
-                switch ($row['role']) {
-                    case 'admin1':
-                        header("Location: ../admin/admin_mainpage/mainpage.php");
-                        break;
-                    case 'admin2':
-                        header("Location: ../admin/admin_mainpage/mainpage.php");
-                        break;
-                    case 'admin3':
-                        header("Location: ../admin/admin_mainpage/mainpage.php");
-                        break;
-                    case 'admin4':
-                        header("Location: ../admin/admin_mainpage/mainpage.php");
-                        break;
-                    case 'admin5':
-                        header("Location: ../admin/admin_mainpage/mainpage.php");
-                        break;
-                    case 'superadmin':
-                        header("Location: ../admin/admin_mainpage/mainpage.php");
-                        break;
-                    default:
-                        $error_message = "Unknown role. Access denied.";
-                        break;
-                }
+                header("Location: ../admin/admin_mainpage/mainpage.php");
                 exit();
             } else {
                 $error_message = "Incorrect password. Please try again.";
@@ -107,16 +87,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $conn->close();
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
-    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <title>Admin Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
@@ -128,13 +105,26 @@ $conn->close();
                     borderRadius: {
                         button: "8px",
                     },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                    }
                 },
             },
         };
+
+        // Show the loading spinner and hide the form, then submit after 4 seconds
+        function showLoading(event) {
+            event.preventDefault(); // Prevent the form from being submitted immediately
+            document.getElementById("loading-button").classList.remove("hidden");
+            document.getElementById("login-form").classList.add("hidden");
+
+            // Wait for 4 seconds and then submit the form
+            setTimeout(function() {
+                document.getElementById("login-form").submit();
+            }, 3000); // 3 seconds delay
+        }
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         body {
@@ -142,96 +132,85 @@ $conn->close();
         }
     </style>
 </head>
+<body class="h-screen w-full flex items-center justify-center bg-cover bg-center relative" style="background-image: url('../../images/background-image2.png');">
 
-<body class="h-screen flex">
-    <!-- Left Side - Login Form -->
-    <div class="flex w-full md:w-1/2 justify-center items-center bg-black relative overflow-hidden" style="background-image: url('../logo/bg.png'); background-size: cover; background-position: center;">
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    <!-- Left half: Background image + dark overlay -->
+    <div class="absolute left-0 top-0 w-1/2 h-full bg-cover bg-center z-0" style="background-image: url('../logo/bg.png');"></div>
+    <div class="absolute left-0 top-0 w-1/2 h-full bg-black bg-opacity-60  z-10"></div>
 
-        <!-- Logos Centered -->
-        <div class="absolute top-16 flex justify-center items-center space-x-6">
-            <img src="../logo/mmone.png" alt="Logo 1" class="relative h-20 max-w-sm object-contain drop-shadow-lg" />
-            <img src="../logo/noblebg.png" alt="Logo 2" class="relative h-20 max-w-sm object-contain drop-shadow-lg" />
+    <!-- Left half: Logos (vertical center) -->
+    <div class="absolute left-0 top-0 w-1/2 h-full flex flex-col items-center justify-center space-y-8 z-20">
+        <img src="../logo/mmone.png" alt="Logo 1" class="h-24 object-contain drop-shadow-xl" />
+        <img src="../logo/noblebg.png" alt="Logo 2" class="h-24 object-contain drop-shadow-xl" />
+    </div>
+
+    <!-- Right half: Login Form -->
+    <div class="relative z-30 w-full max-w-sm ml-[700px] mr-12 bg-white bg-opacity-80 rounded-xl p-8 ">
+
+        <h2 class="text-2xl font-bold text-center text-blue-900 mb-6">Admin Panel</h2>
+
+        <!-- Error Message -->
+        <?php if (!empty($error_message)): ?>
+            <div class="mb-4 text-red-600 text-sm text-center font-semibold">
+                <?php echo htmlspecialchars($error_message); ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Loading Button -->
+        <div id="loading-button" class="hidden text-center">
+            <button type="button" class="bg-indigo-500 text-white w-full py-3 rounded-button font-medium flex items-center justify-center" disabled>
+                <svg class="mr-3 animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0l4 4-4 4V4a4 4 0 00-4 4 4 4 0 004 4v4a8 8 0 01-8-8z"></path>
+                </svg>
+                Processing…
+            </button>
         </div>
 
         <!-- Login Form -->
-        <div class="relative w-auto max-w-sm p-5 rounded-xl bg-gray-200/90 backdrop-blur-md shadow-lg">
-            <!-- Error Message -->
-            <?php if (!empty($error_message)): ?>
-                <div class="mb-4 text-red-600 text-sm text-center font-semibold">
-                    <?php echo htmlspecialchars($error_message); ?>
-                </div>
-            <?php endif; ?>
-
-            <!-- Form -->
-            <form method="POST" action="">
-                <div class="mb-6">
-                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none w-10 h-full justify-center">
-                            <i class="ri-mail-line text-gray-400"></i>
-                        </div>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-gray-900"
-                            placeholder="Enter your email"
-                            required />
+        <form id="login-form" method="POST" action="" onsubmit="showLoading(event)">
+            <div class="mb-5">
+                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                        <i class="ri-mail-line"></i>
                     </div>
+                    <input
+                        type="email"
+                        name="email"  
+                        id="email"
+                        required
+                        placeholder="Enter your email"
+                        class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary text-gray-900" />
                 </div>
+            </div>
 
-                <div class="mb-6">
-                    <div class="flex items-center justify-between mb-1">
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <div class="mb-5">
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                        <i class="ri-lock-line"></i>
                     </div>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none w-10 h-full justify-center">
-                            <i class="ri-lock-line text-gray-400"></i>
-                        </div>
-                        <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-gray-900"
-                            placeholder="••••••••"
-                            required />
-                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center w-10 h-full justify-center toggle-password">
-                            <i class="ri-eye-off-line text-gray-400" id="togglePassword"></i>
-                        </div>
-                    </div>
+                    <input
+                        type="password"
+                        name="password"  
+                        required
+                        placeholder="••••••••"
+                        class="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary text-gray-900" />
                 </div>
+            </div>
 
-                <button
-                    type="submit"
-                    class="w-full bg-primary text-white py-3 rounded-button font-medium hover:bg-primary/90 transition-colors whitespace-nowrap">
-                    Sign in
-                </button>
-                <input type="checkbox" name="remember" id="remember">
-<label for="remember">Remember me</label>
+            <div class="mb-5 flex items-center space-x-2">
+                <input type="checkbox" id="remember" name="remember" class="accent-primary">
+                <label for="remember" class="text-sm text-gray-700">Remember me</label>
+            </div>
 
-            </form>
-        </div>
+            <button
+                type="submit"
+                class="w-full bg-primary hover:bg-secondary text-white py-3 rounded-button font-medium transition duration-200">
+                Sign in
+            </button>
+        </form>
     </div>
-
-
-    <!-- Right Side - Title Section -->
-    <div class="flex w-1/2 items-center justify-center bg-gray-700 relative overflow-hidden" id="bg-slide-container">
-        <!-- Overlay -->
-        <div class="absolute inset-0 bg-gray-900 bg-opacity-40"></div>
-
-        <!-- Slide Content -->
-        <div id="slide-container" class="relative text-center px-10 transition-opacity duration-1000">
-            <h1 class="text-white text-5xl font-bold mb-4" id="title-text"></h1>
-            <p class="text-white text-lg" id="subtitle-text"></p>
-        </div>
-
-    </div>
-
-   <script src="../js/indexofloginpage.js"></script>
-      
-    
 </body>
-
 </html>

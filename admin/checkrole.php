@@ -24,13 +24,13 @@
                     header("Location: ../admin_mainpage/mainpage.php");
                     break;
                 case 'admin4':
-                    header("Location: ../admin4/dashboard.php");
+                    header("Location: ../admin_mainpage/mainpage.php");
                     break;
                 case 'admin3':
-                    header("Location: ../admin3/dashboard.php");
+                    header("Location: ../admin_mainpage/mainpage.php");
                     break;
                 case 'admin2':
-                    header("Location: ../admin2/dashboard.php");
+                    header("Location: ../admin_mainpage/mainpage.php");
                     break;
                 case 'admin1':
                     header("Location: ../admin_mainpage/mainpage.php");

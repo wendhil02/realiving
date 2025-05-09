@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 include '../checkrole.php';
 
@@ -8,6 +9,7 @@ if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     header("Location: ../../loginpage/index.php");
     exit();
 }
+
 
 include '../design/mainbody.php';
 include '../../connection/connection.php';

@@ -238,12 +238,12 @@ if ($action === 'delete' && $id) {
                     }
 
                     if (!empty($imagePath)) {
-                        $stmt = $conn->prepare("UPDATE products SET 
+                        $stmt = $conn->prepare("UPDATE productsrealiving SET 
                             name=?, description=?, size=?, price=?, supplier=?, contact=?, serial_number=?, image=? 
                             WHERE id=?");
                         $stmt->bind_param("sssdssssi", $name, $desc, $size, $price, $supplier, $contact, $serial, $imagePath, $id);
                     } else {
-                        $stmt = $conn->prepare("UPDATE products SET 
+                        $stmt = $conn->prepare("UPDATE productsrealiving SET 
                             name=?, description=?, size=?, price=?, supplier=?, contact=?, serial_number=? 
                             WHERE id=?");
                         $stmt->bind_param("sssdsssi", $name, $desc, $size, $price, $supplier, $contact, $serial, $id);

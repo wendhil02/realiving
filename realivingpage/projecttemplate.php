@@ -1,103 +1,129 @@
 <?php
 include '../connection/connection.php';
+include 'htmldesign/mainhead.php';
+include 'htmldesign/top.php';
 
-if (isset($_GET['id'])) {
-    $project_id = $_GET['id'];
-
-    $sql = "SELECT * FROM project WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $project_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        $project = $result->fetch_assoc();
-    } else {
-        echo "<p>Project not found.</p>";
-        exit;
-    }
-
-    $other_projects_sql = "SELECT * FROM project WHERE id != ? ORDER BY RAND() LIMIT 4";
-    $other_projects_stmt = $conn->prepare($other_projects_sql);
-    $other_projects_stmt->bind_param("i", $project_id);
-    $other_projects_stmt->execute();
-    $other_projects_result = $other_projects_stmt->get_result();
-
-    $other_projects = [];
-    while ($row = $other_projects_result->fetch_assoc()) {
-        $other_projects[] = $row;
-    }
-
-    $stmt->close();
-    $other_projects_stmt->close();
-} else {
-    echo "<p>No project selected.</p>";
-    exit;
+// Fetch all projects first
+$projects = [];
+$result = mysqli_query($conn, "SELECT * FROM projects ORDER BY created_at DESC");
+while ($row = mysqli_fetch_assoc($result)) {
+  $projects[] = $row;
 }
-
-include "header.php";
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($project['title']); ?> - Project Details</title>
-    <link rel="stylesheet" href="./css/project-template.css?v=1.0" />
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-white text-gray-800">
+  <meta charset="UTF-8">
+  <title>All Projects</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 
-<!-- Hero Banner -->
-<section class="h-72 bg-cover bg-center flex items-center justify-center" style="background-image: url('<?php echo htmlspecialchars($project['main_image']); ?>');">
-    <h1 class="text-white text-4xl font-bold bg-black bg-opacity-50 px-6 py-3 rounded">
-        <?php echo htmlspecialchars($project['title']); ?>
-    </h1>
-</section>
+  <script>
+    AOS.init();
 
-<!-- Project Info -->
-<section class="max-w-5xl mx-auto p-6">
-    <p class="text-gray-700 text-lg mb-4"><?php echo nl2br(htmlspecialchars($project['description'])); ?></p>
-    <p class="text-gray-500 mb-8 italic"><?php echo nl2br(htmlspecialchars($project['address'])); ?></p>
+    let currentMainProject = {};
 
-    <!-- Additional Images -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-10">
-        <?php foreach (['image1', 'image2', 'image3'] as $imgField): ?>
-            <?php if (!empty($project[$imgField])): ?>
-                <img src="<?php echo htmlspecialchars($project[$imgField]); ?>" alt="Project Image" class="w-full h-60 object-cover rounded shadow">
-            <?php endif; ?>
-        <?php endforeach; ?>
-    </div>
-</section>
+    function showProject(title, description, image, projectIndex) {
+      const mainTitle = document.getElementById('mainTitle');
+      const mainDesc = document.getElementById('mainDesc');
+      const mainImg = document.getElementById('mainImg');
 
-<!-- Related Projects -->
-<section class="bg-gray-100 py-12 px-4 md:px-16">
-    <h2 class="text-2xl font-semibold text-center mb-10">Related Projects</h2>
-    <?php if (!empty($other_projects)): ?>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            <?php foreach ($other_projects as $related): ?>
-                <div class="bg-white rounded shadow p-4 flex flex-col justify-between hover:shadow-lg transition">
-                    
-                    <!-- Image Wrapper -->
-                    <div class="w-full h-48 overflow-hidden rounded mb-4 bg-gray-200 flex items-center justify-center">
-                        <img src="<?php echo htmlspecialchars($related['main_image']); ?>" alt="Related Project" class="object-cover h-full w-full transition duration-300 hover:scale-105">
-                    </div>
+      const oldTitle = mainTitle.innerText;
+      const oldDescription = mainDesc.innerText;
+      const oldImage = mainImg.src.split("/").pop();
 
-                    <div>
-                        <h3 class="text-lg font-bold"><?php echo htmlspecialchars($related['title']); ?></h3>
-                        <p class="text-sm text-gray-600 mt-2"><?php echo htmlspecialchars(substr($related['description'], 0, 100)) . '...'; ?></p>
-                    </div>
-                    <a href="project-template.php?id=<?php echo $related['id']; ?>" class="mt-4 inline-block bg-blue-600 text-white text-sm font-semibold px-4 py-2 rounded hover:bg-blue-700 transition">
-                        View More
-                    </a>
-                </div>
-            <?php endforeach; ?>
+      mainTitle.innerText = title;
+      mainDesc.innerText = description;
+      mainImg.src = "../uploads/" + image;
+
+      currentMainProject = { title: oldTitle, description: oldDescription, image: oldImage, projectIndex: projectIndex };
+
+      const relatedProjectGrid = document.getElementById('relatedProjects');
+      const clickedProject = document.getElementById('project' + projectIndex);
+      const oldMainProjectInGrid = document.createElement('div');
+      oldMainProjectInGrid.classList.add('cursor-pointer', 'bg-white', 'rounded-xl', 'shadow-lg', 'hover:shadow-2xl', 'transition-all', 'transform', 'hover:scale-105', 'duration-300');
+      oldMainProjectInGrid.setAttribute('id', 'project' + currentMainProject.projectIndex);
+      oldMainProjectInGrid.setAttribute('onclick', `showProject('${currentMainProject.title}', '${currentMainProject.description}', '${currentMainProject.image}', ${currentMainProject.projectIndex})`);
+
+      oldMainProjectInGrid.innerHTML = `
+        <img src="../uploads/${currentMainProject.image}" class="w-full h-56 object-cover rounded-t-xl">
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-800">${currentMainProject.title}</h3>
+          <div class="mt-4 text-sm text-gray-500">${currentMainProject.description}</div>
         </div>
-    <?php else: ?>
-        <p class="text-center text-gray-500">No related projects found.</p>
-    <?php endif; ?>
-</section>
+      `;
+
+      relatedProjectGrid.replaceChild(oldMainProjectInGrid, clickedProject);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      <?php if (count($projects) > 0): ?>
+        showProject('<?php echo addslashes($projects[0]['title']); ?>', '<?php echo addslashes($projects[0]['description']); ?>', '<?php echo $projects[0]['image']; ?>', 0);
+      <?php endif; ?>
+    });
+  </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <div class="max-w-7xl mx-auto mt-16 px-4 sm:px-6 lg:px-8">
+
+    <!-- Project Overview Section -->
+    <section class="mb-16 text-center">
+      <h2 class="text-3xl font-semibold text-gray-900 mb-6">Project Overview</h2>
+      <p class="text-lg text-gray-600">Discover our range of projects, showcasing creativity, innovation, and excellence in every detail.</p>
+    </section>
+
+    <!-- Main Project Details Section -->
+    <div class="mb-16 text-center mt-[40px]" data-aos="fade-up">
+      <h1 id="mainTitle" class="text-4xl font-extrabold text-gray-900 mb-6">
+        <?php echo count($projects) > 0 ? htmlspecialchars($projects[0]['title']) : 'No projects available'; ?>
+      </h1>
+      <?php if (count($projects) > 0): ?>
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-8 px-4">
+          <img id="mainImg" src="../uploads/<?php echo $projects[0]['image']; ?>" class="w-full lg:w-1/2 max-h-96 object-contain rounded-lg shadow-xl mx-auto" alt="Project Image">
+          <div class="lg:w-1/2 text-center lg:text-left">
+            <p id="mainDesc" class="mt-6 text-xl text-gray-600"><?php echo htmlspecialchars($projects[0]['description']); ?></p>
+          </div>
+        </div>
+      <?php else: ?>
+        <div class="text-gray-500 text-lg">There are no projects to display at the moment.</div>
+      <?php endif; ?>
+    </div>
+
+    <!-- Related Projects Section -->
+    <section data-aos="fade-up">
+      <h2 class="text-3xl font-semibold text-gray-900 mb-8">Related Projects</h2>
+      <div id="relatedProjects" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <?php for ($i = 1; $i < count($projects); $i++): ?>
+          <div id="project<?php echo $i; ?>"
+               onclick='showProject(
+                 <?php echo json_encode($projects[$i]["title"]); ?>,
+                 <?php echo json_encode($projects[$i]["description"]); ?>,
+                 <?php echo json_encode($projects[$i]["image"]); ?>,
+                 <?php echo $i; ?>
+               )'
+               class="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all transform hover:scale-105 duration-300"
+               data-aos="fade-up" data-aos-duration="1000"
+          >
+            <img src="../uploads/<?php echo htmlspecialchars($projects[$i]['image']); ?>" class="w-full h-56 object-cover rounded-t-xl" alt="Project Image">
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-800"><?php echo htmlspecialchars($projects[$i]['title']); ?></h3>
+            </div>
+          </div>
+        <?php endfor; ?>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="text-center py-6 bg-gray-800 text-gray-400 text-sm mt-16">
+    © 2025 Realiving Design Center. All rights reserved.
+  </div>
 
 </body>
 </html>
+

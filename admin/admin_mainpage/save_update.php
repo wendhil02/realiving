@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $statusStmt->close();
             }
 
-            $_SESSION['success'] = "Step added successfully!";
+            $_SESSION['success'] = "Successfully!";
         } else {
             $_SESSION['error'] = "Error inserting step update: " . $stmt->error;
         }
