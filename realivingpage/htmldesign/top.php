@@ -26,14 +26,22 @@
                                overflow-y-auto md:overflow-visible max-h-[calc(100vh-4rem)] md:max-h-none
                                font-medium z-40">
 
-        
+                                 <a href="mainpage.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
+                                   w-full md:w-auto py-3 md:py-2 px-3 nav-link">Our World</a>
+
+
         <!-- Projects Dropdown - Improved mobile handling -->
         <div class="relative group/projects w-full md:w-auto">
+
+
           <button id="projectsToggle" class="w-full md:w-auto text-left md:text-center flex justify-between md:justify-center 
                                             items-center text-gray-900 hover:text-yellow-500 transition duration-200 
                                             py-3 md:py-2 px-3 nav-link">
+
+
             Projects <span class="ml-1 text-xs transition-transform duration-200" id="projectsArrow">▾</span>
           </button>
+
           <div id="projectsDropdown" class="hidden bg-gray-50 md:bg-white md:absolute static md:top-full md:left-0 mt-0 md:mt-1 
                                            w-full md:w-72 md:shadow-xl md:rounded-lg z-50 md:p-2 md:border md:border-gray-100">
             <a href="allofproject.php" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
@@ -43,7 +51,8 @@
             <a href="#" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
                               hover:text-yellow-500 md:rounded-md text-sm transition duration-200">Commercial Projects</a>
           </div>
-        </div>                      
+        </div>
+      
         <a href="about.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
                                    w-full md:w-auto py-3 md:py-2 px-3 nav-link">About</a>
         <a href="services.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
@@ -77,6 +86,7 @@
       </nav>
     </div>
   </div>
+  
 </header>
 
 <!-- Add padding to prevent content from being hidden under fixed navbar -->

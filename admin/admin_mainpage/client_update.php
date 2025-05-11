@@ -3,7 +3,7 @@
 session_start();
 include '../checkrole.php';
 
-require_role(['admin1','superadmin']);
+require_role(['admin1', 'superadmin']);
 
 if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     header("Location: ../../loginpage/index.php");
@@ -140,10 +140,10 @@ function getStepUpdateDetails($conn, $clientId, $step)
                                         <?php endif; ?>
                                     </div>
                                     <div>
-                                    <?= $hasTime
-    ? '<i class="fas fa-check text-green-500 text-lg"></i>'
-    : '<i class="far fa-square text-gray-400 text-lg"></i>'
-?>
+                                        <?= $hasTime
+                                            ? '<i class="fas fa-check text-green-500 text-lg"></i>'
+                                            : '<i class="far fa-square text-gray-400 text-lg"></i>'
+                                        ?>
 
                                     </div>
                                 </div>
@@ -155,6 +155,13 @@ function getStepUpdateDetails($conn, $clientId, $step)
                             <button id="openUpdateModal" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm">
                                 Update
                             </button>
+                            <div class="mb-4 text-right">
+                                <a href="export_step_updates.php?id=<?= $id ?>"
+                                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
+                                    Download as Spreadsheet
+                                </a>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -236,58 +243,58 @@ function getStepUpdateDetails($conn, $clientId, $step)
         </script>
 
         <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
-    <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm mx-auto">
-        <h2 class="text-lg font-semibold text-center text-gray-800 mb-4">Update Client Status</h2>
+            <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm mx-auto">
+                <h2 class="text-lg font-semibold text-center text-gray-800 mb-4">Update Client Status</h2>
 
-        <!-- ✅ Single form for everything -->
-        <form id="updateForm" action="save_update.php" method="POST" class="space-y-4">
+                <!-- ✅ Single form for everything -->
+                <form id="updateForm" action="save_update.php" method="POST" class="space-y-4">
 
-            <!-- Hidden client_id -->
-            <input type="hidden" name="client_id" value="<?= $id ?>">
+                    <!-- Hidden client_id -->
+                    <input type="hidden" name="client_id" value="<?= $id ?>">
 
-            <div>
-                <label class="block text-sm text-gray-700 mb-1">Select Step:</label>
-                <select name="step" id="stepSelect" class="w-full border rounded p-2">
-                    <?php foreach ($steps as $step => $label): ?>
-                        <option value="<?= $step ?>"><?= $label ?></option>
-                    <?php endforeach; ?>
-                </select>
+                    <div>
+                        <label class="block text-sm text-gray-700 mb-1">Select Step:</label>
+                        <select name="step" id="stepSelect" class="w-full border rounded p-2">
+                            <?php foreach ($steps as $step => $label): ?>
+                                <option value="<?= $step ?>"><?= $label ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm">Update Date:</label>
+                        <input type="date" name="update_date" class="w-full p-2 border rounded" required />
+
+                        <label class="block text-sm mt-2">Update Time:</label>
+                        <input type="time" name="update_time" class="w-full p-2 border rounded" required />
+
+                        <div id="endDateContainer" class="hidden mt-2">
+                            <label class="block text-sm">End Date:</label>
+                            <input type="date" name="end_date" class="w-full p-2 border rounded" />
+                        </div>
+
+                        <div id="descriptionContainer" class="hidden mt-2">
+                            <label class="block text-sm">Description:</label>
+                            <textarea name="description" rows="3" class="w-full p-2 border rounded"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Modal Action Buttons -->
+                    <div id="normalButtons" class="flex justify-between items-center mt-6">
+                        <button type="button" id="saveButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">Save</button>
+                        <button type="button" id="closeUpdateModal" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm">Cancel</button>
+                    </div>
+
+                    <div id="confirmButtons" class="hidden flex justify-between items-center mt-6">
+                        <p class="text-sm text-gray-700">Are you sure you want to save this update?</p>
+                        <div class="flex gap-2">
+                            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm">Yes</button>
+                            <button type="button" id="confirmNo" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm">No</button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <div>
-                <label class="block text-sm">Update Date:</label>
-                <input type="date" name="update_date" class="w-full p-2 border rounded" required />
-
-                <label class="block text-sm mt-2">Update Time:</label>
-                <input type="time" name="update_time" class="w-full p-2 border rounded" required />
-
-                <div id="endDateContainer" class="hidden mt-2">
-                    <label class="block text-sm">End Date:</label>
-                    <input type="date" name="end_date" class="w-full p-2 border rounded" />
-                </div>
-
-                <div id="descriptionContainer" class="hidden mt-2">
-                    <label class="block text-sm">Description:</label>
-                    <textarea name="description" rows="3" class="w-full p-2 border rounded"></textarea>
-                </div>
-            </div>
-
-            <!-- Modal Action Buttons -->
-            <div id="normalButtons" class="flex justify-between items-center mt-6">
-                <button type="button" id="saveButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">Save</button>
-                <button type="button" id="closeUpdateModal" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm">Cancel</button>
-            </div>
-
-            <div id="confirmButtons" class="hidden flex justify-between items-center mt-6">
-                <p class="text-sm text-gray-700">Are you sure you want to save this update?</p>
-                <div class="flex gap-2">
-                    <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm">Yes</button>
-                    <button type="button" id="confirmNo" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm">No</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
 
         <script src="../../js/clientupdate.js"></script>

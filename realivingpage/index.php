@@ -144,7 +144,7 @@
     <div class="flex flex-col sm:flex-row justify-center gap-6 mt-12 opacity-0 animate-fadeInDelay2">
       <a href="mainpage.php" class="px-10 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/30 group">
         <span class="flex items-center justify-center">
-          <span>Home Page</span>
+          <span>Explore</span>
           <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
           </svg>
@@ -160,17 +160,33 @@
       </a>
     </div>
   </div>
-  
-  <!-- Improved Scroll Down Indicator -->
-  <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-30 cursor-pointer scroll-indicator">
-    <div class="flex flex-col items-center">
-      <span class="text-white/80 text-sm mb-2 tracking-wider">EXPLORE</span>
-      <div class="w-8 h-12 border-2 border-white/30 rounded-full flex justify-center pt-2">
-        <div class="w-1 h-3 bg-white rounded-full animate-scrollBounce"></div>
-      </div>
-    </div>
-  </div>
+
 </section>
+
+<script>
+  document.querySelector('a[href="mainpage.php"]').addEventListener('click', function (e) {
+    e.preventDefault();
+    const button = this;
+
+    // Change button text to "Loading..." or add spinner
+    button.innerHTML = `<span class="flex items-center justify-center">
+      <svg class="w-5 h-5 mr-2 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+      </svg>
+      <span>Loading...</span>
+    </span>`;
+
+    // Optional: disable the button to prevent repeated clicks
+    button.classList.add('pointer-events-none', 'opacity-70');
+
+    // After 2 seconds, redirect
+    setTimeout(() => {
+      window.location.href = 'mainpage.php';
+    }, 2000);
+  });
+</script>
+ 
 
 <!-- JavaScript for Enhanced Functionality -->
 <script>

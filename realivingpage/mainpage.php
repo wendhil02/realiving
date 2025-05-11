@@ -6,32 +6,46 @@ include 'htmldesign/top.php';
 ?>
 
 <style>
-
   /* Add animation for decorative elements */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-  100% { transform: translateY(0px); }
-}
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
 
-.animate-pulse {
-  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
+    50% {
+      transform: translateY(-2px);
+    }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.5; }
-}
+    100% {
+      transform: translateY(0px);
+    }
+  }
 
-/* Custom styling for details/summary */
-details summary::-webkit-details-marker {
-  display: none;
-}
+  .animate-pulse {
+    animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
 
-/* Group variant for details open state */
-.group-open\:rotate-180[open] .transform {
-  transform: rotate(180deg);
-}
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 0.3;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+
+  /* Custom styling for details/summary */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* Group variant for details open state */
+  .group-open\:rotate-180[open] .transform {
+    transform: rotate(180deg);
+  }
 
   @keyframes slide {
     0% {
@@ -50,12 +64,10 @@ details summary::-webkit-details-marker {
     }
 
     100% {
-      width: 31%;
+      width: 56%;
     }
 
   }
-
-
 
   .typing-animation {
     display: inline-block;
@@ -90,36 +102,25 @@ details summary::-webkit-details-marker {
 
 <body class="text-gray-800 leading-relaxed">
   <!-- Hero Section -->
-<section class="relative w-full h-screen overflow-hidden font-sans">
-  <!-- Slideshow Wrapper -->
-  <div class="absolute inset-0 z-0">
-    <!-- Overlay Gradient (top to bottom) -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/70 z-10"></div>
+ <section class="relative w-full h-[70vh] overflow-hidden font-sans">
+  <!-- Background Video -->
+  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+    <source src="../videos/realiving.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 
-    <!-- Slides -->
-    <div class="absolute inset-0 w-full h-full opacity-100 transition-opacity duration-1000 hero-slide">
-      <img src="./images/background-image.jpg" class="w-full h-full object-cover" alt="Slide 1">
-    </div>
-    <div class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-1000 hero-slide">
-      <img src="./images/background-image2.jpg" class="w-full h-full object-cover" alt="Slide 2">
-    </div>
-    <div class="absolute inset-0 w-full h-full opacity-0 transition-opacity duration-1000 hero-slide">
-      <img src="./images/background-image3.jpg" class="w-full h-full object-cover" alt="Slide 3">
-    </div>
-  </div>
+  <!-- Solid Dark Overlay -->
+  <div class="absolute inset-0 bg-black/60 z-10"></div>
 
   <!-- Hero Content -->
-  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 md:px-8">
+  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 md:px-8 mt-[-40px]">
     <!-- Logo -->
-    <img src="../logo/mmone.png" alt="Company Logo" class="w-52 md:w-64 lg:w-72 mb-6 md:mb-10 mx-auto transform transition-transform duration-300 hover:scale-105">
+    <div class="w-[1600px] bg-black/50 backdrop-blur-sm py-6 rounded-none shadow-lg mb-6 md:mb-10">
+      <img src="../logo/mmone.png" alt="Company Logo" class="w-52 md:w-64 lg:w-72 mx-auto transform transition-transform duration-300 hover:scale-105">
+    </div>
 
-    <!-- Headline -->
-    <h1 class="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-wide leading-tight mb-4">
-      Welcome to Realiving Design Center
-    </h1>
-
-    <!-- Typing or Subtitle -->
-    <p class="text-gray-200 text-lg md:text-xl font-medium mb-6 typing-animation">
+    <!-- Subtitle -->
+    <p class="text-gray-100 text-lg md:text-xl font-medium mb-6 typing-animation">
       Your Partner in Elegant & Functional Interior Solutions
     </p>
 
@@ -131,7 +132,8 @@ details summary::-webkit-details-marker {
 </section>
 
 
-  <section class="py-16 bg-gray-100" data-aos="fade-up">
+
+  <section class=" py-16 bg-gray-100" data-aos="fade-up">
     <div class="max-w-7xl mx-auto px-4 text-center">
       <h2 class="text-3xl font-bold text-sky-600 mb-4">Accomplished Projects</h2>
       <hr class="w-24 border-b-4 border-sky-600 mx-auto mb-10">
@@ -168,118 +170,95 @@ details summary::-webkit-details-marker {
   </section>
 
 
- <section class="relative py-24 md:py-32 px-6 md:px-20 overflow-hidden" data-aos="fade-up">
-  <!-- Enhanced Decorative Elements -->
-  <div class="absolute top-0 left-0 w-64 h-64 bg-gradient-to-br from-sky-100 to-blue-200 rounded-full opacity-30 blur-2xl -z-10 animate-pulse"></div>
-  <div class="absolute bottom-0 right-0 w-80 h-80 bg-gradient-to-tl from-yellow-100 to-blue-200 rounded-full opacity-30 blur-3xl -z-10"></div>
-  <div class="absolute top-1/3 right-1/4 w-40 h-40 bg-yellow-100 rounded-full opacity-20 blur-xl -z-10"></div>
+
+<section class="relative py-28 px-6 md:px-24 overflow-hidden bg-gradient-to-br from-white via-sky-50 to-blue-50" data-aos="fade-up">
   
-  <div class="max-w-5xl mx-auto">
-    <div class="bg-white bg-opacity-90 backdrop-blur-lg p-8 md:p-12 rounded-3xl shadow-xl border border-slate-200 transform transition duration-500 hover:shadow-2xl">
-      
-      <!-- Section Header with Decorative Line -->
-      <div class="flex flex-col items-center mb-10">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-sky-700 to-blue-600 mb-4 tracking-tight">
-          Who We Are
+  <div class="max-w-6xl mx-auto">
+    <!-- Card Container -->
+    <div class="bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl p-10 md:p-14 border border-sky-100 shadow-xl hover:shadow-2xl transition duration-500">
+
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-sky-600 to-sky-400 tracking-tight">
+          <i class="fas fa-users mr-2"></i> Who We Are
         </h2>
-        <div class="h-1 w-24 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full"></div>
+        <div class="h-1 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full mt-4"></div>
       </div>
-      
-      <!-- Custom Styled Accordion -->
-      <div class="accordion-container">
-        <div class="text-left">
-          <!-- Company Description with Enhanced Styling -->
-          <div class="relative mb-10 md:flex items-start">
-            <div class="hidden md:block absolute -left-3 top-0 h-full w-1 bg-gradient-to-b from-sky-400 to-blue-600 rounded-full"></div>
-            <div class="md:pl-8">
-              <p class="text-gray-700 text-lg md:text-xl leading-relaxed mb-6">
-                <span class="font-semibold text-yellow-600 text-xl md:text-2xl">Realiving Design Center Corp.</span> is a leading architectural fit-out company specializing in design, manufacturing, and installation of premium modular cabinets. We are driven by a passion for creating beautifully functional spaces that enhance the lives of our clients.
-              </p>
-              <p class="text-gray-700 text-lg md:text-xl leading-relaxed">
-                Realiving was duly incorporated under the trade name <span class="font-semibold text-sky-600 text-xl md:text-2xl">Brava Homes</span> situated at Warehouse 5, Sunhope Compound, Purok 7, Brgy. Calasag, San Ildefonso, Bulacan. It primarily engages in wholesale and retail of competitively priced, high-quality construction, plumbing, and decorative materials.
-              </p>
+
+      <!-- Company Description -->
+      <div class="relative mb-10 pl-4 border-l-4 border-blue-500">
+        <p class="text-gray-800 text-lg md:text-xl mb-4">
+          <span class="font-bold text-yellow-600 text-xl">Realiving Design Center Corp.</span> is a leading architectural fit-out company specializing in design, manufacturing, and installation of premium modular cabinets. We are passionate about creating beautifully functional spaces that elevate the lives of our clients.
+        </p>
+        <p class="text-gray-800 text-lg md:text-xl">
+          Operating under the trade name <span class="font-bold text-sky-600 text-xl">Brava Homes</span>, Realiving is located at Warehouse 5, Sunhope Compound, Purok 7, Brgy. Calasag, San Ildefonso, Bulacan. The company also engages in the wholesale and retail of quality construction, plumbing, and decorative materials.
+        </p>
+      </div>
+
+      <!-- Accordion Section -->
+      <div class="space-y-6">
+        <!-- Mission & Vision -->
+        <details class="group rounded-xl border border-blue-100 overflow-hidden bg-white bg-opacity-60 transition-all duration-300">
+          <summary class="cursor-pointer p-6 flex justify-between items-center text-sky-700 font-semibold text-xl">
+            <span><i class="fas fa-eye mr-2"></i> Our Mission & Vision</span>
+            <svg class="h-6 w-6 transform group-open:rotate-180 transition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="p-6 pt-0 space-y-6">
+            <div class="flex items-start">
+              <div class="mt-1 mr-4 text-yellow-500">
+                <i class="fas fa-lightbulb text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sky-800 text-lg">Our Vision</h4>
+                <p class="text-gray-700 mt-1">To be the premier design-build company known for creating inspiring living and working spaces.</p>
+              </div>
+            </div>
+            <div class="flex items-start">
+              <div class="mt-1 mr-4 text-sky-500">
+                <i class="fas fa-bullseye text-xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-sky-800 text-lg">Our Mission</h4>
+                <p class="text-gray-700 mt-1">To deliver innovative, high-quality architectural solutions through craftsmanship and collaboration.</p>
+              </div>
             </div>
           </div>
-          
-          <!-- Interactive Elements -->
-          <details class="group bg-sky-50 bg-opacity-50 rounded-xl overflow-hidden border border-blue-100 transition-all duration-300">
-            <summary class="cursor-pointer p-6 flex items-center justify-between text-sky-700 font-semibold text-xl">
-              <span>Our Mission & Vision</span>
-              <span class="transform group-open:rotate-180 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </summary>
-            <div class="p-6 pt-0 bg-white bg-opacity-50">
-              <div class="space-y-4">
-                <div class="flex items-start">
-                  <div class="flex-shrink-0 mt-1">
-                    <span class="flex items-center justify-center h-8 w-8 rounded-full bg-yellow-100 text-yellow-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
-                        <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </div>
-                  <div class="ml-4">
-                    <h4 class="text-lg font-semibold text-sky-800">Our Vision</h4>
-                    <p class="mt-2 text-gray-700">To be the premier design-build company recognized for creating exceptional living and working environments that inspire and elevate the human experience.</p>
-                  </div>
-                </div>
-                <div class="flex items-start">
-                  <div class="flex-shrink-0 mt-1">
-                    <span class="flex items-center justify-center h-8 w-8 rounded-full bg-sky-100 text-sky-600">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M7 2a1 1 0 00-.707 1.707L7 4.414v3.758a1 1 0 01-.293.707l-4 4C.817 14.769 2.156 18 4.828 18h10.343c2.673 0 4.012-3.231 2.122-5.121l-4-4A1 1 0 0113 8.172V4.414l.707-.707A1 1 0 0013 2H7zm2 6.172V4h2v4.172a3 3 0 00.879 2.12l1.168 1.168a4 4 0 00-2.278.93l-.869.87a4 4 0 00-2.278-.93l1.168-1.168A3 3 0 009 8.172z" clip-rule="evenodd" />
-                      </svg>
-                    </span>
-                  </div>
-                  <div class="ml-4">
-                    <h4 class="text-lg font-semibold text-sky-800">Our Mission</h4>
-                    <p class="mt-2 text-gray-700">To deliver innovative, high-quality architectural solutions through collaborative partnerships with our clients, focusing on craftsmanship, sustainability, and exceptional service at every step.</p>
-                  </div>
-                </div>
-              </div>
+        </details>
+
+        <!-- Core Values -->
+        <details class="group rounded-xl border border-yellow-100 overflow-hidden bg-white bg-opacity-60 transition-all duration-300">
+          <summary class="cursor-pointer p-6 flex justify-between items-center text-yellow-700 font-semibold text-xl">
+            <span><i class="fas fa-star mr-2"></i> Our Core Values</span>
+            <svg class="h-6 w-6 transform group-open:rotate-180 transition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </summary>
+          <div class="p-6 pt-0 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
+              <h4 class="font-semibold text-yellow-600 mb-1">Excellence</h4>
+              <p class="text-gray-700">We strive for outstanding results in every project we undertake.</p>
             </div>
-          </details>
-          
-          <details class="group mt-4 bg-yellow-50 bg-opacity-50 rounded-xl overflow-hidden border border-yellow-100 transition-all duration-300">
-            <summary class="cursor-pointer p-6 flex items-center justify-between text-yellow-700 font-semibold text-xl">
-              <span>Our Core Values</span>
-              <span class="transform group-open:rotate-180 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </summary>
-            <div class="p-6 pt-0 bg-white bg-opacity-50">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                  <h4 class="font-semibold text-yellow-600 mb-2">Excellence</h4>
-                  <p class="text-gray-700">We strive for excellence in everything we do, from design concept to final installation.</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                  <h4 class="font-semibold text-sky-600 mb-2">Integrity</h4>
-                  <p class="text-gray-700">We conduct our business with the highest level of honesty, transparency and ethical standards.</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                  <h4 class="font-semibold text-yellow-600 mb-2">Innovation</h4>
-                  <p class="text-gray-700">We continuously seek innovative solutions that push boundaries and exceed expectations.</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-sm border border-gray-100">
-                  <h4 class="font-semibold text-sky-600 mb-2">Client-Centric</h4>
-                  <p class="text-gray-700">We prioritize our clients' needs and satisfaction throughout the entire process.</p>
-                </div>
-              </div>
+            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
+              <h4 class="font-semibold text-sky-600 mb-1">Integrity</h4>
+              <p class="text-gray-700">We operate with honesty, transparency, and strong ethical values.</p>
             </div>
-          </details>
-        </div>
+            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
+              <h4 class="font-semibold text-yellow-600 mb-1">Innovation</h4>
+              <p class="text-gray-700">We embrace change and pioneer creative solutions.</p>
+            </div>
+            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
+              <h4 class="font-semibold text-sky-600 mb-1">Client-Centric</h4>
+              <p class="text-gray-700">We value our clients and put their needs at the heart of our process.</p>
+            </div>
+          </div>
+        </details>
       </div>
-      
+
       <!-- Call to Action -->
-      <div class="mt-12 text-center">
-        <a href="about.php" class="inline-block px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-700 text-white font-semibold rounded-full shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
+      <div class="text-center mt-12">
+        <a href="about.php" class="inline-block px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-700 text-white font-semibold rounded-full shadow-md hover:scale-105 hover:shadow-xl transition">
           Learn More About Us
         </a>
       </div>
@@ -287,165 +266,296 @@ details summary::-webkit-details-marker {
   </div>
 </section>
 
+<section class="w-full min-h-[65vh] flex flex-col md:flex-row items-center justify-center font-sans bg-black" data-aos="fade-up">
+  <!-- Left Side: Video with Overlay -->
+  <div class="w-full md:w-1/2 h-[300px] md:h-[65vh] relative group">
+    <video autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover brightness-75 group-hover:brightness-90 transition duration-500">
+      <source src="../videos/contentone.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
+  </div>
 
-  <section class="py-16 bg-gray-300 relative" data-aos="fade-up">
-    <!-- Background Image with Overlay -->
-    <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('../realivingpage/images/new.png');"></div>
+  <!-- Right Side: Content -->
+  <div class="w-full md:w-1/2 px-6 md:px-12 py-12 text-white space-y-6 bg-gradient-to-br from-black via-gray-900 to-black/90 backdrop-blur-sm shadow-2xl">
+    <div class="border-l-4 border-white pl-4">
+      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Realiving Design Center</h2>
+    </div>
+    <p class="text-lg md:text-xl leading-relaxed">
+      Transform your study or home office into an inspiring, functional retreat with our bespoke custom furniture and smart storage solutions.
+      From conceptual design to precision manufacturing and seamless installation, we tailor every element to fit your workflow, aesthetic, and space requirements.
+    </p>
+    <a href="#services" class="inline-block px-6 py-3 bg-white text-black font-semibold rounded-full shadow-md hover:bg-gray-200 transition-all duration-300">
+      Inquire
+    </a>
+  </div>
+</section>
 
-    <div class="container mx-auto px-6 relative z-10">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-black">Services</h2>
-        <hr class="w-10 h-1 bg-yellow-500 mx-auto my-4 border-0 rounded">
+ <section class="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-200">
+  <!-- Decorative Elements -->
+  <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+    <div class="absolute -top-10 -left-10 w-64 h-64 bg-yellow-500 rounded-full opacity-10"></div>
+    <div class="absolute top-1/3 -right-10 w-80 h-80 bg-yellow-500 rounded-full opacity-10"></div>
+    <div class="absolute bottom-0 left-1/4 w-48 h-48 bg-yellow-500 rounded-full opacity-10"></div>
+  </div>
+
+  <div class="container mx-auto px-4 relative z-10">
+    <div class="text-center mb-20">
+      <h2 class="text-5xl font-bold text-gray-900 uppercase tracking-wide montserrat relative inline-block">
+        Our Services
+        <span class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-yellow-500"></span>
+      </h2>
+      <p class="mt-6 text-gray-600 max-w-2xl mx-auto">Transforming your space with custom design, quality fabrication, reliable delivery, and expert installation.</p>
+    </div>
+
+    <div class="relative max-w-6xl mx-auto">
+      <!-- Vertical Timeline Line with Animation -->
+      <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-yellow-400 to-yellow-600"></div>
+
+      <!-- DESIGN -->
+      <div class="relative flex flex-col md:flex-row items-center mb-32 group">
+        <!-- Text Content -->
+        <div class="md:w-1/2 md:pr-12 z-10 order-2 md:order-1 mt-10 md:mt-0">
+          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md ml-auto">
+            <div class="flex items-center mb-4">
+              <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                </svg>
+              </div>
+              <h3 class="text-3xl font-bold text-gray-800 montserrat">DESIGN</h3>
+            </div>
+            <p class="text-gray-700 mt-4 leading-relaxed">We create smart, space-saving, and stylish designs tailored to your specific space and lifestyle needs. Our expert designers work closely with you to bring your vision to life.</p>
+            <a href="#design" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+              Read More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Animated Circle -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <span class="text-yellow-500 font-bold">01</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="md:w-1/2 md:pl-12 relative order-1 md:order-2">
+          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+            <img src="../logo/real.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Design">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+              <h3 class="text-white text-3xl font-semibold montserrat">DESIGN</h3>
+              <p class="text-yellow-300 mt-2 font-medium">Turning ideas into plans</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div class="relative max-w-5xl mx-auto mt-16">
-        <!-- Vertical center line -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-black"></div>
-
-        <div class="space-y-16">
-
-          <!-- DESIGN - Left -->
-          <div class="relative flex justify-start items-center" data-aos="fade-right">
-            <!-- Text Box -->
-            <div class="w-1/2 pr-8 text-right">
-              <div class="bg-gray-100 p-6 rounded-lg shadow-lg inline-block">
-                <h3 class="text-xl font-bold montserrat text-black">DESIGN</h3>
-                <p class="text-black mt-2">We create smart, space-saving, and stylish designs tailored to your space and lifestyle needs.</p>
-                <a href="#design" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-              </div>
-            </div>
-
-            <!-- White Circle -->
-            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-
-            <!-- Image with Title on Hover -->
-            <div class="w-1/2 ml-[50px] relative group">
-              <div class="h-64 overflow-hidden rounded-lg shadow-md">
-                <img src="../logo/real.png" alt="Design Service" class="w-full h-full object-cover" />
-              </div>
-
-              <!-- Title Overlay on Hover -->
-              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex justify-center items-center">
-                <h3 class="text-white text-3xl font-semibold montserrat">DESIGN</h3>
-              </div>
+      <!-- FABRICATE -->
+      <div class="relative flex flex-col md:flex-row items-center mb-32 group">
+        <!-- Image -->
+        <div class="md:w-1/2 md:pr-12 relative order-1">
+          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+            <img src="../logo/nh.jpg" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Fabricate">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+              <h3 class="text-white text-3xl font-semibold montserrat">FABRICATE</h3>
+              <p class="text-yellow-300 mt-2 font-medium">Crafting with precision</p>
             </div>
           </div>
+        </div>
 
-
-          <!-- FABRICATE - Right -->
-          <div class="relative flex justify-end items-center" data-aos="fade-left">
-            <div class="w-1/2 relative group">
-              <!-- Image -->
-              <div class="h-64 overflow-hidden rounded-lg shadow-md">
-                <img src="../logo/nh.jpg" alt="Fabricate Service" class="w-full h-full object-cover" />
-              </div>
-
-              <!-- Title Overlay on Hover -->
-              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex justify-center items-center">
-                <h3 class="text-white text-3xl font-semibold montserrat">FABRICATE</h3>
-              </div>
-            </div>
-
-            <!-- White Circle -->
-            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-
-            <!-- Text Box -->
-            <div class="w-1/2 pl-8 ml-[50px] text-left">
-              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-                <h3 class="text-xl font-semibold montserrat text-black">FABRICATE</h3>
-                <p class="text-black mt-2">Using quality materials, we build each piece with precision to ensure durability and a modern finish.</p>
-                <a href="#fabricate" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-              </div>
+        <!-- Animated Circle -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <span class="text-yellow-500 font-bold">02</span>
             </div>
           </div>
+        </div>
 
-
-          <!-- DELIVERED - Left -->
-          <div class="relative flex justify-start items-center" data-aos="fade-right">
-            <div class="w-1/2 pr-8 text-right">
-              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-                <h3 class="text-xl font-semibold montserrat text-black">DELIVERED</h3>
-                <p class="text-black mt-2">We transport your furniture safely and on time—straight to your doorstep.</p>
-                <a href="#delivered" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
+        <!-- Text Content -->
+        <div class="md:w-1/2 md:pl-12 z-10 order-2 mt-10 md:mt-0">
+          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md">
+            <div class="flex items-center mb-4">
+              <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
               </div>
+              <h3 class="text-3xl font-bold text-gray-800 montserrat">FABRICATE</h3>
             </div>
-            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-            <div class="w-1/2 ml-[50px] relative group">
-              <div class="h-64 overflow-hidden rounded-lg shadow-md">
-                <img src="../logo/deli.png" alt="Delivered Service" class="w-full h-full object-cover" />
+            <p class="text-gray-700 mt-4 leading-relaxed">Using only the highest quality materials, we build each piece with precision and care to ensure durability, functionality, and a modern finish that lasts for years.</p>
+            <a href="#fabricate" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+              Read More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- DELIVERED -->
+      <div class="relative flex flex-col md:flex-row items-center mb-32 group">
+        <!-- Text Content -->
+        <div class="md:w-1/2 md:pr-12 z-10 order-2 md:order-1 mt-10 md:mt-0">
+          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md ml-auto">
+            <div class="flex items-center mb-4">
+              <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                </svg>
               </div>
-              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex items-center justify-center">
-                <h3 class="text-white text-3xl font-semibold montserrat">DELIVERED</h3>
-              </div>
+              <h3 class="text-3xl font-bold text-gray-800 montserrat">DELIVERED</h3>
+            </div>
+            <p class="text-gray-700 mt-4 leading-relaxed">We transport your furniture safely and on time—straight to your doorstep. Our delivery team handles your custom pieces with care to ensure they arrive in perfect condition.</p>
+            <a href="#delivered" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+              Read More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Animated Circle -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <span class="text-yellow-500 font-bold">03</span>
             </div>
           </div>
+        </div>
 
-          <!-- INSTALLATION - Right -->
-          <div class="relative flex justify-end items-center" data-aos="fade-left">
-            <div class="w-1/2 relative group">
-              <div class="h-64 overflow-hidden rounded-lg shadow-md">
-                <img src="../logo/insta.png" alt="Installation Service" class="w-full h-full object-cover" />
-              </div>
-              <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 rounded-lg flex items-center justify-center">
-                <h3 class="text-white text-3xl font-semibold montserrat">INSTALLATION</h3>
-              </div>
-            </div>
-            <div class="w-8 h-8 bg-black rounded-full border-4 border-white absolute left-1/2 transform -translate-x-1/2"></div>
-            <div class="w-1/2 pl-8 ml-[50px] text-left">
-              <div class="bg-gray-100 p-6 rounded-lg shadow-md inline-block">
-                <h3 class="text-xl font-semibold montserrat text-black">INSTALLATION</h3>
-                <p class="text-black mt-2">Our team handles the setup efficiently, making sure everything is perfectly fitted and ready to use.</p>
-                <a href="#installation" class="inline-block mt-4 px-4 py-2 bg-yellow-500 text-white rounded montserrat hover:bg-yellow-600 transition">Read More</a>
-              </div>
+        <!-- Image -->
+        <div class="md:w-1/2 md:pl-12 relative order-1 md:order-2">
+          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+            <img src="../logo/deli.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Delivered">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+              <h3 class="text-white text-3xl font-semibold montserrat">DELIVERED</h3>
+              <p class="text-yellow-300 mt-2 font-medium">On time, every time</p>
             </div>
           </div>
+        </div>
+      </div>
 
+      <!-- INSTALLATION -->
+      <div class="relative flex flex-col md:flex-row items-center group">
+        <!-- Image -->
+        <div class="md:w-1/2 md:pr-12 relative order-1">
+          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+            <img src="../logo/insta.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Installation">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+              <h3 class="text-white text-3xl font-semibold montserrat">INSTALLATION</h3>
+              <p class="text-yellow-300 mt-2 font-medium">Expert assembly and setup</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated Circle -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+              <span class="text-yellow-500 font-bold">04</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text Content -->
+        <div class="md:w-1/2 md:pl-12 z-10 order-2 mt-10 md:mt-0">
+          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md">
+            <div class="flex items-center mb-4">
+              <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 class="text-3xl font-bold text-gray-800 montserrat">INSTALLATION</h3>
+            </div>
+            <p class="text-gray-700 mt-4 leading-relaxed">Our team of professionals handles the setup efficiently, making sure everything is perfectly fitted, securely mounted, and ready to use immediately.</p>
+            <a href="#installation" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+              Read More
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+              </svg>
+            </a>
+          </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="py-20 bg-gray-50 px-6 md:px-20" data-aos="fade-up">
-    <h2 class="text-3xl font-bold text-center mb-10">What Clients Say</h2>
-    <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-      <div class="bg-white p-6 rounded shadow">
-        <p class="italic">“Realiving turned our empty unit into a beautiful, functional space. Their team was professional and creative from start to finish.”</p>
-        <p class="mt-4 font-semibold">– Janelle M., Homeowner</p>
+  <section class="py-20 bg-gray-200 px-6 md:px-20" data-aos="fade-up">
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-bold text-gray-800">What Clients Say</h2>
+      <hr class="w-12 h-1 bg-yellow-500 mx-auto mt-4 rounded border-0">
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
+
+      <!-- Testimonial 1 -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="../logo/nh.png" alt="Janelle M." class="w-14 h-14 rounded-full object-cover shadow">
+          <div>
+            <p class="text-lg font-semibold text-gray-900">Janelle M.</p>
+            <p class="text-sm text-gray-500">Homeowner</p>
+          </div>
+        </div>
+        <p class="text-gray-700 italic">“Realiving turned our empty unit into a beautiful, functional space. Their team was professional and creative from start to finish.”</p>
       </div>
-      <div class="bg-white p-6 rounded shadow">
-        <p class="italic">“Excellent service and amazing results. Our office renovation was seamless and exceeded expectations.”</p>
-        <p class="mt-4 font-semibold">– Carlo D., Business Owner</p>
+
+      <!-- Testimonial 2 -->
+      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
+        <div class="flex items-center gap-4 mb-6">
+          <img src="../logo/nh.png" alt="Carlo D." class="w-14 h-14 rounded-full object-cover shadow">
+          <div>
+            <p class="text-lg font-semibold text-gray-900">Carlo D.</p>
+            <p class="text-sm text-gray-500">Business Owner</p>
+          </div>
+        </div>
+        <p class="text-gray-700 italic">“Excellent service and amazing results. Our office renovation was seamless and exceeded expectations.”</p>
       </div>
+
     </div>
   </section>
 
-  <section class="py-16 bg-cover bg-center relative" data-aos="fade-up" style="background-image: url('../uploads/home.jpg');">
+  <section class="py-20 bg-cover bg-center relative" data-aos="fade-up" style="background-image: url('../uploads/home.jpg');">
     <!-- Overlay -->
     <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
-    <div class="relative z-10">
-      <h2 class="text-3xl font-semibold text-center text-white mb-6">Latest News</h2>
-      <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-8 border-0 rounded">
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-10">
+      <h2 class="text-4xl font-bold text-center text-white mb-4">Latest News</h2>
+      <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-10 border-0 rounded">
 
-      <div class="relative overflow-hidden px-4" id="newsContainer">
-        <div id="sliderTrack" class="flex transition-all duration-500 ease-in-out w-max">
+      <div class="overflow-hidden" id="newsContainer">
+        <div id="sliderTrack" class="flex gap-6 transition-all duration-500 ease-in-out w-max">
           <?php
           $news = [];
           while ($row = $result->fetch_assoc()) {
             $news[] = $row;
           }
 
-          // duplicate news list to make it loop smoothly
+          // duplicate news list for smooth looping
           $loopNews = array_merge($news, $news);
 
           foreach ($loopNews as $row):
           ?>
-            <div class="min-w-[300px] max-w-sm mx-2 bg-white rounded-xl overflow-hidden shadow-lg flex-shrink-0">
-              <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover rounded-t-xl">
-              <h3 class="mt-4 text-xl font-semibold text-center text-gray-800"><?= htmlspecialchars($row['title']) ?></h3>
-              <p class="p-4 text-sm text-gray-600"><?= htmlspecialchars($row['summary']) ?></p>
-              <a href="<?= $row['link'] ?>" class="inline-block mb-4 px-4 py-2 bg-yellow-500 text-white rounded-b-lg text-center w-full hover:bg-yellow-600 transition duration-200 montserrat">View More</a>
+            <div class="min-w-[300px] max-w-sm bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 flex-shrink-0">
+              <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover">
+              <div class="p-6">
+                <h3 class="text-xl font-semibold text-gray-800 mb-2"><?= htmlspecialchars($row['title']) ?></h3>
+                <p class="text-sm text-gray-600 mb-4"><?= htmlspecialchars($row['summary']) ?></p>
+                <a href="<?= $row['link'] ?>" class="block w-full text-center px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition font-medium">View More</a>
+              </div>
             </div>
           <?php endforeach; ?>
         </div>
@@ -461,10 +571,10 @@ details summary::-webkit-details-marker {
         <!-- Company Info -->
         <div>
           <div class="mb-6">
-            <h2 class="text-3xl font-bold mb-4">
-              <span class="text-blue-400">Real</span>
-              <span class="text-yellow-500">Living</span>
-            </h2>
+            <div class="flex justify-center mb-8">
+              <img src="../logo/mmone.png" alt="Your Image" class="w-[80%] max-w-[800px] h-auto rounded-lg shadow-lg">
+            </div>
+
             <p class="text-gray-300">
               Transforming spaces into beautiful, functional environments
               that enhance the quality of life for our clients.
@@ -489,13 +599,13 @@ details summary::-webkit-details-marker {
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <span>123 Design Street, Makati City, Philippines</span>
+              <span>MC Premier – EDSA Balintawak, Quezon City</span>
             </div>
             <div class="flex items-center">
               <svg class="h-5 w-5 mr-3 text-blue-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span>Mon-Fri: 9AM-6PM | Sat: 10AM-2PM</span>
+              <span>Mon-Fri: 7AM-5PM | Sat: 7AM-12PM</span>
             </div>
           </div>
         </div>
@@ -592,30 +702,30 @@ details summary::-webkit-details-marker {
   <!-- JavaScript for Sliding News -->
 
 
-<script>
-// Add smooth reveal animations
-document.addEventListener('DOMContentLoaded', function() {
-  // Get all details elements
-  const allDetails = document.querySelectorAll('details');
-  
-  // Add transition effects
-  allDetails.forEach(details => {
-    details.addEventListener('toggle', function() {
-      if (details.open) {
-        details.classList.add('shadow-md');
-      } else {
-        details.classList.remove('shadow-md');
-      }
+  <script>
+    // Add smooth reveal animations
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get all details elements
+      const allDetails = document.querySelectorAll('details');
+
+      // Add transition effects
+      allDetails.forEach(details => {
+        details.addEventListener('toggle', function() {
+          if (details.open) {
+            details.classList.add('shadow-md');
+          } else {
+            details.classList.remove('shadow-md');
+          }
+        });
+      });
+
+      // Optional: Animate the decorative elements
+      const decorElements = document.querySelectorAll('section > div:nth-child(-n+3)');
+      decorElements.forEach((elem, index) => {
+        elem.style.animation = `float ${6 + index}s ease-in-out infinite`;
+        elem.style.animationDelay = `${index * 0.5}s`;
+      });
     });
-  });
-  
-  // Optional: Animate the decorative elements
-  const decorElements = document.querySelectorAll('section > div:nth-child(-n+3)');
-  decorElements.forEach((elem, index) => {
-    elem.style.animation = `float ${6 + index}s ease-in-out infinite`;
-    elem.style.animationDelay = `${index * 0.5}s`;
-  });
-});
 
     const slidess = document.querySelectorAll('.hero-slide');
     let currentHeroIndex = 0;
@@ -722,4 +832,5 @@ document.addEventListener('DOMContentLoaded', function() {
   </script>
 
 </body>
+
 </html>
