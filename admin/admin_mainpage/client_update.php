@@ -83,303 +83,477 @@ function getStepUpdateDetails($conn, $clientId, $step)
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Real Living Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
         body {
             font-family: 'Poppins', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-item {
+            transition: all 0.3s ease;
+        }
+
+        .progress-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .hover-raise {
+            transition: transform 0.2s ease;
+        }
+
+        .hover-raise:hover {
+            transform: translateY(-3px);
         }
     </style>
 </head>
 
-<body class=" min-h-screen bg-gray-200">
-    <div class="flex flex-col lg:flex-row w-full gap-4 p-4">
+<body class="min-h-screen bg-gray-50">
 
-        <!-- Client Tracker Section -->
-        <div class="w-full lg:w-1/2 flex flex-col p-2">
-            <main class="w-full flex flex-col items-start justify-start">
-
-                <!-- Notification Area -->
-                <div id="notification" class="hidden fixed top-4 right-4 p-4 rounded-lg shadow-lg text-white bg-green-500 z-50">
-                    <p id="notificationText" class="text-sm"></p>
-                </div>
-
-                <!-- Client Tracker Card -->
-                <div class="w-full bg-white rounded-lg shadow-lg p-4 space-y-4">
-                    <h2 class="text-xl font-bold text-center text-green-700">Client Progress Tracker</h2>
-                    <p class="text-gray-600"><span class="font-semibold text-red-600">Reference No:</span> <?= htmlspecialchars($referenceNumber) ?></p>
-                    <p class="text-gray-600"><span class="font-semibold">Client Name:</span> <?= htmlspecialchars($clientName) ?></p>
-
-                    <div class="space-y-3">
-                        <?php foreach ($steps as $step => $label):
-                            $details = getStepUpdateDetails($conn, $id, $step);
-                            $hasTime = $details !== null;
-                            $updateTime = $hasTime ? $details['update_time'] : null;
-                            $endDate = $hasTime ? $details['end_date'] : null;
-                            static $firstPendingStep = null;
-                            if (!$hasTime && $firstPendingStep === null) {
-                                $firstPendingStep = $step;
-                            }
-                            $isCurrent = $step === $firstPendingStep;
-                        ?>
-                            <div>
-                                <div class="p-3 rounded-lg border flex items-center justify-between
-                                    <?= $hasTime ? 'bg-green-100 border-green-500' : 'bg-gray-100 border-gray-300' ?>">
-                                    <div class="flex flex-col">
-                                        <p class="text-sm font-medium <?= $hasTime ? 'text-green-700' : 'text-gray-700' ?>">
-                                            <?= $label ?>
-                                        </p>
-                                        <?php if ($updateTime): ?>
-                                            <p class="text-xs text-gray-500">Updated: <?= $updateTime ?></p>
-                                        <?php endif; ?>
-                                        <?php if ($endDate): ?>
-                                            <p class="text-xs text-gray-400">End Date: <?= $endDate ?></p>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div>
-                                        <?= $hasTime
-                                            ? '<i class="fas fa-check text-green-500 text-lg"></i>'
-                                            : '<i class="far fa-square text-gray-400 text-lg"></i>'
-                                        ?>
-
-                                    </div>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-
-                        <!-- Update Button -->
-                        <div class="flex justify-end mt-4">
-                            <button id="openUpdateModal" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 text-sm">
-                                Update
-                            </button>
-                            <div class="mb-4 text-right">
-                                <a href="export_step_updates.php?id=<?= $id ?>"
-                                    class="bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded">
-                                    Download as Spreadsheet
-                                </a>
-                            </div>
-
-                        </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Client Info Banner -->
+        <div class="bg-white rounded-xl shadow-sm p-6 mb-8 border-l-4 border-primary-500">
+            <div class="flex flex-col md:flex-row md:justify-between md:items-center">
+                <div>
+                    <h2 class="text-xl font-bold text-gray-800">Client Information</h2>
+                    <div class="mt-2 flex flex-col sm:flex-row sm:space-x-6">
+                        <p class="text-gray-600"><span class="font-semibold text-primary-600">Reference No:</span> <?= htmlspecialchars($referenceNumber) ?></p>
+                        <p class="text-gray-600"><span class="font-semibold text-gray-700">Client Name:</span> <?= htmlspecialchars($clientName) ?></p>
                     </div>
                 </div>
-            </main>
-        </div>
-
-
-        <!-- Order Processing Section -->
-        <div class="w-full lg:w-1/2 flex flex-col p-2">
-            <main class="w-full max-w-full">
-                <div class="w-full bg-white rounded-lg shadow-xl p-4 space-y-4">
-                    <h2 class="text-xl font-bold text-center text-green-700">Order Processing</h2>
-                    <div class="text-sm space-y-1">
-                        <p class="text-gray-600"><span class="font-semibold text-red-600">Reference No:</span> <?= htmlspecialchars($referenceNumber) ?></p>
-                        <p class="text-gray-600"><span class="font-semibold">Client Name:</span> <?= htmlspecialchars($clientName) ?></p>
-                    </div>
-
-                    <div class="overflow-x-auto rounded-lg border border-gray-200">
-                        <table class="min-w-full text-sm text-left">
-                            <thead class="bg-green-100 text-green-800">
-                                <tr>
-                                    <th class="px-4 py-3 font-semibold">Updated</th>
-                                    <th class="px-4 py-3 font-semibold">Description</th>
-                                    <th class="px-4 py-3 font-semibold">End Date</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white">
-                                <?php
-                                // Fetching updates for Step 6 (Order Processing)
-                                $stmt = $conn->prepare("SELECT id, update_time, description, end_date FROM step_updates WHERE client_id = ? AND step = 6 ORDER BY update_time DESC");
-                                $stmt->bind_param("i", $id); // Use $id here to fetch updates for the current client
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-
-                                if ($result->num_rows > 0):
-                                    while ($row = $result->fetch_assoc()):
-                                        $updateTime = !empty($row['update_time']) ? date("F j, Y g:i A", strtotime($row['update_time'])) : 'Not Updated';
-                                        $description = $row['description'] ?? '';
-                                        $endDate = !empty($row['end_date']) ? date("F j, Y", strtotime($row['end_date'])) : 'N/A';
-                                ?>
-                                        <tr class="hover:bg-gray-50 transition-colors duration-200">
-                                            <td class="px-4 py-3"><?= htmlspecialchars($updateTime) ?></td>
-                                            <td class="px-4 py-3">
-                                                <div id="desc-display-<?= $row['id'] ?>" class="flex justify-between items-center">
-                                                    <span id="desc-text-<?= $row['id'] ?>" class="editable-text cursor-pointer" onclick="enableEdit(<?= $row['id'] ?>)">
-                                                        <?= htmlspecialchars($description) ?>
-                                                    </span>
-                                                </div>
-                                                <form method="POST" action="save_update.php" id="desc-form-<?= $row['id'] ?>" class="hidden mt-1 flex items-center gap-2">
-                                                    <input type="hidden" name="update_id" value="<?= $row['id'] ?>">
-                                                    <input type="hidden" name="client_id" value="<?= $id ?>"> <!-- Make sure this is the correct client ID -->
-                                                    <input id="desc-input-<?= $row['id'] ?>" type="text" name="description" value="<?= htmlspecialchars($description) ?>" class="border rounded px-2 py-1 text-sm w-[120px]">
-                                                    <button type="submit" name="update_description" class="text-green-600 hover:text-green-800 font-semibold text-xs">Save</button>
-                                                    <button type="button" onclick="cancelEdit(<?= $row['id'] ?>)" class="text-gray-500 text-xs hover:underline">Cancel</button>
-                                                </form>
-                                            </td>
-                                            <td class="px-4 py-3"><?= htmlspecialchars($endDate) ?></td>
-                                        </tr>
-                                    <?php endwhile;
-                                else: ?>
-                                    <tr>
-                                        <td colspan="3" class="px-4 py-3 text-center text-gray-500">No updates found.</td>
-                                    </tr>
-                                <?php endif;
-                                $stmt->close(); ?>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="mt-4 md:mt-0">
+                    <a href="export_step_updates.php?id=<?= $id ?>" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium text-sm">
+                        <i class="fas fa-file-excel mr-2 text-primary-600"></i>
+                        Export Data
+                    </a>
                 </div>
-            </main>
-        </div>
-        <!-- Notification Container (hidden by default) -->
-        <div id="notification" class="hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-6 py-3 rounded-lg shadow-md">
-            <span id="notificationMessage"></span>
-        </div>
-        <script>
-
-
-        </script>
-
-        <div id="updateModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex justify-center items-center">
-            <div class="bg-white rounded-xl shadow-2xl p-6 w-full max-w-sm mx-auto">
-                <h2 class="text-lg font-semibold text-center text-gray-800 mb-4">Update Client Status</h2>
-
-                <!-- ✅ Single form for everything -->
-                <form id="updateForm" action="save_update.php" method="POST" class="space-y-4">
-
-                    <!-- Hidden client_id -->
-                    <input type="hidden" name="client_id" value="<?= $id ?>">
-
-                    <div>
-                        <label class="block text-sm text-gray-700 mb-1">Select Step:</label>
-                        <select name="step" id="stepSelect" class="w-full border rounded p-2">
-                            <?php foreach ($steps as $step => $label): ?>
-                                <option value="<?= $step ?>"><?= $label ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm">Update Date:</label>
-                        <input type="date" name="update_date" class="w-full p-2 border rounded" required />
-
-                        <label class="block text-sm mt-2">Update Time:</label>
-                        <input type="time" name="update_time" class="w-full p-2 border rounded" required />
-
-                        <div id="endDateContainer" class="hidden mt-2">
-                            <label class="block text-sm">End Date:</label>
-                            <input type="date" name="end_date" class="w-full p-2 border rounded" />
-                        </div>
-
-                        <div id="descriptionContainer" class="hidden mt-2">
-                            <label class="block text-sm">Description:</label>
-                            <textarea name="description" rows="3" class="w-full p-2 border rounded"></textarea>
-                        </div>
-                    </div>
-
-                    <!-- Modal Action Buttons -->
-                    <div id="normalButtons" class="flex justify-between items-center mt-6">
-                        <button type="button" id="saveButton" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 text-sm">Save</button>
-                        <button type="button" id="closeUpdateModal" class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 text-sm">Cancel</button>
-                    </div>
-
-                    <div id="confirmButtons" class="hidden flex justify-between items-center mt-6">
-                        <p class="text-sm text-gray-700">Are you sure you want to save this update?</p>
-                        <div class="flex gap-2">
-                            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 text-sm">Yes</button>
-                            <button type="button" id="confirmNo" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm">No</button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
 
+        <div class="flex flex-col lg:flex-row w-full gap-6">
+            <!-- Client Tracker Section -->
+           <div class="w-full lg:w-1/2">
+    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+        <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+            <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                <i class="fas fa-tasks text-primary-500 mr-2"></i>
+                Client Progress Tracker
+            </h2>
+        </div>
 
-        <script src="../../js/clientupdate.js"></script>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const stepSelect = document.getElementById('stepSelect');
-                const endDateContainer = document.getElementById('endDateContainer');
-                const descriptionContainer = document.getElementById('descriptionContainer');
-
-                // Toggle fields based on the selected step
-                function toggleFields() {
-                    const selectedStep = parseInt(stepSelect.value);
-
-                    // Show "End of Date" for steps 3 to 10
-                    if (selectedStep >= 3 && selectedStep <= 10) {
-                        endDateContainer.classList.remove('hidden');
-                    } else {
-                        endDateContainer.classList.add('hidden');
-                    }
-
-                    // Show "Description" only for Order Processing (step 6)
-                    if (selectedStep === 6) {
-                        descriptionContainer.classList.remove('hidden');
-                    } else {
-                        descriptionContainer.classList.add('hidden');
-                    }
+        <div class="p-6 space-y-4">
+            <?php foreach ($steps as $step => $label):
+                $details = getStepUpdateDetails($conn, $id, $step);
+                $hasTime = $details !== null;
+                $updateTime = $hasTime ? $details['update_time'] : null;
+                $endDate = $hasTime ? $details['end_date'] : null;
+                static $firstPendingStep = null;
+                if (!$hasTime && $firstPendingStep === null) {
+                    $firstPendingStep = $step;
                 }
+                $isCurrent = $step === $firstPendingStep;
 
-                // Listen to step selection change
-                stepSelect.addEventListener('change', toggleFields);
+                // Fetch revision_count for step 4 (Plan/3D) from user_info
+                $revisionCount = null;
+                if ($step == 4) {
+                    $stmt = $conn->prepare("SELECT revision_count FROM user_info WHERE id = ?");
+                    $stmt->bind_param("i", $id);  // Assuming $id is the client ID
+                    $stmt->execute();
+                    $stmt->bind_result($revisionCount);
+                    $stmt->fetch();
+                    $stmt->close();
+                }
+            ?>
+                <div class="progress-item">
+                    <div class="p-4 rounded-lg border <?= $hasTime ? 'bg-green-50 border-green-200' : ($isCurrent ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200') ?> flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0">
+                                <?php if ($hasTime): ?>
+                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                        <i class="fas fa-check text-green-500"></i>
+                                    </div>
+                                <?php elseif ($isCurrent): ?>
+                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                        <i class="fas fa-hourglass-half text-blue-500"></i>
+                                    </div>
+                                <?php else: ?>
+                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                        <i class="far fa-circle text-gray-400"></i>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                            <div>
+                                <p class="font-medium <?= $hasTime ? 'text-green-700' : ($isCurrent ? 'text-blue-700' : 'text-gray-700') ?>">
+                                    <?= $label ?>
+                                </p>
+                                <?php if ($updateTime): ?>
+                                    <p class="text-xs text-gray-500 mt-1">Updated: <?= $updateTime ?></p>
+                                <?php endif; ?>
+                                <?php if ($endDate): ?>
+                                    <p class="text-xs text-gray-500 mt-0.5">End Date: <?= $endDate ?></p>
+                                <?php endif; ?>
+                                <?php if ($step == 4 && $revisionCount !== null): ?>
+                                    <p class="text-xs text-gray-500 mt-0.5">Revision Count: <?= $revisionCount ?></p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
 
-                // Run on page load to set initial state
-                toggleFields();
+                        <div>
+                            <?php if ($hasTime): ?>
+                                <span class="text-xs font-medium bg-green-100 text-green-800 py-1 px-2 rounded-full">Complete</span>
+                            <?php elseif ($isCurrent): ?>
+                                <span class="text-xs font-medium bg-blue-100 text-blue-800 py-1 px-2 rounded-full">In Progress</span>
+                            <?php else: ?>
+                                <span class="text-xs font-medium bg-gray-100 text-gray-600 py-1 px-2 rounded-full">Pending</span>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
+            <!-- Update Button -->
+            <div class="flex justify-end mt-6">
+                <button id="openUpdateModal" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center shadow-sm hover-raise">
+                    <i class="fas fa-edit mr-2"></i>
+                    Update Status
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- Order Processing Section -->
+            <div class="w-full lg:w-1/2 mt-6 lg:mt-0">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-shipping-fast text-primary-500 mr-2"></i>
+                            Order Processing
+                        </h2>
+                    </div>
+
+                    <div class="p-6">
+                        <div class="overflow-x-auto rounded-lg border border-gray-200">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead>
+                                    <tr class="bg-gray-50">
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    <?php
+                                    // Fetching updates for Step 6 (Order Processing)
+                                    $stmt = $conn->prepare("SELECT id, update_time, description, end_date FROM step_updates WHERE client_id = ? AND step = 6 ORDER BY update_time DESC");
+                                    $stmt->bind_param("i", $id);
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
+
+                                    if ($result->num_rows > 0):
+                                        while ($row = $result->fetch_assoc()):
+                                            $updateTime = !empty($row['update_time']) ? date("F j, Y g:i A", strtotime($row['update_time'])) : 'Not Updated';
+                                            $description = $row['description'] ?? '';
+                                            $endDate = !empty($row['end_date']) ? date("F j, Y", strtotime($row['end_date'])) : 'N/A';
+                                    ?>
+                                            <tr class="hover:bg-gray-50">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars($updateTime) ?></td>
+                                                <td class="px-6 py-4 text-sm text-gray-700">
+                                                    <div id="desc-display-<?= $row['id'] ?>" class="flex justify-between items-center">
+                                                        <span id="desc-text-<?= $row['id'] ?>" class="editable-text cursor-pointer" onclick="enableEdit(<?= $row['id'] ?>)">
+                                                            <?= htmlspecialchars($description) ?>
+                                                            <i class="fas fa-pencil-alt text-xs ml-2 text-gray-400"></i>
+                                                        </span>
+                                                    </div>
+                                                    <form method="POST" action="save_update.php" id="desc-form-<?= $row['id'] ?>" class="hidden mt-1 flex items-center gap-2">
+                                                        <input type="hidden" name="update_id" value="<?= $row['id'] ?>">
+                                                        <input type="hidden" name="client_id" value="<?= $id ?>">
+                                                        <input id="desc-input-<?= $row['id'] ?>" type="text" name="description" value="<?= htmlspecialchars($description) ?>" class="border border-gray-300 rounded-md px-3 py-1 text-sm w-full focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                                        <button type="submit" name="update_description" class="text-primary-600 hover:text-primary-800 font-medium text-xs">Save</button>
+                                                        <button type="button" onclick="cancelEdit(<?= $row['id'] ?>)" class="text-gray-500 text-xs hover:text-gray-700">Cancel</button>
+                                                    </form>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars($endDate) ?></td>
+                                            </tr>
+                                        <?php endwhile;
+                                    else: ?>
+                                        <tr>
+                                            <td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500">No updates found.</td>
+                                        </tr>
+                                    <?php endif;
+                                    $stmt->close(); ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="hidden fixed bottom-4 right-4 bg-white border-l-4 border-primary-500 rounded-lg shadow-lg p-4 max-w-sm z-50">
+        <div class="flex items-center">
+            <div class="flex-shrink-0">
+                <i class="fas fa-info-circle text-primary-500 text-xl"></i>
+            </div>
+            <div class="ml-3">
+                <p id="notificationMessage" class="text-sm text-gray-700"></p>
+            </div>
+            <div class="ml-auto pl-3">
+                <div class="-mx-1.5 -my-1.5">
+                    <button onclick="closeNotification()" class="inline-flex rounded-md p-1.5 text-gray-500 hover:bg-gray-100 focus:outline-none">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Update Modal -->
+    <div id="updateModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50 flex justify-center items-center">
+        <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4 animate__animated animate__fadeInUp">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-xl font-semibold text-gray-800">Update Client Status</h2>
+                <button id="closeUpdateModalX" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+
+          <form id="updateForm" action="save_update.php" method="POST" class="space-y-5">
+    <!-- Hidden client_id -->
+    <input type="hidden" name="client_id" value="<?= $id ?>">
+
+    <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Select Step:</label>
+        <div class="relative">
+            <select name="step" id="stepSelect" class="w-full border border-gray-300 rounded-lg p-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none">
+                <?php foreach ($steps as $step => $label): ?>
+                    <option value="<?= $step ?>"><?= $label ?></option>
+                <?php endforeach; ?>
+            </select>
+            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                <i class="fas fa-chevron-down text-gray-400"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Update Date:</label>
+            <input type="date" name="update_date" id="updateDate" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" required />
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Update Time:</label>
+            <input type="time" name="update_time" id="updateTime" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" required />
+        </div>
+    </div>
+
+    <div id="endDateContainer" class="hidden">
+        <label class="block text-sm font-medium text-gray-700 mb-1">End Date:</label>
+        <input type="date" name="end_date" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" />
+    </div>
+
+    <!-- Revision Count Input (Shown only in Step 4) -->
+    <div id="revisionContainer" class="hidden mb-4">
+        <label for="revisionCount" class="block text-sm font-medium text-gray-700 mb-1">
+            Revision Count
+        </label>
+        <input
+            type="number"
+            id="revisionCount"
+            name="revisionCount"
+            min="1"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Enter number of revisions"
+        />
+    </div>
+
+    <div id="descriptionContainer" class="hidden">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Description:</label>
+        <textarea name="description" rows="3" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+    </div>
+
+    <!-- Modal Action Buttons -->
+    <div id="normalButtons" class="flex justify-between items-center mt-6">
+        <button type="button" id="closeUpdateModal" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+            Cancel
+        </button>
+        <button type="button" id="saveButton" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium flex items-center">
+            <i class="fas fa-save mr-2"></i>
+            Save Changes
+        </button>
+    </div>
+
+    <div id="confirmButtons" class="hidden space-y-4">
+        <p class="text-sm text-gray-700 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+            Are you sure you want to save this update?
+        </p>
+        <div class="flex justify-between">
+            <button type="button" id="confirmNo" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+                No, Go Back
+            </button>
+            <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium flex items-center">
+                <i class="fas fa-check mr-2"></i>
+                Yes, Save
+            </button>
+        </div>
+    </div>
+</form>
 
 
-                document.addEventListener('DOMContentLoaded', function() {
-                    const notification = document.getElementById('notification');
-                    if (notification) {
-                        // Only manipulate if the element exists
-                        const notificationMessage = document.getElementById('notificationMessage');
+        </div>
+    </div>
 
-                        // Ensure notificationMessage also exists
-                        if (notificationMessage) {
-                            notificationMessage.textContent = message;
-                        }
+    <script src="../../js/clientupdate.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Set Date and Time on Load
+    const today = new Date();
+    const dateString = today.toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+    const timeString = today.toTimeString().split(' ')[0].slice(0, 5); // Current time in HH:MM format
 
-                        // Show notification with a timeout
-                        notification.classList.remove('hidden');
-                        setTimeout(() => {
-                            notification.classList.add('hidden');
-                        }, 5000);
-                    } else {
-                        console.error('Notification element not found');
-                    }
-                });
+    // Set date and time to the form inputs
+    document.querySelector('[name="update_date"]').value = dateString;
+    document.querySelector('[name="update_time"]').value = timeString;
 
+    // Step-related fields
+    const stepSelect = document.getElementById('stepSelect');
+    const endDateContainer = document.getElementById('endDateContainer');
+    const descriptionContainer = document.getElementById('descriptionContainer');
+    const revisionContainer = document.getElementById('revisionContainer');
 
-                // Check for error message from session and show notification
-                <?php if (isset($_SESSION['error'])): ?>
-                    showNotification("<?= $_SESSION['error']; ?>", "error");
-                    <?php unset($_SESSION['error']); ?>
-                <?php endif; ?>
+    // Toggle visibility of fields based on selected step
+    function toggleFields() {
+        const selectedStep = parseInt(stepSelect.value);
 
-                // Check for success message from session and show notification
-                <?php if (isset($_SESSION['success'])): ?>
-                    showNotification("<?= $_SESSION['success']; ?>", "success");
-                    <?php unset($_SESSION['success']); ?>
-                <?php endif; ?>
-            });
+        // Show "End of Date" for steps 3 to 10
+        if (selectedStep >= 3 && selectedStep <= 10) {
+            endDateContainer.classList.remove('hidden');
+        } else {
+            endDateContainer.classList.add('hidden');
+        }
 
-            // Enable edit mode for description
-            function enableEdit(id) {
-                document.getElementById('desc-display-' + id).classList.add('hidden');
-                document.getElementById('desc-form-' + id).classList.remove('hidden');
-                document.getElementById('desc-input-' + id).focus();
+        // Show "Description" only for Order Processing (step 6)
+        if (selectedStep === 6) {
+            descriptionContainer.classList.remove('hidden');
+        } else {
+            descriptionContainer.classList.add('hidden');
+        }
+
+        // Show "Revision Count" only for step 4
+        if (selectedStep === 4) {
+            revisionContainer.classList.remove('hidden');
+        } else {
+            revisionContainer.classList.add('hidden');
+        }
+    }
+
+    // Add event listener for step selection change
+    if (stepSelect) {
+        stepSelect.addEventListener('change', toggleFields);
+        // Run on page load to set initial state
+        toggleFields();
+    }
+
+    // Handle Notifications (if any)
+    <?php if (isset($_SESSION['error'])): ?>
+        showNotification("<?= $_SESSION['error']; ?>", "error");
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['success'])): ?>
+        showNotification("<?= $_SESSION['success']; ?>", "success");
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+    // Show Notification function
+    function showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notificationMessage');
+
+        if (notification && notificationMessage) {
+            // Set the message
+            notificationMessage.textContent = message;
+
+            // Apply appropriate styling based on the message type
+            if (type === 'error') {
+                notification.classList.remove('border-primary-500');
+                notification.classList.add('border-red-500');
+                document.querySelector('#notification i').classList.remove('text-primary-500');
+                document.querySelector('#notification i').classList.add('text-red-500');
+                document.querySelector('#notification i').classList.remove('fa-info-circle');
+                document.querySelector('#notification i').classList.add('fa-exclamation-circle');
+            } else {
+                notification.classList.remove('border-red-500');
+                notification.classList.add('border-primary-500');
+                document.querySelector('#notification i').classList.remove('text-red-500');
+                document.querySelector('#notification i').classList.add('text-primary-500');
+                document.querySelector('#notification i').classList.remove('fa-exclamation-circle');
+                document.querySelector('#notification i').classList.add('fa-info-circle');
             }
 
-            // Cancel the edit mode and revert back
-            function cancelEdit(id) {
-                document.getElementById('desc-display-' + id).classList.remove('hidden');
-                document.getElementById('desc-form-' + id).classList.add('hidden');
-            }
-        </script>
+            // Show notification
+            notification.classList.remove('hidden');
 
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+    }
+
+    // Close notification manually
+    function closeNotification() {
+        document.getElementById('notification').classList.add('hidden');
+    }
+
+    // Enable edit mode for description
+    function enableEdit(id) {
+        document.getElementById('desc-display-' + id).classList.add('hidden');
+        document.getElementById('desc-form-' + id).classList.remove('hidden');
+        document.getElementById('desc-input-' + id).focus();
+    }
+
+    // Cancel the edit mode and revert back
+    function cancelEdit(id) {
+        document.getElementById('desc-display-' + id).classList.remove('hidden');
+        document.getElementById('desc-form-' + id).classList.add('hidden');
+    }
+});
+</script>
 
 </body>
 

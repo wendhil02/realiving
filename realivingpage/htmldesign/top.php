@@ -1,243 +1,308 @@
-<header class="fixed top-0 left-0 w-full bg-gray-100 border-t-4 border-yellow-500 shadow-md z-50">
+<header class="fixed top-0 left-0 w-full bg-white z-50 transition-all duration-300">
+  <!-- Top accent line with modern gradient -->
+  <div class="h-1 w-full bg-gradient-to-r from-blue-500 via-blue-500 to-blue-600"></div>
+  
   <div class="container mx-auto px-4">
-    <div class="flex items-center justify-between h-16">
+    <div class="flex items-center justify-between h-20">
       <!-- Logo -->
       <div class="flex items-center">
         <a href="index.php" class="flex items-center">
-          <img src="../logo/picart.png" alt="RealLiving Logo" class="h-8 md:h-9">
+          <img src="../logo/picart.png" alt="RealLiving Logo" class="h-10 md:h-12">
         </a>
       </div>
 
-      <!-- Mobile Toggle Button - Improved accessibility -->
-      <button id="navToggle" class="md:hidden text-gray-700 focus:outline-none p-2" aria-label="Toggle navigation">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path id="hamburgerIcon" class="block" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16" />
-          <path id="closeIcon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M6 18L18 6M6 6l12 12" />
-        </svg>
+      <!-- Mobile Toggle Button (Sleek Hamburger) -->
+      <button id="navToggle" class="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 focus:outline-none transition duration-200" aria-label="Toggle navigation">
+        <div class="relative w-5 h-4">
+          <span id="hamburgerTop" class="absolute top-0 left-0 w-5 h-0.5 bg-indigo-600 transform transition-all duration-300 rounded-full"></span>
+          <span id="hamburgerMiddle" class="absolute top-1.5 left-0 w-5 h-0.5 bg-indigo-600 transform transition-all duration-300 rounded-full"></span>
+          <span id="hamburgerBottom" class="absolute top-3 left-0 w-5 h-0.5 bg-indigo-600 transform transition-all duration-300 rounded-full"></span>
+        </div>
       </button>
 
-
-      <!-- Navigation - Improved mobile layout -->
-      <nav id="mainNav" class="hidden md:flex fixed md:static inset-0 top-16 md:top-0 pt-4 md:pt-0 w-full md:w-auto 
-                               bg-white md:bg-transparent shadow-lg md:shadow-none flex-col md:flex-row
-                               items-start md:items-center gap-2 md:gap-6 px-4 md:px-0 pb-6 md:pb-0 
-                               overflow-y-auto md:overflow-visible max-h-[calc(100vh-4rem)] md:max-h-none
-                               font-medium z-40">
-
-                                 <a href="mainpage.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
-                                   w-full md:w-auto py-3 md:py-2 px-3 nav-link">Our World</a>
-
-
-        <!-- Projects Dropdown - Improved mobile handling -->
-        <div class="relative group/projects w-full md:w-auto">
-
-
-          <button id="projectsToggle" class="w-full md:w-auto text-left md:text-center flex justify-between md:justify-center 
-                                            items-center text-gray-900 hover:text-yellow-500 transition duration-200 
-                                            py-3 md:py-2 px-3 nav-link">
-
-
-            Projects <span class="ml-1 text-xs transition-transform duration-200" id="projectsArrow">▾</span>
-          </button>
-
-          <div id="projectsDropdown" class="hidden bg-gray-50 md:bg-white md:absolute static md:top-full md:left-0 mt-0 md:mt-1 
-                                           w-full md:w-72 md:shadow-xl md:rounded-lg z-50 md:p-2 md:border md:border-gray-100">
-            <a href="allofproject.php" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
-                                             hover:text-yellow-500 md:rounded-md text-sm transition duration-200">Accomplish Project</a>
-            <a href="#" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
-                              hover:text-yellow-500 md:rounded-md text-sm transition duration-200">Residential Projects</a>
-            <a href="#" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
-                              hover:text-yellow-500 md:rounded-md text-sm transition duration-200">Commercial Projects</a>
+      <!-- Main Navigation -->
+      <nav id="mainNav" class="hidden md:flex fixed md:static inset-0 top-20 md:top-0 pt-6 md:pt-0 w-full md:w-auto 
+                             bg-white md:bg-transparent md:flex-row flex-col items-start md:items-center 
+                             pb-8 md:pb-0 z-40 overflow-y-auto md:overflow-visible shadow-xl md:shadow-none
+                             max-h-[calc(100vh-5rem)] md:max-h-none">
+        <div class="px-6 md:px-0 w-full md:w-auto md:flex md:items-center">
+          <!-- Main Nav Items -->
+          <ul class="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 w-full md:w-auto">
+            <li class="w-full md:w-auto">
+              <a href="mainpage.php" class="main-link group block py-2.5 px-3 md:px-4 rounded-lg hover:bg-indigo-50 md:hover:bg-transparent transition-all duration-200">
+                <span class="relative font-medium text-gray-800 md:text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">
+                  Our World
+                  <span class="md:absolute md:bottom-0 md:left-0 md:w-0 md:h-0.5 md:bg-indigo-500 md:group-hover:w-full md:transition-all md:duration-300"></span>
+                </span>
+              </a>
+            </li>
+            
+            <!-- Projects Dropdown -->
+            <li class="dropdown-container w-full md:w-auto relative">
+              <button id="projectsToggle" class="dropdown-toggle group flex items-center justify-between w-full md:w-auto py-2.5 px-3 md:px-4 rounded-lg hover:bg-indigo-50 md:hover:bg-transparent transition-all duration-200">
+                <span class="relative font-medium text-gray-800 md:text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">
+                  Projects
+                  <span class="md:absolute md:bottom-0 md:left-0 md:w-0 md:h-0.5 md:bg-indigo-500 md:group-hover:w-full md:transition-all md:duration-300"></span>
+                </span>
+                <svg class="ml-1 w-4 h-4 text-gray-500 group-hover:text-indigo-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div id="projectsDropdown" class="dropdown-menu hidden md:absolute static top-full left-0 mt-1 py-2 px-0 md:p-2
+                                              w-full md:w-64 bg-white md:bg-white/95 md:backdrop-blur-sm rounded-lg md:rounded-xl 
+                                              shadow-none md:shadow-lg md:border border-gray-100 z-50">
+                <a href="allofproject.php" class="block px-3 md:px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200">
+                  Accomplish Project
+                </a>
+                <a href="#" class="block px-3 md:px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200">
+                  Residential Projects
+                </a>
+                <a href="#" class="block px-3 md:px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200">
+                  Commercial Projects
+                </a>
+              </div>
+            </li>
+          
+            <li class="w-full md:w-auto">
+              <a href="about.php" class="main-link group block py-2.5 px-3 md:px-4 rounded-lg hover:bg-indigo-50 md:hover:bg-transparent transition-all duration-200">
+                <span class="relative font-medium text-gray-800 md:text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">
+                  About
+                  <span class="md:absolute md:bottom-0 md:left-0 md:w-0 md:h-0.5 md:bg-indigo-500 md:group-hover:w-full md:transition-all md:duration-300"></span>
+                </span>
+              </a>
+            </li>
+            
+            <li class="w-full md:w-auto">
+              <a href="services.php" class="main-link group block py-2.5 px-3 md:px-4 rounded-lg hover:bg-indigo-50 md:hover:bg-transparent transition-all duration-200">
+                <span class="relative font-medium text-gray-800 md:text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">
+                  Services
+                  <span class="md:absolute md:bottom-0 md:left-0 md:w-0 md:h-0.5 md:bg-indigo-500 md:group-hover:w-full md:transition-all md:duration-300"></span>
+                </span>  
+              </a>
+            </li>
+            
+            <!-- What's New Dropdown -->
+            <li class="dropdown-container w-full md:w-auto relative">
+              <button id="whatsNewToggle" class="dropdown-toggle group flex items-center justify-between w-full md:w-auto py-2.5 px-3 md:px-4 rounded-lg hover:bg-indigo-50 md:hover:bg-transparent transition-all duration-200">
+                <span class="relative font-medium text-gray-800 md:text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">
+                  What's New
+                  <span class="md:absolute md:bottom-0 md:left-0 md:w-0 md:h-0.5 md:bg-indigo-500 md:group-hover:w-full md:transition-all md:duration-300"></span>
+                </span>
+                <svg class="ml-1 w-4 h-4 text-gray-500 group-hover:text-indigo-600 transition-colors duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              
+              <div id="galleryDropdown" class="dropdown-menu hidden md:absolute static top-full left-0 mt-1 py-2 px-0 md:p-2
+                                              w-full md:w-64 bg-white md:bg-white/95 md:backdrop-blur-sm rounded-lg md:rounded-xl 
+                                              shadow-none md:shadow-lg md:border border-gray-100 z-50">
+                <a href="photos.php" class="block px-3 md:px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200">
+                  News
+                </a>
+                <a href="#" class="block px-3 md:px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200">
+                  Design Inspirations
+                </a>
+                <a href="#" class="block px-3 md:px-4 py-2 rounded-lg text-gray-700 hover:bg-indigo-50 hover:text-indigo-700 transition-colors duration-200">
+                  Upcoming Events
+                </a>
+              </div>
+            </li>
+            
+            <li class="w-full md:w-auto">
+              <a href="contact.php" class="main-link group block py-2.5 px-3 md:px-4 rounded-lg hover:bg-indigo-50 md:hover:bg-transparent transition-all duration-200">
+                <span class="relative font-medium text-gray-800 md:text-gray-700 group-hover:text-indigo-600 transition-colors duration-200">
+                  Contact
+                  <span class="md:absolute md:bottom-0 md:left-0 md:w-0 md:h-0.5 md:bg-indigo-500 md:group-hover:w-full md:transition-all md:duration-300"></span>
+                </span>
+              </a>
+            </li>
+          </ul>
+          
+          <!-- CTA Button -->
+          <div class="mt-6 md:mt-0 md:ml-6">
+            <a href="quote.php" class="inline-flex items-center justify-center w-full md:w-auto px-6 py-2.5 rounded-lg bg-gradient-to-r from-yellow-500 to-yellow-600 text-white font-medium shadow hover:shadow-lg hover:from-yellow-600 hover:to-yellow-700 transition-all duration-300 transform hover:-translate-y-0.5">
+              <span>Get Quote</span>
+              <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
+            </a>
           </div>
         </div>
-      
-        <a href="about.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
-                                   w-full md:w-auto py-3 md:py-2 px-3 nav-link">About</a>
-        <a href="services.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
-                                      w-full md:w-auto py-3 md:py-2 px-3 nav-link">Services</a>
-
-
-        <!-- What's New Dropdown - Improved mobile handling -->
-        <div class="relative group/whatsnew w-full md:w-auto">
-          <button id="whatsNewToggle" class="w-full md:w-auto text-left md:text-center flex justify-between md:justify-center 
-                                            items-center text-gray-900 hover:text-yellow-500 transition duration-200 
-                                            py-3 md:py-2 px-3 nav-link">
-            What's New <span class="ml-1 text-xs transition-transform duration-200" id="whatsNewArrow">▾</span>
-          </button>
-          <div id="galleryDropdown" class="hidden bg-gray-50 md:bg-white md:absolute static md:top-full md:left-0 mt-0 md:mt-1 
-                                          w-full md:w-72 md:shadow-xl md:rounded-lg z-50 md:p-2 md:border md:border-gray-100">
-            <a href="photos.php" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
-                                       hover:text-yellow-500 md:rounded-md text-sm transition duration-200">News</a>
-            <a href="#" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
-                              hover:text-yellow-500 md:rounded-md text-sm transition duration-200">Design Inspirations</a>
-            <a href="#" class="block px-4 py-3 md:py-2 text-gray-900 hover:bg-yellow-50 
-                              hover:text-yellow-500 md:rounded-md text-sm transition duration-200">Upcoming Events</a>
-          </div>
-        </div>
-
-        <a href="contact.php" class="text-gray-900 hover:text-yellow-500 transition duration-200 
-                                     w-full md:w-auto py-3 md:py-2 px-3 nav-link">Contact</a>
-
-        <!-- Contact Button - Show on all screens now -->
-        <a href="quote.php" class="block w-full md:w-auto px-4 py-3 md:py-2 mt-4 md:mt-0 bg-yellow-500 hover:bg-yellow-600 
-                                   text-white text-center rounded-md transition duration-200 shadow-sm">Get Quote</a>
       </nav>
     </div>
   </div>
   
+  <!-- Bottom shadow - appears on scroll -->
+  <div id="headerShadow" class="absolute bottom-0 left-0 w-full h-6 bg-gradient-to-b from-gray-200/0 to-gray-200/10 pointer-events-none transition-opacity duration-300 opacity-0"></div>
 </header>
 
 <!-- Add padding to prevent content from being hidden under fixed navbar -->
-<div class="h-16"></div>
+<div class="h-20"></div>
 
 <style>
-  /* Custom underline effect for nav links - Desktop only */
-  @media (min-width: 768px) {
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      height: 2px;
-      background-color: #EAB308;
-      /* yellow-500 */
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-      transform-origin: left;
-    }
-
-    .nav-link:hover::after {
-      transform: scaleX(1);
-    }
-  }
-
-  /* Mobile specific styles */
+  /* Mobile menu specific styles */
   @media (max-width: 767px) {
-    .nav-link {
-      border-bottom: 1px solid #f0f0f0;
-      display: block;
-    }
-
-    /* Prevent body scrolling when mobile menu is open */
     body.menu-open {
       overflow: hidden;
     }
-
-    /* Rotate dropdown arrows when active */
-    .rotate-arrow {
-      transform: rotate(180deg);
+    
+    /* Mobile dropdown styling */
+    .dropdown-menu {
+      border-top: 1px solid #f3f4f6;
+      border-bottom: 1px solid #f3f4f6;
+      background-color: #f9fafb;
+      margin: 8px 0;
     }
+    
+    /* Hamburger animation */
+    body.menu-open #hamburgerTop {
+      transform: translateY(7px) rotate(45deg);
+    }
+    
+    body.menu-open #hamburgerMiddle {
+      opacity: 0;
+    }
+    
+    body.menu-open #hamburgerBottom {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+  
+  /* Dropdown animation */
+  .dropdown-menu {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0s linear 0.25s;
+    visibility: hidden;
+  }
+  
+  .dropdown-menu.active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    visibility: visible;
+  }
+  
+  /* Header shadow on scroll */
+  .header-scrolled {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  
+  .header-scrolled #headerShadow {
+    opacity: 1;
+  }
+  
+  /* Subtle hover effects */
+  .main-link:hover {
+    transform: translateY(-1px);
   }
 </style>
 
 <script>
-  // Mobile menu toggle with improved UX
-  const navToggle = document.getElementById('navToggle');
-  const mainNav = document.getElementById('mainNav');
-  const hamburgerIcon = document.getElementById('hamburgerIcon');
-  const closeIcon = document.getElementById('closeIcon');
-
-  // Project dropdown elements
-  const projectsToggle = document.getElementById('projectsToggle');
-  const projectsDropdown = document.getElementById('projectsDropdown');
-  const projectsArrow = document.getElementById('projectsArrow');
-
-  // What's New dropdown elements
-  const whatsNewToggle = document.getElementById('whatsNewToggle');
-  const galleryDropdown = document.getElementById('galleryDropdown');
-  const whatsNewArrow = document.getElementById('whatsNewArrow');
-
-  if (navToggle && mainNav) {
-    navToggle.addEventListener('click', function() {
-      mainNav.classList.toggle('hidden');
-      hamburgerIcon.classList.toggle('hidden');
-      closeIcon.classList.toggle('hidden');
-      document.body.classList.toggle('menu-open');
-    });
-  }
-
-  // Toggle dropdown function - Mobile friendly
-  function setupDropdown(toggleBtn, dropdown, arrow) {
-    if (toggleBtn && dropdown) {
-      toggleBtn.addEventListener('click', function(e) {
-        e.stopPropagation();
-
-        // Close other dropdowns first
-        if (projectsDropdown && projectsDropdown !== dropdown) {
-          projectsDropdown.classList.add('hidden');
-          if (projectsArrow) projectsArrow.classList.remove('rotate-arrow');
-        }
-
-        if (galleryDropdown && galleryDropdown !== dropdown) {
-          galleryDropdown.classList.add('hidden');
-          if (whatsNewArrow) whatsNewArrow.classList.remove('rotate-arrow');
-        }
-
-        // Toggle current dropdown
-        dropdown.classList.toggle('hidden');
-        if (arrow) arrow.classList.toggle('rotate-arrow');
+  document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const navToggle = document.getElementById('navToggle');
+    const mainNav = document.getElementById('mainNav');
+    const header = document.querySelector('header');
+    const headerShadow = document.getElementById('headerShadow');
+    
+    // Dropdown elements
+    const projectsToggle = document.getElementById('projectsToggle');
+    const projectsDropdown = document.getElementById('projectsDropdown');
+    const whatsNewToggle = document.getElementById('whatsNewToggle');
+    const galleryDropdown = document.getElementById('galleryDropdown');
+    
+    // Mobile menu toggle
+    if (navToggle && mainNav) {
+      navToggle.addEventListener('click', function() {
+        mainNav.classList.toggle('hidden');
+        document.body.classList.toggle('menu-open');
       });
     }
-  }
-
-  // Setup both dropdowns
-  setupDropdown(projectsToggle, projectsDropdown, projectsArrow);
-  setupDropdown(whatsNewToggle, galleryDropdown, whatsNewArrow);
-
-  // Close dropdowns on outside click
-  document.addEventListener('click', function(e) {
-    // Check if we need to close Project dropdown
-    if (projectsDropdown && !projectsDropdown.contains(e.target) &&
-      projectsToggle && !projectsToggle.contains(e.target)) {
-      projectsDropdown.classList.add('hidden');
-      if (projectsArrow) projectsArrow.classList.remove('rotate-arrow');
+    
+    // Function to set up dropdowns
+    function setupDropdown(toggleBtn, dropdown) {
+      if (toggleBtn && dropdown) {
+        toggleBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          
+          // Close all other dropdowns first
+          document.querySelectorAll('.dropdown-menu').forEach(menu => {
+            if (menu !== dropdown && !menu.classList.contains('hidden')) {
+              menu.classList.add('hidden');
+              menu.classList.remove('active');
+            }
+          });
+          
+          // Toggle current dropdown
+          dropdown.classList.toggle('hidden');
+          
+          // Add active class after a slight delay for animation
+          if (!dropdown.classList.contains('hidden')) {
+            setTimeout(() => {
+              dropdown.classList.add('active');
+            }, 10);
+          } else {
+            dropdown.classList.remove('active');
+          }
+        });
+      }
     }
-
-    // Check if we need to close What's New dropdown
-    if (galleryDropdown && !galleryDropdown.contains(e.target) &&
-      whatsNewToggle && !whatsNewToggle.contains(e.target)) {
-      galleryDropdown.classList.add('hidden');
-      if (whatsNewArrow) whatsNewArrow.classList.remove('rotate-arrow');
-    }
-  });
-
-  // Close mobile menu when clicking on a link (better UX)
-  const mobileLinks = mainNav ? mainNav.querySelectorAll('a:not([href="#"])') : [];
-  mobileLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      if (window.innerWidth < 768) {
-        mainNav.classList.add('hidden');
-        hamburgerIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
+    
+    // Set up dropdowns
+    setupDropdown(projectsToggle, projectsDropdown);
+    setupDropdown(whatsNewToggle, galleryDropdown);
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      const dropdowns = document.querySelectorAll('.dropdown-menu');
+      const toggles = document.querySelectorAll('.dropdown-toggle');
+      
+      // If not clicking on a dropdown or toggle button
+      if (!Array.from(toggles).some(toggle => toggle.contains(e.target))) {
+        dropdowns.forEach(dropdown => {
+          dropdown.classList.add('hidden');
+          dropdown.classList.remove('active');
+        });
+      }
+    });
+    
+    // Close mobile menu when clicking a link
+    const mobileLinks = mainNav ? mainNav.querySelectorAll('a:not([href="#"])') : [];
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        if (window.innerWidth < 768) {
+          mainNav.classList.add('hidden');
+          document.body.classList.remove('menu-open');
+        }
+      });
+    });
+    
+    // Handle window resize - ensure menu is visible on desktop
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) {
+        if (mainNav && mainNav.classList.contains('hidden')) {
+          mainNav.classList.remove('hidden');
+        }
         document.body.classList.remove('menu-open');
       }
     });
-  });
-
-  // Handle window resize - ensure menu is visible on desktop
-  window.addEventListener('resize', function() {
-    if (window.innerWidth >= 768) {
-      if (mainNav && mainNav.classList.contains('hidden')) {
-        mainNav.classList.remove('hidden');
+    
+    // Add shadow on scroll
+    window.addEventListener('scroll', function() {
+      if (header) {
+        if (window.scrollY > 20) {
+          header.classList.add('header-scrolled');
+        } else {
+          header.classList.remove('header-scrolled');
+        }
       }
-      document.body.classList.remove('menu-open');
-      hamburgerIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
-    }
-  });
-
-  // Add shadow on scroll
-  window.addEventListener('scroll', function() {
-    const header = document.querySelector('header');
-    if (header) {
-      if (window.scrollY > 20) {
-        header.classList.add('shadow-md');
-      } else {
-        header.classList.remove('shadow-md');
-      }
+    });
+    
+    // Initialize header state on page load
+    if (window.scrollY > 20 && header) {
+      header.classList.add('header-scrolled');
     }
   });
 </script>

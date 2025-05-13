@@ -1,0 +1,402 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    padding-top: 50px; /* match header height */
+    font-family: 'Playfair Display', serif;
+    line-height: 1.6;
+    color: #333;
+  }
+  
+  header {
+    position: fixed; /* ✅ Make it stick */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width */
+    height: 50px;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-top: 3px solid #e7b455;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    z-index: 1000;
+  }
+  header nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 10;
+  }
+  
+  header nav a {
+    text-decoration: none;
+    color: #202020;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px !important; 
+    padding: 0.5rem 0;
+  }
+  
+  header nav a:hover {
+    color: #e4a314;
+  }
+
+  .sub-header {
+    background-image: url('../images/background-image.jpg'); /* Replace with your actual image path */
+    background-size: cover;
+    background-position: center;
+    height: 180px; /* or your preferred height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+  }
+  
+  .sub-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* optional overlay for better text readability */
+    z-index: 0;
+  }
+  
+  .sub-header h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown > a {
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  /* ✅ FIXED DROPDOWN STYLE */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    min-width: 280px;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+    z-index: 1100;
+    border-radius: 6px;
+    padding: 0.5rem 0;
+  }
+  
+  /* ✅ STYLED EACH ITEM FOR CLARITY */
+  .dropdown-content a {
+    display: block;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #202020;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    white-space: normal;
+    line-height: 1.4;
+    transition: background-color 0.3s;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f7f7f7;
+    color: #e4a314;
+  }
+  
+  /* Optional: Custom scrollbar */
+  .dropdown-content::-webkit-scrollbar {
+    width: 6px;
+  }
+  .dropdown-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .hero-text,
+  .sub-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 50px !important; /* force consistent size */
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* dark shadow */
+  }
+
+  .contact-section {
+    background-color: #ffffff;
+    padding: 60px 20px 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .contact-container {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  
+  /* Contact Text */
+  .contact-text {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  .contact-text h2 {
+    font-size: 40px;
+    color: #1f96c9;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+  .contact-text p {
+    font-size: 15px;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* Contact Details (left side) */
+.contact-details {
+  margin-top: 2rem;
+  flex: 1 1 40%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background-color: #f7f7f7;
+  border-left: 4px solid #e4a314;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+.detail-item h4 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  color: #444;
+}
+
+.detail-item p {
+  margin: 2px 0 0 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: #111;
+}
+
+.detail-item .icon {
+  width: 24px;  /* Set width for image icons */
+  height: 24px; /* Set height for image icons */
+  color: #e4a314; /* For Font Awesome icons */
+}
+
+/* Make the layout responsive for small screens */
+@media (max-width: 768px) {
+  .contact-details {
+    flex: 1 1 100%; /* Full width on small screens */
+  }
+}
+
+  
+ /* Contact Form (right side) */
+.contact-form {
+  flex: 1 1 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 600px;
+  margin: 0 auto; /* Centering form */
+}
+
+/* Styling input and textarea fields */
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #e4a314; /* Highlight focus with color */
+  outline: none; /* Remove default outline */
+}
+
+/* Button styling */
+.contact-form button {
+  padding: 12px;
+  border-radius: 25px;
+  background-color: #e4a314;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: white;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.contact-form button:hover {
+  background-color: #c27a1e;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .contact-form {
+    flex: 1 1 100%;
+    padding: 15px; /* Add some padding around the form on smaller screens */
+  }
+
+  .contact-form input[type="text"],
+  .contact-form input[type="email"],
+  .contact-form textarea {
+    font-size: 14px; /* Adjust font size on smaller screens */
+  }
+
+  .contact-form button {
+    font-size: 14px; /* Adjust button font size on smaller screens */
+  }
+}
+
+/* Form Heading Styling */
+.contact-form .form-heading {
+  font-size: 24px; /* Adjust font size */
+  font-weight: normal;
+  color:  #1f96c9;
+}
+
+.map-section {
+  padding: 10px;
+  text-align: center;
+  background-color: #5b3d3d;
+}
+
+.map-section h2 {
+  font-size: 40px;
+  color: #1f96c9;
+  margin-bottom: 10px;
+  font-weight: normal; /* Ensures the text is not bold */
+  font-style: normal !important;
+}
+
+.map-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+  
+  footer {
+    background-color: #ffefd8;
+    margin-top: 3rem;
+    padding: 2rem 4rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  .footer-left {
+    flex: 1 1 300px;
+  }
+  
+  .footer-logo {
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+  
+  .footer-logo img {
+    height: 40px;
+    width: auto;
+  }
+  
+  .footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  
+  .footer-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  
+  .footer-icon {
+    height: 20px;
+    width: 20px;
+  }
+  
+  .footer-detail p {
+    margin: 0;
+    line-height: 1.3;
+  }
+  
+  .quick-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    flex: 1 1 200px;
+  }
+  
+  .quick-links h4 {
+    color: #1f96c9;
+    text-align: right;
+  }
+    
+  .quick-links a {
+    text-decoration: none;
+    color: #333;
+    margin: 0.2rem 0;
+    text-align: right;
+    transition: color 0.3s ease-in-out;
+  }
+  
+  
+  .quick-links a:hover {
+    color: #e4a314;
+  }
+  
+  .footer-bottom {
+    background: #1f96c9;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    font-family: 'Montserrat', sans-serif;
+  }

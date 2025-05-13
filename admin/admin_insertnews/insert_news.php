@@ -6,13 +6,13 @@ include '../design/mainbody.php';
 
 require_role(['superadmin']);
 
-$message = '';
+$message = $_SESSION['message'] ?? '';
+unset($_SESSION['message']);
 
 // DELETE LOGIC
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
 
-    // Get image path first
     $stmt = $conn->prepare("SELECT image FROM news WHERE id = ?");
     $stmt->bind_param("i", $delete_id);
     $stmt->execute();
@@ -23,26 +23,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     if (!empty($imagePath)) {
         $filePath = '../../uploads/' . basename($imagePath);
         if (file_exists($filePath)) {
-            unlink($filePath); // delete image file
+            unlink($filePath);
         }
     }
 
-    // Delete from database
     $stmt = $conn->prepare("DELETE FROM news WHERE id = ?");
     $stmt->bind_param("i", $delete_id);
     if ($stmt->execute()) {
-        $message = "News deleted successfully.";
+        $_SESSION['message'] = "News deleted successfully.";
     } else {
-        $message = "Delete failed: " . $stmt->error;
+        $_SESSION['message'] = "Delete failed: " . $stmt->error;
     }
     $stmt->close();
+    header("Location: insert_news.php"); // Replace with your actual filename
+    exit;
 }
 
 // INSERT LOGIC
 if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['delete_id'])) {
-    $title = isset($_POST["title"]) ? $_POST["title"] : '';
-    $summary = isset($_POST["summary"]) ? $_POST["summary"] : '';
-    $link = isset($_POST["link"]) ? $_POST["link"] : '';
+    $title = $_POST["title"] ?? '';
+    $summary = $_POST["summary"] ?? '';
+    $link = $_POST["link"] ?? '';
 
     if (isset($_FILES["image"]) && $_FILES["image"]["error"] === 0) {
         $uploadDir = "../../uploads/";
@@ -58,23 +59,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !isset($_POST['delete_id'])) {
                 $stmt->bind_param("ssss", $title, $summary, $displayPath, $link);
 
                 if ($stmt->execute()) {
-                    $message = "News uploaded successfully.";
+                    $_SESSION['message'] = "News uploaded successfully.";
                 } else {
-                    $message = "Database Error: " . $stmt->error;
+                    $_SESSION['message'] = "Database Error: " . $stmt->error;
                 }
-
                 $stmt->close();
             } else {
-                $message = "Error uploading the image.";
+                $_SESSION['message'] = "Error uploading the image.";
             }
         } else {
-            $message = "Invalid file type. Allowed types: JPG, JPEG, PNG, GIF.";
+            $_SESSION['message'] = "Invalid file type. Allowed types: JPG, JPEG, PNG, GIF.";
         }
     } else {
-        $message = "Image file not uploaded or an error occurred.";
+        $_SESSION['message'] = "Image file not uploaded or an error occurred.";
     }
-}
 
+    header("Location: insert_news.php"); // Replace with your actual filename
+    exit;
+}
 // FETCH ALL NEWS
 $newsRecords = $conn->query("SELECT * FROM news ORDER BY created_at DESC");
 ?>

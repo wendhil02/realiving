@@ -1,19 +1,17 @@
 <?php
 include '../../connection/connection.php';
-
+include '../design/mainbody.php';
 function h($str)
 {
     return htmlspecialchars($str ?? '');
 }
-
-include '../design/mainbody.php';
 
 $action = $_GET['action'] ?? 'list';
 $id = $_GET['id'] ?? null;
 
 // Delete Product
 if ($action === 'delete' && $id) {
-    $stmt = $conn->prepare("SELECT image FROM productsrealiving WHERE id = ?");
+    $stmt = $conn->prepare("SELECT image FROM products WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
     $res = $stmt->get_result();
@@ -25,7 +23,7 @@ if ($action === 'delete' && $id) {
             unlink($imagePath);
         }
     }
-    $stmt = $conn->prepare("DELETE FROM productsrealiving WHERE id = ?");
+    $stmt = $conn->prepare("DELETE FROM products WHERE id = ?");
     $stmt->bind_param("i", $id);
     $stmt->execute();
 
@@ -41,13 +39,17 @@ if ($action === 'delete' && $id) {
     <meta charset="UTF-8" />
     <title>Product Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-100">
 
     <div class="flex min-h-screen">
-
+ 
 
         <!-- Main content area -->
         <main class="flex-1 p-8">
@@ -119,13 +121,13 @@ if ($action === 'delete' && $id) {
                     }
                     $imagePath = '';
                     if (!empty($image)) {
-                        $target = "../uploads/" . basename($image);
+                        $target = "uploads/" . basename($image);
                         if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                             $imagePath = $image;
                         }
                     }
 
-                    $stmt = $conn->prepare("INSERT INTO productsrealiving 
+                    $stmt = $conn->prepare("INSERT INTO products 
                     (name, description, size, price, supplier, contact, serial_number, image) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -139,7 +141,7 @@ if ($action === 'delete' && $id) {
                 <!-- Back Button -->
                 <a href="products.php"
                     class="inline-block mb-6 px-5 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition transition duration-150 ease-in-out transform active:scale-95">
-                    Back to Product Listings
+                    &larr; Back to Product Listings
                 </a>
 
                 <div class="flex justify-center items-start min-h-screen">
@@ -231,7 +233,7 @@ if ($action === 'delete' && $id) {
                     $imagePath = '';
 
                     if (!empty($image)) {
-                        $target = "uploads/" . basename($image);
+                        $target = "../uploads/" . basename($image);
                         if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
                             $imagePath = $image;
                         }
@@ -298,7 +300,7 @@ if ($action === 'delete' && $id) {
 
                         <label class="block mb-2 font-medium">Current Image</label>
                         <?php if (!empty($product['image'])): ?>
-                            <img src="uploads/<?= h($product['image']) ?>" alt="Current Image" class="w-32 mb-2">
+                            <img src="../uploads/<?= h($product['image']) ?>" alt="Current Image" class="w-32 mb-2">
                         <?php else: ?>
                             <p>No image uploaded.</p>
                         <?php endif; ?>
@@ -374,44 +376,52 @@ if ($action === 'delete' && $id) {
             <a href="products.php?action=upload"
                 class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-6 transition duration-150 ease-in-out transform active:scale-95 ">+ Add Product</a>
 
-            <!-- Product Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Product List -->
+            <div class="flex flex-col gap-4">
                 <?php if ($result->num_rows > 0): ?>
                     <?php while ($row = $result->fetch_assoc()): ?>
-                        <div class="product-tile bg-white rounded-xl shadow-md overflow-hidden flex flex-col h-full cursor-pointer opacity-0 translate-y-5 transition-all duration-700 
-            hover:shadow-lg hover:brightness-95 hover:-translate-y-3 transition duration-150 ease-in-out transform active:scale-95"
+                        <div class="product-tile bg-white rounded-xl shadow-md overflow-hidden flex flex-col md:flex-row h-full cursor-pointer opacity-0 translate-y-5 transition-all duration-700 
+                hover:shadow-lg hover:brightness-95 transition duration-150 ease-in-out transform active:scale-95"
                             onclick="handleCardClick(event, <?= $row['id'] ?>, 
-                                '../uploads/<?= h($row['image'] ?? 'default.png') ?>', 
-                                '<?= h($row['name']) ?>', 
-                                '<?= h($row['description']) ?>', 
-                                '<?= h($row['size']) ?>',
-                                '<?= $row['price'] ?>', 
-                                '<?= h($row['supplier']) ?>', 
-                                '<?= h($row['contact']) ?>', 
-                                '<?= h($row['serial_number']) ?>')">
-                            <img class="w-full h-48 object-cover transform transition-transform duration-300 hover:scale-105"
-                                src="../uploads/<?= h($row['image'] ?? 'default.png') ?>" alt="<?= h($row['name']) ?>">
+                    '../uploads/<?= h($row['image'] ?? 'default.png') ?>', 
+                    '<?= h($row['name']) ?>', 
+                    '<?= h($row['description']) ?>', 
+                    '<?= h($row['size']) ?>',
+                    '<?= $row['price'] ?>', 
+                    '<?= h($row['supplier']) ?>', 
+                    '<?= h($row['contact']) ?>', 
+                    '<?= h($row['serial_number']) ?>')">
+                            <div class="flex-shrink-0 w-full md:w-48 h-48 md:h-auto">
+                                <img class="w-full h-full object-cover transform transition-transform duration-300 hover:scale-105"
+                                    src="../uploads/<?= h($row['image'] ?? 'default.png') ?>"
+                                    alt="<?= h($row['name']) ?>">
+                            </div>
                             <div class="flex flex-col flex-grow p-4">
-                                <h2 class="text-xl font-semibold"><?= h($row['name']) ?></h2>
-                                <p class="text-gray-600 flex-grow"><?= h($row['description']) ?></p>
-                                <div class="text-sm text-gray-500 mb-4">Size: <?= h($row['size']) ?></div>
-                                <div class="text-sm text-green-600 font-bold">Price: ₱<?= h($row['price']) ?></div>
-                                <div class="text-sm text-gray-500">Supplier: <?= h($row['supplier']) ?></div>
-                                <div class="text-sm text-gray-500">Contact: <?= h($row['contact']) ?></div>
-                                <div class="text-sm text-gray-500 mb-4">Serial #: <?= h($row['serial_number']) ?></div>
-
-                                <div class="mt-auto flex justify-between gap-2 text-sm">
+                                <div class="flex flex-col md:flex-row justify-between gap-2">
+                                    <div class="flex-1">
+                                        <h2 class="text-xl font-semibold mb-2"><?= h($row['name']) ?></h2>
+                                        <p class="text-gray-600 mb-2"><?= h($row['description']) ?></p>
+                                        <div class="text-sm text-gray-500 mb-2">Size: <?= h($row['size']) ?></div>
+                                        <!-- Modified Price Line -->
+                                        <div class="text-green-600 font-bold text-lg mb-2">₱<?= number_format($row['price'], 2) ?></div>
+                                    </div>
+                                    <div class="md:text-right">
+                                        <div class="text-sm text-gray-500">Supplier: <?= h($row['supplier']) ?></div>
+                                        <div class="text-sm text-gray-500">Contact: <?= h($row['contact']) ?></div>
+                                        <div class="text-sm text-gray-500">Serial #: <?= h($row['serial_number']) ?></div>
+                                    </div>
+                                </div>
+                                <div class="mt-auto flex gap-2 text-sm">
                                     <a href="products.php?action=edit&id=<?= $row['id'] ?>"
-                                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition transition duration-150 ease-in-out transform active:scale-95">
+                                        class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out transform active:scale-95">
                                         Edit
                                     </a>
                                     <a href="products.php?action=delete&id=<?= $row['id'] ?>"
-                                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition transition duration-150 ease-in-out transform active:scale-95"
+                                        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition duration-150 ease-in-out transform active:scale-95"
                                         onclick="return confirm('Are you sure you want to delete this product?')">
                                         Delete
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                     <?php endwhile; ?>

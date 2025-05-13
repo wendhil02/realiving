@@ -102,469 +102,783 @@ include 'htmldesign/top.php';
 
 <body class="text-gray-800 leading-relaxed">
   <!-- Hero Section -->
- <section class="relative w-full h-[70vh] overflow-hidden font-sans">
-  <!-- Background Video -->
-  <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
-    <source src="../videos/realiving.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <!-- Solid Dark Overlay -->
-  <div class="absolute inset-0 bg-black/60 z-10"></div>
-
-  <!-- Hero Content -->
-  <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-4 md:px-8 mt-[-40px]">
-    <!-- Logo -->
-    <div class="w-[1600px] bg-black/50 backdrop-blur-sm py-6 rounded-none shadow-lg mb-6 md:mb-10">
-      <img src="../logo/mmone.png" alt="Company Logo" class="w-52 md:w-64 lg:w-72 mx-auto transform transition-transform duration-300 hover:scale-105">
-    </div>
-
-    <!-- Subtitle -->
-    <p class="text-gray-100 text-lg md:text-xl font-medium mb-6 typing-animation">
-      Your Partner in Elegant & Functional Interior Solutions
-    </p>
-
-    <!-- Call to Action Button -->
-    <a href="#services" class="inline-block px-6 py-3 bg-white text-gray-900 font-semibold rounded-full shadow-lg hover:bg-gray-100 transition-all duration-300">
-      Explore Our Services
-    </a>
-  </div>
-</section>
-
-
-
-  <section class=" py-16 bg-gray-100" data-aos="fade-up">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <h2 class="text-3xl font-bold text-sky-600 mb-4">Accomplished Projects</h2>
-      <hr class="w-24 border-b-4 border-sky-600 mx-auto mb-10">
-
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-        <!-- Project Item -->
-        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
-          <img src="./images/project-1.png" alt="Project 1" class="w-20 h-20 object-contain mb-3">
-          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Modern Kitchen Design</p>
-        </a>
-
-        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
-          <img src="./images/project-2.png" alt="Project 2" class="w-20 h-20 object-contain mb-3">
-          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Custom Living Room</p>
-        </a>
-
-        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
-          <img src="./images/project-3.png" alt="Project 3" class="w-20 h-20 object-contain mb-3">
-          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Minimalist Office Setup</p>
-        </a>
-
-        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
-          <img src="./images/project-4.png" alt="Project 4" class="w-20 h-20 object-contain mb-3">
-          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Industrial Bar Counter</p>
-        </a>
-
-        <a href="#" target="_blank" class="group transform hover:scale-105 transition duration-300 bg-white rounded-lg p-4 shadow-md flex flex-col items-center">
-          <img src="./images/project-5.png" alt="Project 5" class="w-20 h-20 object-contain mb-3">
-          <p class="text-sm text-gray-700 font-semibold group-hover:text-sky-600">Cozy Bedroom Cabinetry</p>
-        </a>
-
-      </div>
-    </div>
-  </section>
-
-
-
-<section class="relative py-28 px-6 md:px-24 overflow-hidden bg-gradient-to-br from-white via-sky-50 to-blue-50" data-aos="fade-up">
-  
-  <div class="max-w-6xl mx-auto">
-    <!-- Card Container -->
-    <div class="bg-white bg-opacity-80 backdrop-blur-lg rounded-3xl p-10 md:p-14 border border-sky-100 shadow-xl hover:shadow-2xl transition duration-500">
-
-      <!-- Header -->
-      <div class="text-center mb-12">
-        <h2 class="text-4xl md:text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-sky-600 to-sky-400 tracking-tight">
-          <i class="fas fa-users mr-2"></i> Who We Are
-        </h2>
-        <div class="h-1 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full mt-4"></div>
-      </div>
-
-      <!-- Company Description -->
-      <div class="relative mb-10 pl-4 border-l-4 border-blue-500">
-        <p class="text-gray-800 text-lg md:text-xl mb-4">
-          <span class="font-bold text-yellow-600 text-xl">Realiving Design Center Corp.</span> is a leading architectural fit-out company specializing in design, manufacturing, and installation of premium modular cabinets. We are passionate about creating beautifully functional spaces that elevate the lives of our clients.
-        </p>
-        <p class="text-gray-800 text-lg md:text-xl">
-          Operating under the trade name <span class="font-bold text-sky-600 text-xl">Brava Homes</span>, Realiving is located at Warehouse 5, Sunhope Compound, Purok 7, Brgy. Calasag, San Ildefonso, Bulacan. The company also engages in the wholesale and retail of quality construction, plumbing, and decorative materials.
-        </p>
-      </div>
-
-      <!-- Accordion Section -->
-      <div class="space-y-6">
-        <!-- Mission & Vision -->
-        <details class="group rounded-xl border border-blue-100 overflow-hidden bg-white bg-opacity-60 transition-all duration-300">
-          <summary class="cursor-pointer p-6 flex justify-between items-center text-sky-700 font-semibold text-xl">
-            <span><i class="fas fa-eye mr-2"></i> Our Mission & Vision</span>
-            <svg class="h-6 w-6 transform group-open:rotate-180 transition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div class="p-6 pt-0 space-y-6">
-            <div class="flex items-start">
-              <div class="mt-1 mr-4 text-yellow-500">
-                <i class="fas fa-lightbulb text-xl"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-sky-800 text-lg">Our Vision</h4>
-                <p class="text-gray-700 mt-1">To be the premier design-build company known for creating inspiring living and working spaces.</p>
-              </div>
-            </div>
-            <div class="flex items-start">
-              <div class="mt-1 mr-4 text-sky-500">
-                <i class="fas fa-bullseye text-xl"></i>
-              </div>
-              <div>
-                <h4 class="font-semibold text-sky-800 text-lg">Our Mission</h4>
-                <p class="text-gray-700 mt-1">To deliver innovative, high-quality architectural solutions through craftsmanship and collaboration.</p>
-              </div>
-            </div>
-          </div>
-        </details>
-
-        <!-- Core Values -->
-        <details class="group rounded-xl border border-yellow-100 overflow-hidden bg-white bg-opacity-60 transition-all duration-300">
-          <summary class="cursor-pointer p-6 flex justify-between items-center text-yellow-700 font-semibold text-xl">
-            <span><i class="fas fa-star mr-2"></i> Our Core Values</span>
-            <svg class="h-6 w-6 transform group-open:rotate-180 transition" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </summary>
-          <div class="p-6 pt-0 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
-              <h4 class="font-semibold text-yellow-600 mb-1">Excellence</h4>
-              <p class="text-gray-700">We strive for outstanding results in every project we undertake.</p>
-            </div>
-            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
-              <h4 class="font-semibold text-sky-600 mb-1">Integrity</h4>
-              <p class="text-gray-700">We operate with honesty, transparency, and strong ethical values.</p>
-            </div>
-            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
-              <h4 class="font-semibold text-yellow-600 mb-1">Innovation</h4>
-              <p class="text-gray-700">We embrace change and pioneer creative solutions.</p>
-            </div>
-            <div class="p-5 rounded-lg bg-white border border-gray-100 shadow-sm">
-              <h4 class="font-semibold text-sky-600 mb-1">Client-Centric</h4>
-              <p class="text-gray-700">We value our clients and put their needs at the heart of our process.</p>
-            </div>
-          </div>
-        </details>
-      </div>
-
-      <!-- Call to Action -->
-      <div class="text-center mt-12">
-        <a href="about.php" class="inline-block px-8 py-4 bg-gradient-to-r from-sky-600 to-blue-700 text-white font-semibold rounded-full shadow-md hover:scale-105 hover:shadow-xl transition">
-          Learn More About Us
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="w-full min-h-[65vh] flex flex-col md:flex-row items-center justify-center font-sans bg-black" data-aos="fade-up">
-  <!-- Left Side: Video with Overlay -->
-  <div class="w-full md:w-1/2 h-[300px] md:h-[65vh] relative group">
-    <video autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover brightness-75 group-hover:brightness-90 transition duration-500">
-      <source src="../videos/contentone.mp4" type="video/mp4">
+  <section class="relative w-full h-screen overflow-hidden font-sans">
+    <!-- Background Video -->
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+      <source src="../videos/realiving.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
 
-  </div>
+    <!-- Gradient Overlay for better text visibility -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/60 to-black/40 z-10"></div>
 
-  <!-- Right Side: Content -->
-  <div class="w-full md:w-1/2 px-6 md:px-12 py-12 text-white space-y-6 bg-gradient-to-br from-black via-gray-900 to-black/90 backdrop-blur-sm shadow-2xl">
-    <div class="border-l-4 border-white pl-4">
-      <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">Realiving Design Center</h2>
-    </div>
-    <p class="text-lg md:text-xl leading-relaxed">
-      Transform your study or home office into an inspiring, functional retreat with our bespoke custom furniture and smart storage solutions.
-      From conceptual design to precision manufacturing and seamless installation, we tailor every element to fit your workflow, aesthetic, and space requirements.
-    </p>
-    <a href="#services" class="inline-block px-6 py-3 bg-white text-black font-semibold rounded-full shadow-md hover:bg-gray-200 transition-all duration-300">
-      Inquire
-    </a>
-  </div>
-</section>
+    <!-- Hero Content -->
+    <div class="relative z-20 flex flex-col items-center justify-center h-full text-center px-6 md:px-12 lg:px-20">
+      <!-- Logo Container with subtle glass effect -->
+      <div class="w-full max-w-2xl bg-black/30 backdrop-blur-md py-8 rounded-lg shadow-2xl mb-8 border border-white/10 transform transition-all duration-500 hover:bg-black/40">
+        <img src="../logo/mmone.png" alt="MMOne" class="w-48 md:w-60 lg:w-72 mx-auto transform transition-transform duration-500 hover:scale-105">
+      </div>
 
- <section class="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-200">
-  <!-- Decorative Elements -->
-  <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
-    <div class="absolute -top-10 -left-10 w-64 h-64 bg-yellow-500 rounded-full opacity-10"></div>
-    <div class="absolute top-1/3 -right-10 w-80 h-80 bg-yellow-500 rounded-full opacity-10"></div>
-    <div class="absolute bottom-0 left-1/4 w-48 h-48 bg-yellow-500 rounded-full opacity-10"></div>
-  </div>
-
-  <div class="container mx-auto px-4 relative z-10">
-    <div class="text-center mb-20">
-      <h2 class="text-5xl font-bold text-gray-900 uppercase tracking-wide montserrat relative inline-block">
-        Our Services
-        <span class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-yellow-500"></span>
+      <!-- Tagline with enhanced typography -->
+      <h2 class="text-white text-xl md:text-2xl lg:text-3xl font-light mb-4 tracking-wider">
+        Your Partner in <span class="font-semibold">Elegant & Functional</span> Interior Solutions
       </h2>
-      <p class="mt-6 text-gray-600 max-w-2xl mx-auto">Transforming your space with custom design, quality fabrication, reliable delivery, and expert installation.</p>
-    </div>
 
-    <div class="relative max-w-6xl mx-auto">
-      <!-- Vertical Timeline Line with Animation -->
-      <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-yellow-400 to-yellow-600"></div>
+      <!-- Short Description -->
+      <p class="text-gray-200 text-base md:text-lg max-w-2xl mb-10 opacity-90">
+        Transforming spaces into stunning environments that perfectly balance aesthetics and practicality.
+      </p>
 
-      <!-- DESIGN -->
-      <div class="relative flex flex-col md:flex-row items-center mb-32 group">
-        <!-- Text Content -->
-        <div class="md:w-1/2 md:pr-12 z-10 order-2 md:order-1 mt-10 md:mt-0">
-          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md ml-auto">
-            <div class="flex items-center mb-4">
-              <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <h3 class="text-3xl font-bold text-gray-800 montserrat">DESIGN</h3>
-            </div>
-            <p class="text-gray-700 mt-4 leading-relaxed">We create smart, space-saving, and stylish designs tailored to your specific space and lifestyle needs. Our expert designers work closely with you to bring your vision to life.</p>
-            <a href="#design" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
-              Read More
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Animated Circle -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
-          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span class="text-yellow-500 font-bold">01</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Image -->
-        <div class="md:w-1/2 md:pl-12 relative order-1 md:order-2">
-          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
-            <img src="../logo/real.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Design">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
-              <h3 class="text-white text-3xl font-semibold montserrat">DESIGN</h3>
-              <p class="text-yellow-300 mt-2 font-medium">Turning ideas into plans</p>
-            </div>
-          </div>
-        </div>
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 md:gap-6">
+        <a href="#services" class="px-8 py-3 bg-transparent text-white border-2 border-white font-medium rounded-full shadow-lg hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1">
+          Explore Services
+        </a>
+        <a href="#portfolio" class="px-8 py-3 bg-transparent border-2 border-white text-white font-medium rounded-full shadow-lg hover:bg-white/10 transition-all duration-300 transform hover:-translate-y-1">
+          View Portfolio
+        </a>
       </div>
-
-      <!-- FABRICATE -->
-      <div class="relative flex flex-col md:flex-row items-center mb-32 group">
-        <!-- Image -->
-        <div class="md:w-1/2 md:pr-12 relative order-1">
-          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
-            <img src="../logo/nh.jpg" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Fabricate">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
-              <h3 class="text-white text-3xl font-semibold montserrat">FABRICATE</h3>
-              <p class="text-yellow-300 mt-2 font-medium">Crafting with precision</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Animated Circle -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
-          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span class="text-yellow-500 font-bold">02</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Text Content -->
-        <div class="md:w-1/2 md:pl-12 z-10 order-2 mt-10 md:mt-0">
-          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md">
-            <div class="flex items-center mb-4">
-              <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                </svg>
-              </div>
-              <h3 class="text-3xl font-bold text-gray-800 montserrat">FABRICATE</h3>
-            </div>
-            <p class="text-gray-700 mt-4 leading-relaxed">Using only the highest quality materials, we build each piece with precision and care to ensure durability, functionality, and a modern finish that lasts for years.</p>
-            <a href="#fabricate" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
-              Read More
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      <!-- DELIVERED -->
-      <div class="relative flex flex-col md:flex-row items-center mb-32 group">
-        <!-- Text Content -->
-        <div class="md:w-1/2 md:pr-12 z-10 order-2 md:order-1 mt-10 md:mt-0">
-          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md ml-auto">
-            <div class="flex items-center mb-4">
-              <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
-                </svg>
-              </div>
-              <h3 class="text-3xl font-bold text-gray-800 montserrat">DELIVERED</h3>
-            </div>
-            <p class="text-gray-700 mt-4 leading-relaxed">We transport your furniture safely and on time—straight to your doorstep. Our delivery team handles your custom pieces with care to ensure they arrive in perfect condition.</p>
-            <a href="#delivered" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
-              Read More
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Animated Circle -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
-          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span class="text-yellow-500 font-bold">03</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Image -->
-        <div class="md:w-1/2 md:pl-12 relative order-1 md:order-2">
-          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
-            <img src="../logo/deli.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Delivered">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
-              <h3 class="text-white text-3xl font-semibold montserrat">DELIVERED</h3>
-              <p class="text-yellow-300 mt-2 font-medium">On time, every time</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- INSTALLATION -->
-      <div class="relative flex flex-col md:flex-row items-center group">
-        <!-- Image -->
-        <div class="md:w-1/2 md:pr-12 relative order-1">
-          <div class="overflow-hidden rounded-2xl shadow-xl relative group">
-            <img src="../logo/insta.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Installation">
-            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
-              <h3 class="text-white text-3xl font-semibold montserrat">INSTALLATION</h3>
-              <p class="text-yellow-300 mt-2 font-medium">Expert assembly and setup</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Animated Circle -->
-        <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
-          <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
-            <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-              <span class="text-yellow-500 font-bold">04</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Text Content -->
-        <div class="md:w-1/2 md:pl-12 z-10 order-2 mt-10 md:mt-0">
-          <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md">
-            <div class="flex items-center mb-4">
-              <div class="bg-yellow-100 p-3 rounded-full mr-4">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <h3 class="text-3xl font-bold text-gray-800 montserrat">INSTALLATION</h3>
-            </div>
-            <p class="text-gray-700 mt-4 leading-relaxed">Our team of professionals handles the setup efficiently, making sure everything is perfectly fitted, securely mounted, and ready to use immediately.</p>
-            <a href="#installation" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
-              Read More
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-  <section class="py-20 bg-gray-200 px-6 md:px-20" data-aos="fade-up">
-    <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold text-gray-800">What Clients Say</h2>
-      <hr class="w-12 h-1 bg-yellow-500 mx-auto mt-4 rounded border-0">
-    </div>
-
-    <div class="grid md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-
-      <!-- Testimonial 1 -->
-      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
-        <div class="flex items-center gap-4 mb-6">
-          <img src="../logo/nh.png" alt="Janelle M." class="w-14 h-14 rounded-full object-cover shadow">
-          <div>
-            <p class="text-lg font-semibold text-gray-900">Janelle M.</p>
-            <p class="text-sm text-gray-500">Homeowner</p>
-          </div>
-        </div>
-        <p class="text-gray-700 italic">“Realiving turned our empty unit into a beautiful, functional space. Their team was professional and creative from start to finish.”</p>
-      </div>
-
-      <!-- Testimonial 2 -->
-      <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition duration-300">
-        <div class="flex items-center gap-4 mb-6">
-          <img src="../logo/nh.png" alt="Carlo D." class="w-14 h-14 rounded-full object-cover shadow">
-          <div>
-            <p class="text-lg font-semibold text-gray-900">Carlo D.</p>
-            <p class="text-sm text-gray-500">Business Owner</p>
-          </div>
-        </div>
-        <p class="text-gray-700 italic">“Excellent service and amazing results. Our office renovation was seamless and exceeded expectations.”</p>
-      </div>
-
     </div>
   </section>
 
-  <section class="py-20 bg-cover bg-center relative" data-aos="fade-up" style="background-image: url('../uploads/home.jpg');">
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-10">
-      <h2 class="text-4xl font-bold text-center text-white mb-4">Latest News</h2>
-      <hr class="w-16 h-1 bg-yellow-500 mx-auto mb-10 border-0 rounded">
+ 
 
-      <div class="overflow-hidden" id="newsContainer">
-        <div id="sliderTrack" class="flex gap-6 transition-all duration-500 ease-in-out w-max">
-          <?php
-          $news = [];
-          while ($row = $result->fetch_assoc()) {
-            $news[] = $row;
-          }
 
-          // duplicate news list for smooth looping
-          $loopNews = array_merge($news, $news);
+  <section class="relative py-24 bg-gradient-to-br from-gray-50 via-yellow-50 to-yellow-50 overflow-hidden" data-aos="fade-up">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-200 rounded-full filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-sky-200 rounded-full filter blur-3xl opacity-20"></div>
 
-          foreach ($loopNews as $row):
-          ?>
-            <div class="min-w-[300px] max-w-sm bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition duration-300 flex-shrink-0">
-              <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-48 object-cover">
-              <div class="p-6">
-                <h3 class="text-xl font-semibold text-gray-800 mb-2"><?= htmlspecialchars($row['title']) ?></h3>
-                <p class="text-sm text-gray-600 mb-4"><?= htmlspecialchars($row['summary']) ?></p>
-                <a href="<?= $row['link'] ?>" class="block w-full text-center px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition font-medium">View More</a>
+    <!-- Blueprint Grid Background -->
+    <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(#4299e1 1px, transparent 1px), linear-gradient(to right,rgb(175, 190, 60) 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <div class="inline-block mb-4">
+          <div class="flex items-center justify-center bg-yellow-600 text-white h-16 w-16 rounded-full shadow-lg mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+          <h2 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-400 tracking-tight">Accomplished Projects</h2>
+        </div>
+        <div class="h-1 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full mb-6"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg">Explore our portfolio of premium architectural solutions and modular cabinet designs that we've created for our valued clients.</p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+        <!-- Project Item 1 -->
+        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
+          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
+            <div class="text-white text-center p-4">
+              <p class="font-bold text-lg mb-2">Modern Kitchen Design</p>
+              <p class="text-sm mb-4">Custom modular kitchen cabinets with premium finishes</p>
+              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
+                View Project
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="h-48 bg-gray-100 relative">
+            <img src="./images/project-1.png" alt="Modern Kitchen Design" class="w-full h-full object-cover">
+            <!-- Design Element -->
+            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Modern Kitchen Design</h3>
+            <div class="flex items-center mt-2">
+              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
+              </div>
+              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project Item 2 -->
+        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
+          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
+            <div class="text-white text-center p-4">
+              <p class="font-bold text-lg mb-2">Custom Living Room</p>
+              <p class="text-sm mb-4">Contemporary furniture solutions for modern homes</p>
+              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
+                View Project
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="h-48 bg-gray-100 relative">
+            <img src="./images/project-2.png" alt="Custom Living Room" class="w-full h-full object-cover">
+            <!-- Design Element -->
+            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+              </svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Custom Living Room</h3>
+            <div class="flex items-center mt-2">
+              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
+              </div>
+              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project Item 3 -->
+        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
+          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
+            <div class="text-white text-center p-4">
+              <p class="font-bold text-lg mb-2">Minimalist Office Setup</p>
+              <p class="text-sm mb-4">Functional workspace solutions with clean design</p>
+              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
+                View Project
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="h-48 bg-gray-100 relative">
+            <img src="./images/project-3.png" alt="Minimalist Office Setup" class="w-full h-full object-cover">
+            <!-- Design Element -->
+            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Minimalist Office Setup</h3>
+            <div class="flex items-center mt-2">
+              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
+              </div>
+              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project Item 4 -->
+        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
+          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
+            <div class="text-white text-center p-4">
+              <p class="font-bold text-lg mb-2">Industrial Bar Counter</p>
+              <p class="text-sm mb-4">Stylish bar design with industrial elements</p>
+              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
+                View Project
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="h-48 bg-gray-100 relative">
+            <img src="./images/project-4.png" alt="Industrial Bar Counter" class="w-full h-full object-cover">
+            <!-- Design Element -->
+            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Industrial Bar Counter</h3>
+            <div class="flex items-center mt-2">
+              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
+              </div>
+              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Project Item 5 -->
+        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
+          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
+            <div class="text-white text-center p-4">
+              <p class="font-bold text-lg mb-2">Cozy Bedroom Cabinetry</p>
+              <p class="text-sm mb-4">Space-efficient storage solutions for bedrooms</p>
+              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
+                View Project
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="h-48 bg-gray-100 relative">
+            <img src="./images/project-5.png" alt="Cozy Bedroom Cabinetry" class="w-full h-full object-cover">
+            <!-- Design Element -->
+            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+              </svg>
+            </div>
+          </div>
+          <div class="p-5">
+            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Cozy Bedroom Cabinetry</h3>
+            <div class="flex items-center mt-2">
+              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
+              </div>
+              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <!-- View All Projects -->
+      <div class="text-center mt-12">
+        <a href="allproject/allofproject.php" class="group inline-flex items-center px-8 py-4 bg-white text-sky-600 font-semibold rounded-full border-2 border-sky-500 shadow-md hover:bg-gradient-to-r hover:from-sky-600 hover:to-blue-700 hover:text-white transition-all duration-300">
+          <span>View All Projects</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section id="services" class="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-200" data-aos="fade-up">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+      <div class="absolute -top-10 -left-10 w-64 h-64 bg-yellow-500 rounded-full opacity-10"></div>
+      <div class="absolute top-1/3 -right-10 w-80 h-80 bg-yellow-500 rounded-full opacity-10"></div>
+      <div class="absolute bottom-0 left-1/4 w-48 h-48 bg-yellow-500 rounded-full opacity-10"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center mb-20">
+        <h2 class="text-5xl font-bold text-gray-900 uppercase tracking-wide montserrat relative inline-block">
+          Our Services
+          <span class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-yellow-500"></span>
+        </h2>
+        <p class="mt-6 text-gray-600 max-w-2xl mx-auto">Transforming your space with custom design, quality fabrication, reliable delivery, and expert installation.</p>
+      </div>
+
+      <div class="relative max-w-6xl mx-auto">
+        <!-- Vertical Timeline Line with Animation -->
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-yellow-400 to-yellow-600"></div>
+
+        <!-- DESIGN -->
+        <div class="relative flex flex-col md:flex-row items-center mb-32 group" data-aos="fade-up">
+          <!-- Text Content -->
+          <div class="md:w-1/2 md:pr-12 z-10 order-2 md:order-1 mt-10 md:mt-0">
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md ml-auto">
+              <div class="flex items-center mb-4">
+                <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                  </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 montserrat">DESIGN</h3>
+              </div>
+              <p class="text-gray-700 mt-4 leading-relaxed">We create smart, space-saving, and stylish designs tailored to your specific space and lifestyle needs. Our expert designers work closely with you to bring your vision to life.</p>
+              <a href="design" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Animated Circle -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+            <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+              <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <span class="text-yellow-500 font-bold">01</span>
               </div>
             </div>
-          <?php endforeach; ?>
+          </div>
+
+          <!-- Image -->
+          <div class="md:w-1/2 md:pl-12 relative order-1 md:order-2">
+            <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+              <img src="../logo/real.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Design">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+                <h3 class="text-white text-3xl font-semibold montserrat">DESIGN</h3>
+                <p class="text-yellow-300 mt-2 font-medium">Turning ideas into plans</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FABRICATE -->
+        <div class="relative flex flex-col md:flex-row items-center mb-32 group" data-aos="fade-up">
+          <!-- Image -->
+          <div class="md:w-1/2 md:pr-12 relative order-1">
+            <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+              <img src="../logo/nh.jpg" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Fabricate">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+                <h3 class="text-white text-3xl font-semibold montserrat">FABRICATE</h3>
+                <p class="text-yellow-300 mt-2 font-medium">Crafting with precision</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Animated Circle -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+            <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+              <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <span class="text-yellow-500 font-bold">02</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text Content -->
+          <div class="md:w-1/2 md:pl-12 z-10 order-2 mt-10 md:mt-0">
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md">
+              <div class="flex items-center mb-4">
+                <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                  </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 montserrat">FABRICATE</h3>
+              </div>
+              <p class="text-gray-700 mt-4 leading-relaxed">Using only the highest quality materials, we build each piece with precision and care to ensure durability, functionality, and a modern finish that lasts for years.</p>
+              <a href="#fabricate" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- DELIVERED -->
+        <div class="relative flex flex-col md:flex-row items-center mb-32 group" data-aos="fade-up">
+          <!-- Text Content -->
+          <div class="md:w-1/2 md:pr-12 z-10 order-2 md:order-1 mt-10 md:mt-0">
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md ml-auto">
+              <div class="flex items-center mb-4">
+                <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                  </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 montserrat">DELIVERED</h3>
+              </div>
+              <p class="text-gray-700 mt-4 leading-relaxed">We transport your furniture safely and on time—straight to your doorstep. Our delivery team handles your custom pieces with care to ensure they arrive in perfect condition.</p>
+              <a href="#delivered" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Animated Circle -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+            <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+              <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <span class="text-yellow-500 font-bold">03</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <div class="md:w-1/2 md:pl-12 relative order-1 md:order-2">
+            <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+              <img src="../logo/deli.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Delivered">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+                <h3 class="text-white text-3xl font-semibold montserrat">DELIVERED</h3>
+                <p class="text-yellow-300 mt-2 font-medium">On time, every time</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INSTALLATION -->
+        <div class="relative flex flex-col md:flex-row items-center group" data-aos="fade-up">
+          <!-- Image -->
+          <div class="md:w-1/2 md:pr-12 relative order-1">
+            <div class="overflow-hidden rounded-2xl shadow-xl relative group">
+              <img src="../logo/insta.png" class="w-full h-80 object-cover transform transition duration-700 group-hover:scale-110" alt="Installation">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-70 flex flex-col justify-end p-8">
+                <h3 class="text-white text-3xl font-semibold montserrat">INSTALLATION</h3>
+                <p class="text-yellow-300 mt-2 font-medium">Expert assembly and setup</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Animated Circle -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-12 h-12 flex items-center justify-center z-20">
+            <div class="w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+              <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                <span class="text-yellow-500 font-bold">04</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Text Content -->
+          <div class="md:w-1/2 md:pl-12 z-10 order-2 mt-10 md:mt-0">
+            <div class="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-yellow-500 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl max-w-md">
+              <div class="flex items-center mb-4">
+                <div class="bg-yellow-100 p-3 rounded-full mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <h3 class="text-3xl font-bold text-gray-800 montserrat">INSTALLATION</h3>
+              </div>
+              <p class="text-gray-700 mt-4 leading-relaxed">Our team of professionals handles the setup efficiently, making sure everything is perfectly fitted, securely mounted, and ready to use immediately.</p>
+              <a href="#installation" class="inline-flex items-center mt-6 px-6 py-3 bg-yellow-500 text-white font-medium rounded-lg hover:bg-yellow-600 transition transform hover:-translate-y-1">
+                Read More
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </section>
+
+  <section class="w-full min-h-[75vh] flex flex-col md:flex-row font-sans relative overflow-hidden" data-aos="fade-up">
+    <!-- Left Side: Video with Enhanced Overlay -->
+    <div class="w-full md:w-1/2 h-[350px] md:h-[95vh] relative group overflow-hidden">
+      <!-- Video Container -->
+      <video autoplay muted loop playsinline preload="auto" class="w-full h-full object-cover scale-105 group-hover:scale-110 transition duration-700 ease-in-out">
+        <source src="../videos/contentone.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Elegant Overlay -->
+      <div class="absolute inset-0 bg-gradient-to-tr from-black/70 via-black/30 to-transparent opacity-80 group-hover:opacity-60 transition-opacity duration-500"></div>
+
+      <!-- Floating Design Elements -->
+      <div class="absolute bottom-6 left-6 md:bottom-10 md:left-10 flex items-center space-x-3">
+        <div class="w-12 h-1 bg-white"></div>
+        <span class="text-white text-sm tracking-widest uppercase font-light">Excellence in Design</span>
+      </div>
+    </div>
+
+    <!-- Right Side: Content with Enhanced Design -->
+    <div class="w-full md:w-1/2 px-8 md:px-16 py-16 text-white bg-gradient-to-br from-black via-gray-900 to-black flex flex-col justify-center relative">
+      <!-- Subtle Background Pattern -->
+      <div class="absolute inset-0 opacity-5">
+        <div class="absolute top-0 left-0 w-full h-full" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.4\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')"></div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="space-y-8 relative z-10">
+        <!-- Title with Elegant Border -->
+        <div class="border-l-4 border-white pl-6 py-2 relative">
+          <h2 class="text-4xl md:text-5xl font-bold tracking-tight leading-tight">
+            Realiving <span class="block mt-1 text-3xl md:text-4xl font-light tracking-wider">Design Center</span>
+          </h2>
+          <div class="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-white via-white to-transparent"></div>
+        </div>
+
+        <!-- Description with Enhanced Typography -->
+        <p class="text-lg leading-relaxed font-light max-w-xl">
+          Transform your study or home office into an <span class="italic">inspiring, functional retreat</span> with our bespoke custom furniture and smart storage solutions.
+        </p>
+
+        <p class="text-lg leading-relaxed font-light max-w-xl">
+          From conceptual design to precision manufacturing and seamless installation, we tailor every element to fit your workflow, aesthetic, and space requirements.
+        </p>
+
+        <!-- CTA Area -->
+
+      </div>
+
+      <!-- Bottom Accent -->
+      <div class="absolute bottom-0 right-0 w-1/2 h-px bg-gradient-to-r from-transparent to-white/50"></div>
+    </div>
+  </section>
+
+  <section id="clientsay" class="relative py-24 overflow-hidden bg-gradient-to-br from-gray-50 via-blue-50 to-sky-50" data-aos="fade-up">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 right-0 w-72 h-72 bg-yellow-200 rounded-full filter blur-3xl opacity-20"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-200 rounded-full filter blur-3xl opacity-20"></div>
+
+    <!-- Blueprint Grid Background -->
+    <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(#4299e1 1px, transparent 1px), linear-gradient(to right, #4299e1 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+    <!-- Large Quote Marks -->
+    <div class="absolute top-20 left-10 text-blue-200 opacity-20" style="font-size: 180px; line-height: 1;">❝</div>
+    <div class="absolute bottom-20 right-10 text-blue-200 opacity-20" style="font-size: 180px; line-height: 1;">❞</div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <div class="inline-block mb-4">
+          <div class="flex items-center justify-center bg-yellow-500 text-white h-16 w-16 rounded-full shadow-lg mx-auto mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+          </div>
+          <h2 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-sky-600 to-sky-400 tracking-tight">What Clients Say</h2>
+        </div>
+        <div class="h-1 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full mb-6"></div>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg">Don't just take our word for it. Here's what our valued clients have to say about their experience with Realiving Design Center Corp.</p>
+      </div>
+
+      <!-- Testimonials -->
+      <div class="grid md:grid-cols-2 gap-8 lg:gap-12">
+        <!-- Testimonial 1 -->
+        <div class="relative group">
+          <!-- Card -->
+          <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border border-sky-50 relative z-10 h-full">
+            <!-- Quote Icon -->
+            <div class="absolute -top-5 -left-5 bg-blue-600 text-white h-10 w-10 rounded-full flex items-center justify-center shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+            </div>
+
+            <!-- Rating Stars -->
+            <div class="flex mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+
+            <!-- Testimonial Text -->
+            <p class="text-gray-700 text-lg mb-8 leading-relaxed">
+              <span class="text-blue-600 text-4xl leading-none font-serif mr-1">"</span>
+              Realiving turned our empty unit into a beautiful, functional space. Their team was professional and creative from start to finish. We couldn't be happier with how our dream home has come to life!
+              <span class="text-blue-600 text-4xl leading-none font-serif ml-1">"</span>
+            </p>
+
+            <!-- Project Type -->
+            <div class="mb-6">
+              <span class="bg-blue-50 text-blue-700 text-xs font-medium px-3 py-1 rounded-full">Residential Project</span>
+            </div>
+
+            <!-- Client Info -->
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-sky-100 shadow-md">
+                  <img src="../logo/nh.png" alt="Janelle M." class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-1 -right-1 bg-green-500 text-white h-6 w-6 flex items-center justify-center rounded-full border-2 border-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <p class="text-xl font-semibold text-gray-900">Janelle M.</p>
+                <p class="text-sm text-gray-500 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                  Homeowner
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative Pattern -->
+          <div class="absolute -bottom-2 -right-2 w-full h-full bg-gradient-to-br from-blue-400 to-sky-300 rounded-2xl z-0 opacity-0 group-hover:opacity-20 transition-all duration-300"></div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="relative group">
+          <!-- Card -->
+          <div class="bg-white p-8 md:p-10 rounded-2xl shadow-lg hover:shadow-xl transition duration-300 border border-sky-50 relative z-10 h-full">
+            <!-- Quote Icon -->
+            <div class="absolute -top-5 -left-5 bg-yellow-500 text-white h-10 w-10 rounded-full flex items-center justify-center shadow-lg">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+            </div>
+
+            <!-- Rating Stars -->
+            <div class="flex mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-500" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            </div>
+
+            <!-- Testimonial Text -->
+            <p class="text-gray-700 text-lg mb-8 leading-relaxed">
+              <span class="text-blue-600 text-4xl leading-none font-serif mr-1">"</span>
+              Excellent service and amazing results. Our office renovation was seamless and exceeded expectations. The team was attentive to our needs and delivered our vision within budget and on schedule.
+              <span class="text-blue-600 text-4xl leading-none font-serif ml-1">"</span>
+            </p>
+
+            <!-- Project Type -->
+            <div class="mb-6">
+              <span class="bg-yellow-50 text-yellow-700 text-xs font-medium px-3 py-1 rounded-full">Commercial Project</span>
+            </div>
+
+            <!-- Client Info -->
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-sky-100 shadow-md">
+                  <img src="../logo/nh.png" alt="Carlo D." class="w-full h-full object-cover">
+                </div>
+                <div class="absolute -bottom-1 -right-1 bg-green-500 text-white h-6 w-6 flex items-center justify-center rounded-full border-2 border-white">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <p class="text-xl font-semibold text-gray-900">Carlo D.</p>
+                <p class="text-sm text-gray-500 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                  Business Owner
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative Pattern -->
+          <div class="absolute -bottom-2 -right-2 w-full h-full bg-gradient-to-br from-yellow-400 to-yellow-300 rounded-2xl z-0 opacity-0 group-hover:opacity-20 transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Call To Action -->
+      <div class="mt-16 text-center">
+        <a href="#" class="group inline-flex items-center px-6 py-3 bg-white text-sky-600 font-medium rounded-full border border-sky-200 shadow-sm hover:bg-sky-50 transition-all duration-300">
+          <span>Scroll To Top</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-24 bg-cover bg-fixed bg-center relative" data-aos="fade-up" style="background-image: url('../uploads/home.jpg');">
+    <!-- Enhanced Overlay with Gradient -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-yellow/75 to-yellow/90 z-0"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 md:px-10">
+      <!-- Section Header with Enhanced Typography -->
+      <div class="text-center mb-16">
+        <span class="inline-block text-yellow-400 text-sm font-medium tracking-widest uppercase mb-3">Stay Updated</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">Latest <span class="text-yellow-400">News</span></h2>
+        <div class="w-24 h-px mx-auto relative">
+          <div class="absolute w-full h-px bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
+          <div class="absolute w-16 h-px bg-yellow-400 left-1/2 transform -translate-x-1/2 -translate-y-1 opacity-75"></div>
+          <div class="absolute w-8 h-px bg-yellow-400 left-1/2 transform -translate-x-1/2 translate-y-1 opacity-50"></div>
+        </div>
+      </div>
+
+      <!-- News Carousel with Navigation Controls -->
+      <div class="relative">
+        <!-- Carousel Navigation -->
+        <div class="absolute -left-4 md:-left-8 top-1/2 transform -translate-y-1/2 z-20">
+          <button id="prevBtn" class="w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm text-white flex items-center justify-center border border-white/20 hover:bg-yellow-500 transition duration-300 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div class="absolute -right-4 md:-right-8 top-1/2 transform -translate-y-1/2 z-20">
+          <button id="nextBtn" class="w-12 h-12 rounded-full bg-black/50 backdrop-blur-sm text-white flex items-center justify-center border border-white/20 hover:bg-yellow-500 transition duration-300 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- News Container with Glass Morphism Cards -->
+        <div class="overflow-hidden px-4" id="newsContainer">
+          <div id="sliderTrack" class="flex gap-6 transition-all duration-500 ease-in-out w-max">
+            <?php
+            $news = [];
+            while ($row = $result->fetch_assoc()) {
+              $news[] = $row;
+            }
+
+            // duplicate news list for smooth looping
+            $loopNews = array_merge($news);
+
+            foreach ($loopNews as $row):
+            ?>
+              <div class="min-w-[320px] max-w-sm bg-white/10 backdrop-blur-md rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition duration-300 flex-shrink-0 group border border-white/10">
+                <!-- Image with Hover Effect -->
+                <div class="relative overflow-hidden h-52">
+                  <img src="<?= '../uploads/' . $row['image'] ?>" alt="<?= htmlspecialchars($row['title']) ?>" class="w-full h-full object-cover transition duration-700 ease-in-out group-hover:scale-110">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300"></div>
+                </div>
+
+                <!-- Content with Better Typography -->
+                <div class="p-6 relative">
+                  <!-- Date Badge -->
+
+                  <h3 class="text-xl font-semibold text-white mb-3 group-hover:text-yellow-400 transition duration-300"><?= htmlspecialchars($row['title']) ?></h3>
+                  <p class="text-sm text-gray-300 mb-6 line-clamp-3"><?= htmlspecialchars($row['summary']) ?></p>
+
+                  <!-- Button with Animation -->
+                  <a href="<?= $row['link'] ?>" class="inline-flex items-center text-yellow-400 group-hover:text-white transition duration-300">
+                    <span class="mr-2 font-medium">Read More</span>
+                    <svg class="w-5 h-5 transform group-hover:translate-x-1 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination Dots -->
+      <div class="flex justify-center mt-10 space-x-2" id="paginationDots">
+        <?php for ($i = 0; $i < count($news); $i++): ?>
+          <button class="w-2 h-2 rounded-full bg-white/30 hover:bg-yellow-400 transition-all duration-300 pagination-dot <?= $i === 0 ? 'w-6 bg-yellow-400' : '' ?>" data-index="<?= $i ?>"></button>
+        <?php endfor; ?>
+      </div>
+    </div>
+
   </section>
 
   <!-- Footer Section -->
-  <footer class="bg-gray-900 text-white">
+  <footer class="bg-sky-900 text-white">
     <div class="container mx-auto px-4 py-8">
       <!-- Main Footer Content -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8">
@@ -572,7 +886,7 @@ include 'htmldesign/top.php';
         <div>
           <div class="mb-6">
             <div class="flex justify-center mb-8">
-              <img src="../logo/mmone.png" alt="Your Image" class="w-[80%] max-w-[800px] h-auto rounded-lg shadow-lg">
+              <img src="../logo/mmone.png" alt="Your Image" class="w-[80%] max-w-[800px] h-auto ">
             </div>
 
             <p class="text-gray-300">
@@ -669,18 +983,7 @@ include 'htmldesign/top.php';
 
       <!-- Action Buttons -->
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <a href="quote.php" class="bg-blue-500 hover:bg-blue-600 text-white py-3 font-medium transition flex items-center justify-center">
-          Request Quote
-        </a>
-        <a href="consultation.php" class="bg-yellow-500 hover:bg-yellow-600 text-white py-3 font-medium transition flex items-center justify-center">
-          Schedule Consultation
-        </a>
-        <a href="portfolio.php" class="bg-gray-700 hover:bg-gray-600 text-white py-3 font-medium transition flex items-center justify-center">
-          View Portfolio
-        </a>
-        <a href="contact-designer.php" class="bg-blue-700 hover:bg-blue-800 text-white py-3 font-medium transition flex items-center justify-center">
-          Contact Designer
-        </a>
+
       </div>
 
       <!-- Copyright -->
@@ -703,51 +1006,58 @@ include 'htmldesign/top.php';
 
 
   <script>
-    // Add smooth reveal animations
     document.addEventListener('DOMContentLoaded', function() {
-      // Get all details elements
-      const allDetails = document.querySelectorAll('details');
+      const sliderTrack = document.getElementById('sliderTrack');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      const paginationDots = document.querySelectorAll('.pagination-dot');
+      const cardWidth = 340; // Card width + gap
+      let currentIndex = 0;
+      const totalItems = <?= count($news) ?>;
 
-      // Add transition effects
-      allDetails.forEach(details => {
-        details.addEventListener('toggle', function() {
-          if (details.open) {
-            details.classList.add('shadow-md');
+      // Update slider position
+      function updateSlider() {
+        sliderTrack.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
+
+        // Update pagination dots
+        paginationDots.forEach((dot, index) => {
+          if (index === currentIndex) {
+            dot.classList.add('w-6', 'bg-yellow-400');
+            dot.classList.remove('bg-white/30', 'w-2');
           } else {
-            details.classList.remove('shadow-md');
+            dot.classList.remove('w-6', 'bg-yellow-400');
+            dot.classList.add('bg-white/30', 'w-2');
           }
+        });
+      }
+
+      // Next slide
+      nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateSlider();
+      });
+
+      // Previous slide
+      prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+        updateSlider();
+      });
+
+      // Pagination dot click
+      paginationDots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          currentIndex = index;
+          updateSlider();
         });
       });
 
-      // Optional: Animate the decorative elements
-      const decorElements = document.querySelectorAll('section > div:nth-child(-n+3)');
-      decorElements.forEach((elem, index) => {
-        elem.style.animation = `float ${6 + index}s ease-in-out infinite`;
-        elem.style.animationDelay = `${index * 0.5}s`;
-      });
+      // Auto slide every 5 seconds
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalItems;
+        updateSlider();
+      }, 5000);
     });
 
-    const slidess = document.querySelectorAll('.hero-slide');
-    let currentHeroIndex = 0;
-
-    function showHeroSlide(index) {
-      slidess.forEach((slide, i) => {
-        slide.classList.remove('opacity-100', 'z-20');
-        slide.classList.add('opacity-0', 'z-10');
-        if (i === index) {
-          slide.classList.remove('opacity-0');
-          slide.classList.add('opacity-100', 'z-20');
-        }
-      });
-    }
-
-    function nextHeroSlide() {
-      currentHeroIndex = (currentHeroIndex + 1) % slidess.length;
-      showHeroSlide(currentHeroIndex);
-    }
-
-    showHeroSlide(currentHeroIndex);
-    setInterval(nextHeroSlide, 5000);
 
     const container = document.getElementById('newsContainer');
     const track = document.getElementById('sliderTrack');

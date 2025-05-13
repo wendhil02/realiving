@@ -15,411 +15,584 @@ $inquiries = $conn->query("SELECT * FROM contact_inquiries ORDER BY created_at D
 $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <!-- Font Awesome CDN (latest version) -->
+  <title>Client Management Dashboard</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome CDN -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Add Custom Tailwind CSS for Realiving Yellow -->
-  <style>
-    .bg-realiving-yellow {
-      background-color: #FFCC00; /* Realiving Yellow */
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            },
+            realiving: {
+              DEFAULT: '#FFCC00',
+              light: '#FFED7D',
+              dark: '#E6B800'
+            },
+            noblehome: {
+              DEFAULT: '#FF7A00',
+              light: '#FFA552',
+              dark: '#E66D00'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        }
+      }
     }
-    .text-realiving-yellow {
-      color: #FFCC00; /* Realiving Yellow */
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .chart-container {
+      position: relative;
+      height: 220px;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Animation for notifications */
+    @keyframes slideInNotification {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .notification-animate {
+      animation: slideInNotification 0.3s ease forwards;
     }
   </style>
 </head>
 
-<body class="bg-gray-200">
+<body class="bg-slate-50 min-h-screen">
 
-  <?php
-  if (isset($_SESSION['admin_email']) && isset($_SESSION['admin_role'])) {
-    echo "<div class='text-right p-4 text-blue-900'>
-            <i class='fas fa-user mr-2'></i>
-            Logged in as: <strong>" . htmlspecialchars($_SESSION['admin_email']) . "</strong> 
-            <span class='ml-2 text-sm text-gray-600'>(Role: " . htmlspecialchars($_SESSION['admin_role']) . ")</span>
-          </div>";
-  }
-  ?>
-
+  <!-- Notification -->
   <?php if (isset($_SESSION['noti'])): ?>
-    <div id="notifBox" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-200 text-yellow-800 p-4 rounded shadow-lg w-80 text-center">
-      <?= $_SESSION['noti']; ?>
+    <div id="notifBox" class="fixed top-20 right-4 bg-white border-l-4 border-green-500 shadow-lg rounded-lg p-4 w-80 notification-animate z-50">
+      <div class="flex items-center">
+        <i class="fas fa-check-circle text-green-500 mr-3 text-xl"></i>
+        <div>
+          <p class="text-sm font-medium text-gray-900">Success</p>
+          <p class="text-xs text-gray-600"><?= $_SESSION['noti']; ?></p>
+        </div>
+        <button onclick="this.parentElement.parentElement.remove()" class="ml-auto text-gray-400 hover:text-gray-500">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
     </div>
     <script>
-      // Auto-hide after 3 seconds
       setTimeout(function() {
         var notif = document.getElementById("notifBox");
         if (notif) {
-          notif.style.display = "none";
+          notif.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+          setTimeout(() => notif.remove(), 300);
         }
       }, 3000);
     </script>
     <?php unset($_SESSION['noti']); ?>
   <?php endif; ?>
 
-  <section class="py-2">
-    <div class="max-w-7xl mx-auto">
-      <div class="flex flex-wrap justify-between gap-4">
-        <!-- Pie Chart: New vs Old Clients -->
-        <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%] ml-4">
-          <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Client Type</h2>
-          <canvas id="combinedClientChart" width="150" height="150"></canvas>
-        </div>
+  <!-- Main Content -->
+  <div class="pt-10 pb-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
 
-        <!-- Total Clients Counter -->
-        <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center justify-center w-full sm:w-[30%] md:w-[28%]">
-          <h2 class="text-xl font-semibold text-gray-700 mb-4">Total Clients</h2>
-          <canvas id="totalClientsBar" width="180" height="150"></canvas>
-        </div>
+    <!-- Dashboard Header -->
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">Client Management Dashboard</h1>
+      <p class="text-sm text-gray-600 mt-1">Overview of all client activities and statistics</p>
+    </div>
 
-        <!-- Pie Chart: Completed vs Incomplete Clients -->
-        <div class="bg-white shadow rounded-lg p-4 flex flex-col items-center w-full sm:w-[30%] md:w-[28%] mr-4">
-          <h2 class="text-xl font-semibold text-center text-gray-700 mb-4">Status Overview</h2>
-          <canvas id="statusClientChart" width="150" height="150"></canvas>
+    <!-- Analytics Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+      <!-- New vs Old Clients -->
+      <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-shadow">
+        <h2 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
+          <i class="fas fa-users text-primary-500 mr-2"></i>
+          Client Type Distribution
+        </h2>
+        <div class="chart-container">
+          <canvas id="combinedClientChart"></canvas>
         </div>
+      </div>
 
+      <!-- Total Clients -->
+      <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-shadow">
+        <h2 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
+          <i class="fas fa-chart-bar text-primary-500 mr-2"></i>
+          Client Overview
+        </h2>
+        <div class="chart-container">
+          <canvas id="totalClientsBar"></canvas>
+        </div>
+      </div>
+
+      <!-- Completion Status -->
+      <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 hover:shadow-md transition-shadow">
+        <h2 class="text-base font-semibold text-gray-900 mb-4 flex items-center">
+          <i class="fas fa-tasks text-primary-500 mr-2"></i>
+          Completion Status
+        </h2>
+        <div class="chart-container">
+          <canvas id="statusClientChart"></canvas>
+        </div>
       </div>
     </div>
-  </section>
 
-  <div class="flex justify-center">
-    <div class="mb-5 w-full max-w-md mt-2">
-      <div class="flex items-center w-full bg-white rounded-lg shadow px-4 py-2">
-        <input
-          type="text"
-          id="searchInput"
-          placeholder="Search here..."
-          class="w-full bg-transparent focus:outline-none text-gray-700" />
-        <button id="searchBtn" type="button">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none"
-            viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </button>
+    <!-- Search and Filters Section -->
+    <div class="bg-white rounded-xl shadow-sm p-5 border border-gray-100 mb-6">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <!-- Search Bar -->
+        <div class="relative flex-grow max-w-md">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <i class="fas fa-search text-gray-400"></i>
+          </div>
+          <input type="text" id="searchInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2.5" placeholder="Search clients, projects...">
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-3">
+          <!-- Sort Dropdown -->
+          <div class="flex items-center">
+            <label for="sortOrder" class="mr-2 text-sm font-medium text-gray-700">Sort by:</label>
+            <select id="sortOrder" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 p-2.5">
+              <option value="asc">A to Z</option>
+              <option value="desc">Z to A</option>
+            </select>
+          </div>
+
+
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Sort Dropdown -->
-  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 ml-5">
-    <div class="flex items-center space-x-2">
-      <label for="sortOrder" class="text-gray-700 font-medium">Sort by:</label>
-      <select id="sortOrder" class="px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent text-sm">
-        <option value="asc">A to Z</option>
-        <option value="desc">Z to A</option>
-      </select>
-    </div>
-  </div>
+    <!-- Client Records Table -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+      <div class="p-5 border-b border-gray-200">
+        <h2 class="text-lg font-semibold text-gray-900">Client Records</h2>
+      </div>
 
-  <!-- Client Records Table -->
-  <div class="bg-white shadow-xl p-8 w-full overflow-x-auto">
-    <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-gray-800">Client Records</h2>
-    </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+              <th class="px-6 py-4 font-medium">Reference No.</th>
+              <th class="px-6 py-4 font-medium">Name</th>
+              <th class="px-6 py-4 font-medium">Project Name</th>
+              <th class="px-6 py-4 font-medium">Client Type</th>
+              <th class="px-6 py-4 font-medium">Status</th>
+              <th class="px-6 py-4 font-medium">Last Updated</th>
+              <th class="px-6 py-4 font-medium text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="clientTableBody" class="divide-y divide-gray-200">
+            <?php
+            // Connect to your database (make sure $conn is already initialized)
+            $result = $conn->query("
+                  SELECT u.*, 
+                      (SELECT COUNT(*) FROM step_updates s WHERE s.client_id = u.id AND s.step = 10) AS step10_done 
+                  FROM user_info u 
+                  ORDER BY u.created_at DESC
+              ");
 
-    <div class="overflow-x-auto bg-white rounded-lg shadow-md mt-6">
-      <table class="min-w-full table-auto divide-y divide-gray-200 text-sm">
-        <thead class="bg-gray-50">
-          <tr>
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Reference No.</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Name</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Project Name</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Client Type</th> <!-- New Column -->
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Status</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Last Updated</th>
-            <th class="px-6 py-3 text-left font-semibold text-gray-600 uppercase tracking-wider">Action</th>
-          </tr>
-        </thead>
+            if ($result->num_rows > 0):
+              while ($row = $result->fetch_assoc()):
+                $clientLink = 'client_update.php?id=' . urlencode($row['id']);
+            ?>
+                <tr class="client-row hover:bg-gray-50 cursor-pointer transition-colors" onclick="window.location.href='<?php echo $clientLink; ?>'">
+                  <td class="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                    <?php echo htmlspecialchars($row['reference_number']); ?>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap client-name">
+                    <div class="flex items-center">
+                      <div class="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 mr-3">
+                        <?php echo strtoupper(substr(htmlspecialchars($row['clientname']), 0, 1)); ?>
+                      </div>
+                      <span><?php echo htmlspecialchars($row['clientname']); ?></span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700">
+                    <?php echo htmlspecialchars($row['nameproject']); ?>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <?php
+                    $clientType = htmlspecialchars($row['client_type'] ?? 'N/A');
 
-        <tbody class="divide-y divide-gray-100" id="clientTableBody">
-          <?php
-          // Connect to your database (make sure $conn is already initialized)
-          $result = $conn->query("
-                SELECT u.*, 
-                    (SELECT COUNT(*) FROM step_updates s WHERE s.client_id = u.id AND s.step = 10) AS step10_done 
-                FROM user_info u 
-                ORDER BY u.created_at DESC
-            ");
-
-          if ($result->num_rows > 0):
-            while ($row = $result->fetch_assoc()):
-              $clientLink = 'client_update.php?id=' . urlencode($row['id']);
-          ?>
-              <tr onclick="window.location.href='<?php echo $clientLink; ?>'" class="client-row hover:bg-gray-100 cursor-pointer transition duration-200 group">
-
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700 group-hover:font-semibold">
-                  <?php echo htmlspecialchars($row['reference_number']); ?>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700 group-hover:font-semibold client-name">
-                  <?php echo htmlspecialchars($row['clientname']); ?>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-700 group-hover:font-semibold">
-                  <?php echo htmlspecialchars($row['nameproject']); ?>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-  <?php
-    $clientType = htmlspecialchars($row['client_type'] ?? 'N/A');
-
-    // Set badge styles based on client type
-    $badgeClasses = 'inline-block text-xs font-semibold px-3 py-1 rounded-full shadow-sm';
-    if (strtolower($clientType) === 'realiving') {
-        $badgeColor = 'bg-[#FFED7D] text-yellow-900'; // Realiving Yellow
-    } elseif (strtolower($clientType) === 'noblehome') {
-        $badgeColor = 'bg-[#FFA552] text-white'; // Noblehome Orange
-    } else {
-        $badgeColor = 'bg-gray-300 text-gray-700'; // Default style for other types
-    }
-  ?>
-  <span class="<?= $badgeClasses . ' ' . $badgeColor ?>">
-    <?= $clientType ?>
-  </span>
-</td>
-
-
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <?php if ($row['step10_done'] > 0): ?>
-                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
-                      Complete
-                    </span>
-                  <?php else: ?>
-                    <span class="inline-block px-2 py-1 text-xs font-medium rounded-full bg-red-100 text-red-700">
-                      Incomplete
-                    </span>
-                  <?php endif; ?>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-gray-500 text-sm">
-                  <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <a href="<?php echo $clientLink; ?>" onclick="event.stopPropagation();" class="inline-flex items-center px-3 py-2 bg-blue-500 hover:bg-blue-600 text-white text-xs font-semibold rounded-md shadow-sm transition duration-150">
-                    Update
-                  </a>
-                </td>
-              </tr>
-          <?php endwhile;
-          else: ?>
-              <tr>
-                <td colspan="7" class="px-6 py-8 text-center text-gray-400">No records found.</td>
-              </tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- JavaScript for Search -->
-    <script>
-      fetch('get_client_data.php')
-        .then(response => response.json())
-        .then(data => {
-          if (data.error) {
-            console.error('Error:', data.error);
-            return;
-          }
-
-          // PIE: New vs Old Clients
-          const ctxType = document.getElementById('combinedClientChart').getContext('2d');
-          new Chart(ctxType, {
-            type: 'pie',
-            data: {
-              labels: ['New Clients', 'Old Clients'],
-              datasets: [{
-                data: [data.newClientCount, data.oldClientCount],
-                backgroundColor: ['#4CAF50', '#2196F3'],
-                borderColor: ['#fff', '#fff'],
-                borderWidth: 2
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top'
-                }
-              }
-            }
-          });
-
-   // BAR: Total Clients (New + Old + Realiving + Noblehome + Total)
-const ctxTotal = document.getElementById('totalClientsBar').getContext('2d');
-const totalClientCount = data.newClientCount + data.oldClientCount; // already provided by PHP
-
-new Chart(ctxTotal, {
-  type: 'bar',
-  data: {
-    labels: ['Clients'],
-    datasets: [
-      {
-        label: 'New Clients',
-        data: [data.newClientCount],
-        backgroundColor: '#4CAF50'
-      },
-      {
-        label: 'Old Clients',
-        data: [data.oldClientCount],
-        backgroundColor: '#2196F3'
-      },
-      {
-        label: 'Realiving Clients',
-        data: [data.realivingClientCount],
-        backgroundColor: '#6366F1' // Indigo
-      },
-      {
-        label: 'Noblehome Clients',
-        data: [data.noblehomeClientCount],
-        backgroundColor: '#F59E0B' // Amber
-      },
-      {
-        label: 'Total Clients',
-        data: [data.totalClientCount],
-        backgroundColor: '#9CA3AF' // Gray
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Client Count'
-        }
-      }
-    },
-    plugins: {
-      legend: {
-        position: 'bottom'
-      },
-      tooltip: {
-        mode: 'index',
-        intersect: false
-      }
-    }
-  }
-});
-
-
-
-          // PIE: Completed vs Incomplete Clients
-          const ctxStatus = document.getElementById('statusClientChart').getContext('2d');
-          const totalStatus = data.completedClients + data.incompleteClients;
-          new Chart(ctxStatus, {
-            type: 'pie',
-            data: {
-              labels: ['Completed', 'Incomplete'],
-              datasets: [{
-                data: [data.completedClients, data.incompleteClients],
-                backgroundColor: ['#10B981', '#EF4444'],
-                borderColor: ['#fff', '#fff'],
-                borderWidth: 2
-              }]
-            },
-            options: {
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'bottom'
-                },
-                tooltip: {
-                  callbacks: {
-                    label: function(context) {
-                      const value = context.raw;
-                      const percent = ((value / totalStatus) * 100).toFixed(1);
-                      return `${context.label}: ${value} (${percent}%)`;
+                    if (strtolower($clientType) === 'realiving') {
+                      echo '<span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-800">
+                                <span class="h-1.5 w-1.5 rounded-full bg-yellow-500 mr-1"></span>
+                                Realiving
+                              </span>';
+                    } elseif (strtolower($clientType) === 'noblehome') {
+                      echo '<span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-800">
+                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500 mr-1"></span>
+                                Noblehome
+                              </span>';
+                    } else {
+                      echo '<span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-800">
+                                <span class="h-1.5 w-1.5 rounded-full bg-gray-500 mr-1"></span>
+                                ' . $clientType . '
+                              </span>';
                     }
+                    ?>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
+                    <?php if ($row['step10_done'] > 0): ?>
+                      <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-800">
+                        <span class="h-1.5 w-1.5 rounded-full bg-green-500 mr-1"></span>
+                        Complete
+                      </span>
+                    <?php else: ?>
+                      <span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-1 text-xs font-medium text-red-800">
+                        <span class="h-1.5 w-1.5 rounded-full bg-red-500 mr-1"></span>
+                        Incomplete
+                      </span>
+                    <?php endif; ?>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-500 text-xs">
+                    <div class="flex items-center">
+                      <i class="far fa-calendar-alt mr-1.5"></i>
+                      <?php echo date('M d, Y', strtotime($row['created_at'])); ?>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-right">
+                    <a href="<?php echo $clientLink; ?>" onclick="event.stopPropagation();" class="text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-xs px-3 py-2 inline-flex items-center">
+                      <i class="fas fa-pen-to-square mr-1.5"></i>
+                      Update
+                    </a>
+                  </td>
+                </tr>
+              <?php
+              endwhile;
+            else:
+              ?>
+              <tr>
+                <td colspan="7" class="px-6 py-10 text-center text-gray-500">
+                  <div class="flex flex-col items-center">
+                    <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    <p class="text-base">No records found</p>
+                    <p class="text-sm text-gray-400 mt-1">Try adjusting your search or filters</p>
+                  </div>
+                </td>
+              </tr>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white py-4 border-t border-gray-200 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-xs text-gray-500">© 2025 ClientFlow Management System. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Fetch client data and create charts
+    fetch('get_client_data.php')
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          console.error('Error:', data.error);
+          return;
+        }
+
+        // Chart 1: New vs Old Clients
+        const ctxType = document.getElementById('combinedClientChart').getContext('2d');
+        new Chart(ctxType, {
+          type: 'doughnut',
+          data: {
+            labels: ['New Clients', 'Old Clients'],
+            datasets: [{
+              data: [data.newClientCount, data.oldClientCount],
+              backgroundColor: ['#3b82f6', '#10b981'],
+              borderColor: ['#ffffff', '#ffffff'],
+              borderWidth: 2,
+              hoverOffset: 15
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true,
+                  padding: 15,
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleFont: {
+                  size: 14
+                },
+                bodyFont: {
+                  size: 13
+                },
+                displayColors: false,
+                callbacks: {
+                  label: function(context) {
+                    const label = context.label || '';
+                    const value = context.parsed || 0;
+                    const total = context.dataset.data.reduce((acc, val) => acc + val, 0);
+                    const percentage = Math.round((value / total) * 100);
+                    return `${label}: ${value} (${percentage}%)`;
                   }
                 }
               }
             }
-          });
-        })
-        .catch(error => {
-          console.error('Fetch error:', error);
-        });
-
-      // Search functionality
-      const searchInput = document.getElementById('searchInput');
-      const searchBtn = document.getElementById('searchBtn');
-
-      function performSearch() {
-        const filter = searchInput.value.trim().toLowerCase();
-        const rows = document.querySelectorAll('.client-row'); // Use the class name for rows
-
-        rows.forEach(row => {
-          const cells = row.querySelectorAll('td');
-          let rowContainsSearch = false; // Flag to check if row matches the search
-
-          // Loop through all columns in the row
-          cells.forEach(cell => {
-            const cellText = cell.textContent.trim().toLowerCase();
-            if (cellText.includes(filter)) {
-              rowContainsSearch = true;
-            }
-          });
-
-          // Show or hide the row based on search result
-          if (filter === '' || rowContainsSearch) {
-            row.style.display = ''; // Show row if it matches
-          } else {
-            row.style.display = 'none'; // Hide row if it doesn't match
           }
         });
-      }
 
-      // Trigger on search button click
-      searchBtn.addEventListener('click', performSearch);
+        const ctxTotal = document.getElementById('totalClientsBar').getContext('2d');
+        new Chart(ctxTotal, {
+          type: 'bar',
+          data: {
+            labels: ['Client Categories'],
+            datasets: [{
+                label: 'New Clients',
+                data: [data.newClientCount],
+                backgroundColor: '#3b82f6', // Blue
+                borderRadius: 5,
+                barThickness: 20
+              },
+              {
+                label: 'Old Clients',
+                data: [data.oldClientCount],
+                backgroundColor: '#10b981', // Green
+                borderRadius: 5,
+                barThickness: 20
+              },
+              {
+                label: 'Realiving',
+                data: [data.realivingClientCount],
+                backgroundColor: '#FFCC00', // Yellow
+                borderRadius: 5,
+                barThickness: 20
+              },
+              {
+                label: 'Noblehome',
+                data: [data.noblehomeClientCount],
+                backgroundColor: '#FF7A00', // Orange
+                borderRadius: 5,
+                barThickness: 20
+              },
+              {
+                label: 'Total Clients',
+                data: [data.totalClientCount],
+                backgroundColor: '#8B5CF6', // Purple
+                borderRadius: 5,
+                barThickness: 20
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                display: false,
+                grid: {
+                  display: false
+                }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  precision: 0
+                },
+                grid: {
+                  color: 'rgba(0, 0, 0, 0.05)'
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true,
+                  padding: 15,
+                  boxWidth: 10,
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleFont: {
+                  size: 14
+                },
+                bodyFont: {
+                  size: 13
+                }
+              }
+            }
+          }
+        });
 
-      // Trigger on Enter key
-      searchInput.addEventListener('keydown', function(e) {
+
+        // Chart 3: Completed vs Incomplete Clients
+        const ctxStatus = document.getElementById('statusClientChart').getContext('2d');
+        const totalStatus = data.completedClients + data.incompleteClients;
+        new Chart(ctxStatus, {
+          type: 'doughnut',
+          data: {
+            labels: ['Completed', 'Incomplete'],
+            datasets: [{
+              data: [data.completedClients, data.incompleteClients],
+              backgroundColor: ['#10b981', '#ef4444'],
+              borderColor: ['#ffffff', '#ffffff'],
+              borderWidth: 2,
+              hoverOffset: 15
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  usePointStyle: true,
+                  padding: 15,
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                padding: 12,
+                titleFont: {
+                  size: 14
+                },
+                bodyFont: {
+                  size: 13
+                },
+                displayColors: false,
+                callbacks: {
+                  label: function(context) {
+                    const value = context.parsed;
+                    const percent = ((value / totalStatus) * 100).toFixed(1);
+                    return `${context.label}: ${value} (${percent}%)`;
+                  }
+                }
+              }
+            }
+          }
+        });
+      })
+      .catch(error => {
+        console.error('Fetch error:', error);
+      });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('searchInput');
+
+      searchInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          e.preventDefault(); // Prevent form submission if inside form
           performSearch();
         }
       });
 
-      // Sorting functionality
-      const sortSelect = document.getElementById('sortOrder');
-      const clientTableBody = document.getElementById('clientTableBody');
-      const clientRows = Array.from(clientTableBody.querySelectorAll('.client-row'));
+      function performSearch() {
+        const filter = searchInput.value.trim().toLowerCase();
+        const rows = document.querySelectorAll('.client-row');
 
-      // Function to sort the rows
-      function sortTable() {
-        const sortOrder = sortSelect.value;
-        const sortedRows = clientRows.sort((rowA, rowB) => {
-          const nameA = rowA.querySelector('td:nth-child(2)').textContent.toLowerCase();
-          const nameB = rowB.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-          if (sortOrder === 'asc') {
-            return nameA.localeCompare(nameB);
-          } else {
-            return nameB.localeCompare(nameA);
-          }
+        rows.forEach(row => {
+          const text = row.textContent.toLowerCase();
+          row.style.display = text.includes(filter) ? '' : 'none';
         });
-
-        // Reattach the sorted rows to the table body
-        sortedRows.forEach(row => clientTableBody.appendChild(row));
       }
+    });
+    // Sorting functionality
+    const sortSelect = document.getElementById('sortOrder');
+    const clientTableBody = document.getElementById('clientTableBody');
+    const clientRows = Array.from(clientTableBody.querySelectorAll('.client-row'));
 
-      // Trigger sorting whenever the sort option changes
-      sortSelect.addEventListener('change', sortTable);
+    sortSelect.addEventListener('change', sortTable);
 
-      // Call the sorting function initially to apply the default order (A to Z)
-      sortTable();
-    </script>
+    function sortTable() {
+      const sortOrder = sortSelect.value;
+      const sortedRows = clientRows.sort((rowA, rowB) => {
+        const nameA = rowA.querySelector('.client-name').textContent.trim().toLowerCase();
+        const nameB = rowB.querySelector('.client-name').textContent.trim().toLowerCase();
+
+        return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
+      });
+
+      sortedRows.forEach(row => clientTableBody.appendChild(row));
+    }
+
+    // Initial sort
+    sortTable();
+  </script>
 
 </body>
 

@@ -1,0 +1,119 @@
+<?php
+  include 'database.php';
+
+  include 'header.php';
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Realiving Design Center</title>
+  <link rel="icon" type="image/png" href="./images/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/project-template.css?v=2.0" />
+</head>
+<body>
+
+  <section class="sub-header">
+    <h1>Alphaland Baguio Mountatin Lodges</h1>
+  </section>
+
+  <section class="project-section">
+    <div class="project-container">
+      <div class="project-text">
+        <h2>Realiving Design Center's Work for Alphaland Baguio Mountain Lodges</h2>
+        <p>Realiving Design Center delivered creative design solutions for Alphaland Baguio Mountain Lodges, concentrating on crafting a functional and visually appealing space. Below are the finished results of the project:</p>
+      </div>
+      <div class="project-images">
+        <div class="project-image">
+          <img src="./images/alphaland-project-1.png">
+          <p>Solid Wood Kitchen Cabinets and Wine Cabinet</p>
+        </div>
+        <div class="project-image">
+          <img src="./images/alphaland-project-2.png">
+          <p>Solid Wood Kitchen Cabinets</p>
+        </div>
+        <div class="project-image">
+          <img src="./images/alphaland-project-3.png">
+          <p>Solid Wood Kitchen Cabinets</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-section">
+    <div class="contact-container">
+  
+      <!-- LEFT SIDE: LOGO + CONTACT DETAILS -->
+      <div class="contact-left">
+        <img src="./images/logo.png" alt="Company Logo" class="company-logo">
+  
+        <div class="contact-text">
+          <h2><i>Contact Us</i></h2>
+          <p>We would love to speak with you.</p>
+        </div>
+  
+        <!-- CONTACT DETAILS BELOW THE TEXT -->
+        <div class="contact-details">
+          <div class="detail-item">
+            <img src="./images/calendar-icon.png" alt="Office Hours Icon">
+            <span>Mon-Fri | 8AM - 5PM</span>
+          </div>
+          <div class="detail-item">
+            <img src="./images/email-icon.png" alt="Email Icon">
+            <span>company email</span>
+          </div>
+          <div class="detail-item">
+            <img src="./images/call-icon.png" alt="Phone Icon">
+            <span>company number</span>
+          </div>
+        </div>
+      </div>
+  
+      <!-- RIGHT SIDE: FORM -->
+      <div class="contact-right">
+        <form class="contact-form">
+          <input type="text" placeholder="E.g. Juan Dela Cruz" required>
+          <input type="text" placeholder="E.g. (+63) 923 456 789" required>
+          <input type="email" placeholder="E.g. juan.delacruz@gmail.com" required>
+          <input type="text" placeholder="Subject" required>
+          <textarea placeholder="Type your message here..." rows="5" required></textarea>
+          <button type="submit" id="submitBtn">Submit</button>
+        </form>
+      </div>
+  
+    </div>
+  </section>
+
+  </section>
+  
+  
+
+<?
+include 'footer.php';
+?>
+</footer>
+  </footer>
+  <script>
+let currentIndex = 0;
+const images = document.querySelectorAll('.company-image img'); // Select all images
+
+function showNextImage() {
+  // Remove 'active' class from the current image
+  images[currentIndex].classList.remove('active');
+
+  // Increment index, loop back to 0 if at the end
+  currentIndex = (currentIndex + 1) % images.length;
+
+  // Add 'active' class to the next image
+  images[currentIndex].classList.add('active');
+}
+
+// Start the slideshow
+setInterval(showNextImage, 3000); // Change image every 3 seconds
+
+
+  </script>
+</body>
+</html>

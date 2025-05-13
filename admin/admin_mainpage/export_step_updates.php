@@ -64,13 +64,24 @@ $sheet->getColumnDimension('I')->setWidth(15);
 
 // HEADER SECTION - Enhanced RealLiving's template
 // Logo and Company name
-$sheet->mergeCells('A1:C2');
-$sheet->setCellValue('A1', 'RealLiving');
-$sheet->getStyle('A1')->getFont()->setBold(true)->setSize(24)->setColor(new Color('FF00A6D6')); // Blue color for RealLiving
-$sheet->setCellValue('A2', 'DESIGN CENTER'); // Add "DESIGN CENTER" text below
-$sheet->getStyle('A2')->getFont()->setBold(true)->setSize(14)->setColor(new Color('FFF7941D')); // Orange color for DESIGN CENTER
-$sheet->getStyle('A1:A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
-$sheet->getStyle('A1:A2')->getAlignment()->setVertical(Alignment::VERTICAL_CENTER);
+$sheet->mergeCells('A1:C3');
+
+// Add logo image - THIS IS THE NEW CODE FOR ADDING THE LOGO
+$drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
+$drawing->setName('Logo');
+$drawing->setDescription('RealLiving Logo');
+$drawing->setPath('../../logo/picart.png'); // REPLACE THIS WITH YOUR ACTUAL LOGO PATH
+$drawing->setCoordinates('A1');
+$drawing->setOffsetX(220); // Approximate horizontal centering — adjust based on image width
+$drawing->setOffsetY(5);
+$drawing->setHeight(50); // Adjust height as needed
+$drawing->setWorksheet($sheet);
+
+// Keep the DESIGN CENTER text
+$sheet->setCellValue('A2', 'DESIGN CENTER'); 
+$sheet->getStyle('A2')->getFont()->setBold(true)->setSize(20)->setColor(new Color('FFF7941D')); // Orange color for DESIGN CENTER
+$sheet->getStyle('A2')->getAlignment()->setHorizontal(Alignment::HORIZONTAL_LEFT);
+$sheet->getStyle('A2')->getAlignment()->setVertical(Alignment::VERTICAL_BOTTOM); // Align to bottom so it appears below the logo
 
 $sheet->mergeCells('D1:F2');
 $sheet->setCellValue('D1', 'INITIAL STEP UPDATES');
@@ -94,6 +105,8 @@ $sheet->getStyle('A1:I2')->getBorders()->getOutline()->setBorderStyle(Border::BO
 
 // CLIENT INFO SECTION - Similar to the quotation template
 $currentRow = 4;
+
+$sheet->getColumnDimension('A')->setWidth(20); // You can adjust the number as needed
 
 // Client Name
 $sheet->setCellValue('A' . $currentRow, 'Client Name:');
