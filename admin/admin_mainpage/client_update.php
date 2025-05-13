@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 include '../checkrole.php';
 
@@ -9,7 +8,6 @@ if (!isset($_SESSION['admin_id']) || !isset($_SESSION['admin_email'])) {
     header("Location: ../../loginpage/index.php");
     exit();
 }
-
 
 include '../design/mainbody.php';
 include '../../connection/connection.php';
@@ -162,95 +160,95 @@ function getStepUpdateDetails($conn, $clientId, $step)
 
         <div class="flex flex-col lg:flex-row w-full gap-6">
             <!-- Client Tracker Section -->
-           <div class="w-full lg:w-1/2">
-    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
-            <h2 class="text-lg font-semibold text-gray-800 flex items-center">
-                <i class="fas fa-tasks text-primary-500 mr-2"></i>
-                Client Progress Tracker
-            </h2>
-        </div>
+            <div class="w-full lg:w-1/2">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                    <div class="border-b border-gray-200 bg-gray-50 px-6 py-4">
+                        <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                            <i class="fas fa-tasks text-primary-500 mr-2"></i>
+                            Client Progress Tracker
+                        </h2>
+                    </div>
 
-        <div class="p-6 space-y-4">
-            <?php foreach ($steps as $step => $label):
-                $details = getStepUpdateDetails($conn, $id, $step);
-                $hasTime = $details !== null;
-                $updateTime = $hasTime ? $details['update_time'] : null;
-                $endDate = $hasTime ? $details['end_date'] : null;
-                static $firstPendingStep = null;
-                if (!$hasTime && $firstPendingStep === null) {
-                    $firstPendingStep = $step;
-                }
-                $isCurrent = $step === $firstPendingStep;
+                    <div class="p-6 space-y-4">
+                        <?php foreach ($steps as $step => $label):
+                            $details = getStepUpdateDetails($conn, $id, $step);
+                            $hasTime = $details !== null;
+                            $updateTime = $hasTime ? $details['update_time'] : null;
+                            $endDate = $hasTime ? $details['end_date'] : null;
+                            static $firstPendingStep = null;
+                            if (!$hasTime && $firstPendingStep === null) {
+                                $firstPendingStep = $step;
+                            }
+                            $isCurrent = $step === $firstPendingStep;
 
-                // Fetch revision_count for step 4 (Plan/3D) from user_info
-                $revisionCount = null;
-                if ($step == 4) {
-                    $stmt = $conn->prepare("SELECT revision_count FROM user_info WHERE id = ?");
-                    $stmt->bind_param("i", $id);  // Assuming $id is the client ID
-                    $stmt->execute();
-                    $stmt->bind_result($revisionCount);
-                    $stmt->fetch();
-                    $stmt->close();
-                }
-            ?>
-                <div class="progress-item">
-                    <div class="p-4 rounded-lg border <?= $hasTime ? 'bg-green-50 border-green-200' : ($isCurrent ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200') ?> flex items-center justify-between">
-                        <div class="flex items-center space-x-3">
-                            <div class="flex-shrink-0">
-                                <?php if ($hasTime): ?>
-                                    <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-                                        <i class="fas fa-check text-green-500"></i>
+                            // Fetch revision_count for step 4 (Plan/3D) from user_info
+                            $revisionCount = null;
+                            if ($step == 4) {
+                                $stmt = $conn->prepare("SELECT revision_count FROM user_info WHERE id = ?");
+                                $stmt->bind_param("i", $id);  // Assuming $id is the client ID
+                                $stmt->execute();
+                                $stmt->bind_result($revisionCount);
+                                $stmt->fetch();
+                                $stmt->close();
+                            }
+                        ?>
+                            <div class="progress-item">
+                                <div class="p-4 rounded-lg border <?= $hasTime ? 'bg-green-50 border-green-200' : ($isCurrent ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200') ?> flex items-center justify-between">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="flex-shrink-0">
+                                            <?php if ($hasTime): ?>
+                                                <div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
+                                                    <i class="fas fa-check text-green-500"></i>
+                                                </div>
+                                            <?php elseif ($isCurrent): ?>
+                                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                                                    <i class="fas fa-hourglass-half text-blue-500"></i>
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                                                    <i class="far fa-circle text-gray-400"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div>
+                                            <p class="font-medium <?= $hasTime ? 'text-green-700' : ($isCurrent ? 'text-blue-700' : 'text-gray-700') ?>">
+                                                <?= $label ?>
+                                            </p>
+                                            <?php if ($updateTime): ?>
+                                                <p class="text-xs text-gray-500 mt-1">Updated: <?= $updateTime ?></p>
+                                            <?php endif; ?>
+                                            <?php if ($endDate): ?>
+                                                <p class="text-xs text-gray-500 mt-0.5">End Date: <?= $endDate ?></p>
+                                            <?php endif; ?>
+                                            <?php if ($step == 4 && $revisionCount !== null): ?>
+                                                <p class="text-xs text-gray-500 mt-0.5">Revision Count: <?= $revisionCount ?></p>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
-                                <?php elseif ($isCurrent): ?>
-                                    <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                                        <i class="fas fa-hourglass-half text-blue-500"></i>
+
+                                    <div>
+                                        <?php if ($hasTime): ?>
+                                            <span class="text-xs font-medium bg-green-100 text-green-800 py-1 px-2 rounded-full">Complete</span>
+                                        <?php elseif ($isCurrent): ?>
+                                            <span class="text-xs font-medium bg-blue-100 text-blue-800 py-1 px-2 rounded-full">In Progress</span>
+                                        <?php else: ?>
+                                            <span class="text-xs font-medium bg-gray-100 text-gray-600 py-1 px-2 rounded-full">Pending</span>
+                                        <?php endif; ?>
                                     </div>
-                                <?php else: ?>
-                                    <div class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                                        <i class="far fa-circle text-gray-400"></i>
-                                    </div>
-                                <?php endif; ?>
+                                </div>
                             </div>
-                            <div>
-                                <p class="font-medium <?= $hasTime ? 'text-green-700' : ($isCurrent ? 'text-blue-700' : 'text-gray-700') ?>">
-                                    <?= $label ?>
-                                </p>
-                                <?php if ($updateTime): ?>
-                                    <p class="text-xs text-gray-500 mt-1">Updated: <?= $updateTime ?></p>
-                                <?php endif; ?>
-                                <?php if ($endDate): ?>
-                                    <p class="text-xs text-gray-500 mt-0.5">End Date: <?= $endDate ?></p>
-                                <?php endif; ?>
-                                <?php if ($step == 4 && $revisionCount !== null): ?>
-                                    <p class="text-xs text-gray-500 mt-0.5">Revision Count: <?= $revisionCount ?></p>
-                                <?php endif; ?>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
 
-                        <div>
-                            <?php if ($hasTime): ?>
-                                <span class="text-xs font-medium bg-green-100 text-green-800 py-1 px-2 rounded-full">Complete</span>
-                            <?php elseif ($isCurrent): ?>
-                                <span class="text-xs font-medium bg-blue-100 text-blue-800 py-1 px-2 rounded-full">In Progress</span>
-                            <?php else: ?>
-                                <span class="text-xs font-medium bg-gray-100 text-gray-600 py-1 px-2 rounded-full">Pending</span>
-                            <?php endif; ?>
+                        <!-- Update Button -->
+                        <div class="flex justify-end mt-6">
+                            <button id="openUpdateModal" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center shadow-sm hover-raise">
+                                <i class="fas fa-edit mr-2"></i>
+                                Update Status
+                            </button>
                         </div>
                     </div>
                 </div>
-            <?php endforeach; ?>
-
-            <!-- Update Button -->
-            <div class="flex justify-end mt-6">
-                <button id="openUpdateModal" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center shadow-sm hover-raise">
-                    <i class="fas fa-edit mr-2"></i>
-                    Update Status
-                </button>
             </div>
-        </div>
-    </div>
-</div>
 
             <!-- Order Processing Section -->
             <div class="w-full lg:w-1/2 mt-6 lg:mt-0">
@@ -350,210 +348,209 @@ function getStepUpdateDetails($conn, $clientId, $step)
                 </button>
             </div>
 
-          <form id="updateForm" action="save_update.php" method="POST" class="space-y-5">
-    <!-- Hidden client_id -->
-    <input type="hidden" name="client_id" value="<?= $id ?>">
+            <form id="updateForm" action="save_update.php" method="POST" class="space-y-5">
+                <!-- Hidden client_id -->
+                <input type="hidden" name="client_id" value="<?= $id ?>">
 
-    <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Select Step:</label>
-        <div class="relative">
-            <select name="step" id="stepSelect" class="w-full border border-gray-300 rounded-lg p-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none">
-                <?php foreach ($steps as $step => $label): ?>
-                    <option value="<?= $step ?>"><?= $label ?></option>
-                <?php endforeach; ?>
-            </select>
-            <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
-                <i class="fas fa-chevron-down text-gray-400"></i>
-            </div>
-        </div>
-    </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Select Step:</label>
+                    <div class="relative">
+                        <select name="step" id="stepSelect" class="w-full border border-gray-300 rounded-lg p-3 pr-10 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500 appearance-none">
+                            <?php foreach ($steps as $step => $label): ?>
+                                <option value="<?= $step ?>"><?= $label ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Update Date:</label>
-            <input type="date" name="update_date" id="updateDate" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" required />
-        </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Update Date:</label>
+                        <input type="date" name="update_date" id="updateDate" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" required />
+                    </div>
 
-        <div>
-            <label class="block text-sm font-medium text-gray-700 mb-1">Update Time:</label>
-            <input type="time" name="update_time" id="updateTime" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" required />
-        </div>
-    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Update Time:</label>
+                        <input type="time" name="update_time" id="updateTime" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" required />
+                    </div>
+                </div>
 
-    <div id="endDateContainer" class="hidden">
-        <label class="block text-sm font-medium text-gray-700 mb-1">End Date:</label>
-        <input type="date" name="end_date" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" />
-    </div>
+                <div id="endDateContainer" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">End Date:</label>
+                    <input type="date" name="end_date" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500" />
+                </div>
 
-    <!-- Revision Count Input (Shown only in Step 4) -->
-    <div id="revisionContainer" class="hidden mb-4">
-        <label for="revisionCount" class="block text-sm font-medium text-gray-700 mb-1">
-            Revision Count
-        </label>
-        <input
-            type="number"
-            id="revisionCount"
-            name="revisionCount"
-            min="1"
-            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:ring-indigo-500 focus:border-indigo-500"
-            placeholder="Enter number of revisions"
-        />
-    </div>
+                <!-- Revision Count Input (Shown only in Step 4) -->
+                <div id="revisionContainer" class="hidden mb-4">
+                    <label for="revisionCount" class="block text-sm font-medium text-gray-700 mb-1">
+                        Revision Count
+                    </label>
+                    <input
+                        type="number"
+                        id="revisionCount"
+                        name="revisionCount"
+                        min="1"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm text-base focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Enter number of revisions" />
+                </div>
 
-    <div id="descriptionContainer" class="hidden">
-        <label class="block text-sm font-medium text-gray-700 mb-1">Description:</label>
-        <textarea name="description" rows="3" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
-    </div>
+                <div id="descriptionContainer" class="hidden">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Description:</label>
+                    <textarea name="description" rows="3" class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                </div>
 
-    <!-- Modal Action Buttons -->
-    <div id="normalButtons" class="flex justify-between items-center mt-6">
-        <button type="button" id="closeUpdateModal" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-            Cancel
-        </button>
-        <button type="button" id="saveButton" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium flex items-center">
-            <i class="fas fa-save mr-2"></i>
-            Save Changes
-        </button>
-    </div>
+                <!-- Modal Action Buttons -->
+                <div id="normalButtons" class="flex justify-between items-center mt-6">
+                    <button type="button" id="closeUpdateModal" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+                        Cancel
+                    </button>
+                    <button type="button" id="saveButton" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium flex items-center">
+                        <i class="fas fa-save mr-2"></i>
+                        Save Changes
+                    </button>
+                </div>
 
-    <div id="confirmButtons" class="hidden space-y-4">
-        <p class="text-sm text-gray-700 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
-            <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
-            Are you sure you want to save this update?
-        </p>
-        <div class="flex justify-between">
-            <button type="button" id="confirmNo" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                No, Go Back
-            </button>
-            <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium flex items-center">
-                <i class="fas fa-check mr-2"></i>
-                Yes, Save
-            </button>
-        </div>
-    </div>
-</form>
+                <div id="confirmButtons" class="hidden space-y-4">
+                    <p class="text-sm text-gray-700 p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                        Are you sure you want to save this update?
+                    </p>
+                    <div class="flex justify-between">
+                        <button type="button" id="confirmNo" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
+                            No, Go Back
+                        </button>
+                        <button type="submit" class="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm font-medium flex items-center">
+                            <i class="fas fa-check mr-2"></i>
+                            Yes, Save
+                        </button>
+                    </div>
+                </div>
+            </form>
 
 
         </div>
     </div>
 
     <script src="../../js/clientupdate.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Set Date and Time on Load
-    const today = new Date();
-    const dateString = today.toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
-    const timeString = today.toTimeString().split(' ')[0].slice(0, 5); // Current time in HH:MM format
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set Date and Time on Load
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
+            const timeString = today.toTimeString().split(' ')[0].slice(0, 5); // Current time in HH:MM format
 
-    // Set date and time to the form inputs
-    document.querySelector('[name="update_date"]').value = dateString;
-    document.querySelector('[name="update_time"]').value = timeString;
+            // Set date and time to the form inputs
+            document.querySelector('[name="update_date"]').value = dateString;
+            document.querySelector('[name="update_time"]').value = timeString;
 
-    // Step-related fields
-    const stepSelect = document.getElementById('stepSelect');
-    const endDateContainer = document.getElementById('endDateContainer');
-    const descriptionContainer = document.getElementById('descriptionContainer');
-    const revisionContainer = document.getElementById('revisionContainer');
+            // Step-related fields
+            const stepSelect = document.getElementById('stepSelect');
+            const endDateContainer = document.getElementById('endDateContainer');
+            const descriptionContainer = document.getElementById('descriptionContainer');
+            const revisionContainer = document.getElementById('revisionContainer');
 
-    // Toggle visibility of fields based on selected step
-    function toggleFields() {
-        const selectedStep = parseInt(stepSelect.value);
+            // Toggle visibility of fields based on selected step
+            function toggleFields() {
+                const selectedStep = parseInt(stepSelect.value);
 
-        // Show "End of Date" for steps 3 to 10
-        if (selectedStep >= 3 && selectedStep <= 10) {
-            endDateContainer.classList.remove('hidden');
-        } else {
-            endDateContainer.classList.add('hidden');
-        }
+                // Show "End of Date" for steps 3 to 10
+                if (selectedStep >= 3 && selectedStep <= 10) {
+                    endDateContainer.classList.remove('hidden');
+                } else {
+                    endDateContainer.classList.add('hidden');
+                }
 
-        // Show "Description" only for Order Processing (step 6)
-        if (selectedStep === 6) {
-            descriptionContainer.classList.remove('hidden');
-        } else {
-            descriptionContainer.classList.add('hidden');
-        }
+                // Show "Description" only for Order Processing (step 6)
+                if (selectedStep === 6) {
+                    descriptionContainer.classList.remove('hidden');
+                } else {
+                    descriptionContainer.classList.add('hidden');
+                }
 
-        // Show "Revision Count" only for step 4
-        if (selectedStep === 4) {
-            revisionContainer.classList.remove('hidden');
-        } else {
-            revisionContainer.classList.add('hidden');
-        }
-    }
-
-    // Add event listener for step selection change
-    if (stepSelect) {
-        stepSelect.addEventListener('change', toggleFields);
-        // Run on page load to set initial state
-        toggleFields();
-    }
-
-    // Handle Notifications (if any)
-    <?php if (isset($_SESSION['error'])): ?>
-        showNotification("<?= $_SESSION['error']; ?>", "error");
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
-
-    <?php if (isset($_SESSION['success'])): ?>
-        showNotification("<?= $_SESSION['success']; ?>", "success");
-        <?php unset($_SESSION['success']); ?>
-    <?php endif; ?>
-
-    // Show Notification function
-    function showNotification(message, type = 'success') {
-        const notification = document.getElementById('notification');
-        const notificationMessage = document.getElementById('notificationMessage');
-
-        if (notification && notificationMessage) {
-            // Set the message
-            notificationMessage.textContent = message;
-
-            // Apply appropriate styling based on the message type
-            if (type === 'error') {
-                notification.classList.remove('border-primary-500');
-                notification.classList.add('border-red-500');
-                document.querySelector('#notification i').classList.remove('text-primary-500');
-                document.querySelector('#notification i').classList.add('text-red-500');
-                document.querySelector('#notification i').classList.remove('fa-info-circle');
-                document.querySelector('#notification i').classList.add('fa-exclamation-circle');
-            } else {
-                notification.classList.remove('border-red-500');
-                notification.classList.add('border-primary-500');
-                document.querySelector('#notification i').classList.remove('text-red-500');
-                document.querySelector('#notification i').classList.add('text-primary-500');
-                document.querySelector('#notification i').classList.remove('fa-exclamation-circle');
-                document.querySelector('#notification i').classList.add('fa-info-circle');
+                // Show "Revision Count" only for step 4
+                if (selectedStep === 4) {
+                    revisionContainer.classList.remove('hidden');
+                } else {
+                    revisionContainer.classList.add('hidden');
+                }
             }
 
-            // Show notification
-            notification.classList.remove('hidden');
+            // Add event listener for step selection change
+            if (stepSelect) {
+                stepSelect.addEventListener('change', toggleFields);
+                // Run on page load to set initial state
+                toggleFields();
+            }
 
-            // Auto hide after 5 seconds
-            setTimeout(() => {
-                notification.classList.add('hidden');
-            }, 5000);
-        }
-    }
+            // Handle Notifications (if any)
+            <?php if (isset($_SESSION['error'])): ?>
+                showNotification("<?= $_SESSION['error']; ?>", "error");
+                <?php unset($_SESSION['error']); ?>
+            <?php endif; ?>
 
-    // Close notification manually
-    function closeNotification() {
-        document.getElementById('notification').classList.add('hidden');
-    }
+            <?php if (isset($_SESSION['success'])): ?>
+                showNotification("<?= $_SESSION['success']; ?>", "success");
+                <?php unset($_SESSION['success']); ?>
+            <?php endif; ?>
 
-    // Enable edit mode for description
-    function enableEdit(id) {
-        document.getElementById('desc-display-' + id).classList.add('hidden');
-        document.getElementById('desc-form-' + id).classList.remove('hidden');
-        document.getElementById('desc-input-' + id).focus();
-    }
+            // Show Notification function
+            function showNotification(message, type = 'success') {
+                const notification = document.getElementById('notification');
+                const notificationMessage = document.getElementById('notificationMessage');
 
-    // Cancel the edit mode and revert back
-    function cancelEdit(id) {
-        document.getElementById('desc-display-' + id).classList.remove('hidden');
-        document.getElementById('desc-form-' + id).classList.add('hidden');
-    }
-});
-</script>
+                if (notification && notificationMessage) {
+                    // Set the message
+                    notificationMessage.textContent = message;
+
+                    // Apply appropriate styling based on the message type
+                    if (type === 'error') {
+                        notification.classList.remove('border-primary-500');
+                        notification.classList.add('border-red-500');
+                        document.querySelector('#notification i').classList.remove('text-primary-500');
+                        document.querySelector('#notification i').classList.add('text-red-500');
+                        document.querySelector('#notification i').classList.remove('fa-info-circle');
+                        document.querySelector('#notification i').classList.add('fa-exclamation-circle');
+                    } else {
+                        notification.classList.remove('border-red-500');
+                        notification.classList.add('border-primary-500');
+                        document.querySelector('#notification i').classList.remove('text-red-500');
+                        document.querySelector('#notification i').classList.add('text-primary-500');
+                        document.querySelector('#notification i').classList.remove('fa-exclamation-circle');
+                        document.querySelector('#notification i').classList.add('fa-info-circle');
+                    }
+
+                    // Show notification
+                    notification.classList.remove('hidden');
+
+                    // Auto hide after 5 seconds
+                    setTimeout(() => {
+                        notification.classList.add('hidden');
+                    }, 5000);
+                }
+            }
+
+            // Close notification manually
+            function closeNotification() {
+                document.getElementById('notification').classList.add('hidden');
+            }
+
+            // Enable edit mode for description
+            function enableEdit(id) {
+                document.getElementById('desc-display-' + id).classList.add('hidden');
+                document.getElementById('desc-form-' + id).classList.remove('hidden');
+                document.getElementById('desc-input-' + id).focus();
+            }
+
+            // Cancel the edit mode and revert back
+            function cancelEdit(id) {
+                document.getElementById('desc-display-' + id).classList.remove('hidden');
+                document.getElementById('desc-form-' + id).classList.add('hidden');
+            }
+        });
+    </script>
 
 </body>
 
