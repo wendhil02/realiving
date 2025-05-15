@@ -142,211 +142,344 @@ include 'htmldesign/top.php';
   </section>
 
 
- 
+  <!-- Coohom Projects Section -->
+  <section class="py-16 bg-gray-100" data-aos="fade-up">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="mb-10 text-center">
+        <p class="text-gray-600 mt-2">Explore our 360° panoramic designs</p>
+      </div>
 
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-  <section class="relative py-24 bg-gradient-to-br from-gray-50 via-yellow-50 to-yellow-50 overflow-hidden" data-aos="fade-up">
-    <!-- Decorative Elements -->
-    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-200 rounded-full filter blur-3xl opacity-20"></div>
-    <div class="absolute bottom-0 left-0 w-80 h-80 bg-sky-200 rounded-full filter blur-3xl opacity-20"></div>
-
-    <!-- Blueprint Grid Background -->
-    <div class="absolute inset-0 opacity-5" style="background-image: linear-gradient(#4299e1 1px, transparent 1px), linear-gradient(to right,rgb(175, 190, 60) 1px, transparent 1px); background-size: 20px 20px;"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-      <!-- Header -->
-      <div class="text-center mb-16">
-        <div class="inline-block mb-4">
-          <div class="flex items-center justify-center bg-yellow-600 text-white h-16 w-16 rounded-full shadow-lg mx-auto mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-            </svg>
+        <!-- Project Card 1 -->
+        <div class="relative bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden h-[450px]">
+          <img src="images/white.png" alt="NobleHome Logo"
+            class="absolute top-2 left-3 w-[150px] bg-white p-3 rounded shadow z-10" />
+          <iframe src="https://kd20-realiving.yfcad.com/pano?id=61549751"
+            allowfullscreen
+            class="w-full h-full border-none relative z-0"></iframe>
+          <div class="absolute top-0 right-0 w-[55px] h-full bg-yellow-500 z-10 opacity-150 flex items-center justify-center mr-2.5">
+            <span class="text-[20px] text-white font-semibold rotate-90 whitespace-nowrap">Site Project </span>
           </div>
-          <h2 class="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-yellow-700 via-yellow-600 to-yellow-400 tracking-tight">Accomplished Projects</h2>
         </div>
-        <div class="h-1 w-32 bg-gradient-to-r from-yellow-400 to-yellow-600 mx-auto rounded-full mb-6"></div>
-        <p class="text-gray-600 max-w-2xl mx-auto text-lg">Explore our portfolio of premium architectural solutions and modular cabinet designs that we've created for our valued clients.</p>
+
+        <!-- Project Card 2 -->
+        <div class="relative bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden h-[450px]">
+          <img src="images/white.png" alt="NobleHome Logo"
+            class="absolute top-2 left-3 w-[150px] bg-white p-3 rounded shadow z-10" />
+          <iframe src="https://kd20-realiving.yfcad.com/pano?id=62840554"
+            allowfullscreen
+            class="w-full h-full border-none relative z-0"></iframe>
+          <div class="absolute top-0 right-0 w-[55px] h-full bg-yellow-500 z-10 opacity-150 flex items-center justify-center mr-2.5">
+            <span class="text-[20px] text-white font-semibold rotate-90 whitespace-nowrap">Residential Project</span>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="relative bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden h-[450px]">
+          <img src="images/white.png" alt="NobleHome Logo"
+            class="absolute top-2 left-3 w-[150px] bg-white p-3 rounded shadow z-10" />
+          <iframe src="https://kd20-realiving.yfcad.com/pano?id=55736419"
+            allowfullscreen
+            class="w-full h-full border-none relative z-0"></iframe>
+          <div class="absolute top-0 right-0 w-[55px] h-full bg-yellow-500 z-10 opacity-150 flex items-center justify-center mr-2.5">
+            <span class="text-[20px] text-white font-semibold rotate-90 whitespace-nowrap">Commercial Project</span>
+          </div>
+        </div>
       </div>
 
-      <!-- Projects Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
-        <!-- Project Item 1 -->
-        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
-          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
-            <div class="text-white text-center p-4">
-              <p class="font-bold text-lg mb-2">Modern Kitchen Design</p>
-              <p class="text-sm mb-4">Custom modular kitchen cabinets with premium finishes</p>
-              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
-                View Project
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div class="h-48 bg-gray-100 relative">
-            <img src="./images/project-1.png" alt="Modern Kitchen Design" class="w-full h-full object-cover">
-            <!-- Design Element -->
-            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-              </svg>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Modern Kitchen Design</h3>
-            <div class="flex items-center mt-2">
-              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
-              </div>
-              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
-            </div>
-          </div>
-        </a>
+      <!-- ✅ Buttons Section -->
+      <div class="mt-10 flex justify-center gap-4">
+        <button class="flex items-center gap-2 px-5 py-2.5 text-base font-medium text-white bg-blue-600 border border-blue-700 rounded-full shadow-sm hover:bg-blue-700 transition-all duration-200 ease-in-out">
+          <i class="fas fa-globe"></i>
+          All Projects
+        </button>
 
-        <!-- Project Item 2 -->
-        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
-          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
-            <div class="text-white text-center p-4">
-              <p class="font-bold text-lg mb-2">Custom Living Room</p>
-              <p class="text-sm mb-4">Contemporary furniture solutions for modern homes</p>
-              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
-                View Project
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div class="h-48 bg-gray-100 relative">
-            <img src="./images/project-2.png" alt="Custom Living Room" class="w-full h-full object-cover">
-            <!-- Design Element -->
-            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-              </svg>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Custom Living Room</h3>
-            <div class="flex items-center mt-2">
-              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
-              </div>
-              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
-            </div>
-          </div>
-        </a>
+        <button class="flex items-center gap-2 px-5 py-2.5 text-base font-medium text-white bg-green-600 border border-green-700 rounded-full shadow-sm hover:bg-green-700 transition-all duration-200 ease-in-out">
+          <i class="fas fa-home"></i>
+          Residential
+        </button>
 
-        <!-- Project Item 3 -->
-        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
-          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
-            <div class="text-white text-center p-4">
-              <p class="font-bold text-lg mb-2">Minimalist Office Setup</p>
-              <p class="text-sm mb-4">Functional workspace solutions with clean design</p>
-              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
-                View Project
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div class="h-48 bg-gray-100 relative">
-            <img src="./images/project-3.png" alt="Minimalist Office Setup" class="w-full h-full object-cover">
-            <!-- Design Element -->
-            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Minimalist Office Setup</h3>
-            <div class="flex items-center mt-2">
-              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
-              </div>
-              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Project Item 4 -->
-        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
-          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
-            <div class="text-white text-center p-4">
-              <p class="font-bold text-lg mb-2">Industrial Bar Counter</p>
-              <p class="text-sm mb-4">Stylish bar design with industrial elements</p>
-              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
-                View Project
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div class="h-48 bg-gray-100 relative">
-            <img src="./images/project-4.png" alt="Industrial Bar Counter" class="w-full h-full object-cover">
-            <!-- Design Element -->
-            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
-              </svg>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Industrial Bar Counter</h3>
-            <div class="flex items-center mt-2">
-              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
-              </div>
-              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
-            </div>
-          </div>
-        </a>
-
-        <!-- Project Item 5 -->
-        <a href="allproject/allofproject.php" target="_blank" class="group relative bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-500 flex flex-col h-full transform hover:-translate-y-2">
-          <div class="absolute inset-0 bg-gradient-to-b from-blue-600/80 via-sky-500/80 to-sky-400/80 opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10 flex items-center justify-center">
-            <div class="text-white text-center p-4">
-              <p class="font-bold text-lg mb-2">Cozy Bedroom Cabinetry</p>
-              <p class="text-sm mb-4">Space-efficient storage solutions for bedrooms</p>
-              <span class="inline-flex items-center justify-center px-4 py-2 bg-white bg-opacity-20 rounded-full text-sm font-medium">
-                View Project
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
-              </span>
-            </div>
-          </div>
-          <div class="h-48 bg-gray-100 relative">
-            <img src="./images/project-5.png" alt="Cozy Bedroom Cabinetry" class="w-full h-full object-cover">
-            <!-- Design Element -->
-            <div class="absolute top-3 left-3 bg-white rounded-full h-8 w-8 flex items-center justify-center shadow-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-              </svg>
-            </div>
-          </div>
-          <div class="p-5">
-            <h3 class="font-semibold text-gray-800 group-hover:text-sky-600 transition duration-300">Cozy Bedroom Cabinetry</h3>
-            <div class="flex items-center mt-2">
-              <div class="flex-1 bg-gray-200 h-1 rounded-full overflow-hidden">
-                <div class="bg-gradient-to-r from-blue-500 to-sky-400 w-full h-full rounded-full"></div>
-              </div>
-              <span class="text-xs font-medium text-gray-500 ml-2">Completed</span>
-            </div>
-          </div>
-        </a>
+        <button class="flex items-center gap-2 px-5 py-2.5 text-base font-medium text-white bg-yellow-500 border border-yellow-600 rounded-full shadow-sm hover:bg-yellow-600 transition-all duration-200 ease-in-out">
+          <i class="fas fa-briefcase"></i>
+          Commercial
+        </button>
       </div>
 
-      <!-- View All Projects -->
+    </div>
+  </section>
+
+
+
+  <section class="relative py-24 bg-gradient-to-br from-gray-50 to-blue-50 overflow-hidden" data-aos="fade-up">
+    <!-- Subtle background elements -->
+    <div class="absolute top-0 right-0 w-72 h-72 bg-yellow-100 rounded-full filter blur-3xl opacity-30"></div>
+    <div class="absolute bottom-0 left-0 w-80 h-80 bg-blue-100 rounded-full filter blur-3xl opacity-20"></div>
+
+    <!-- Subtle grid pattern -->
+    <div class="absolute inset-0 bg-grid-pattern opacity-5"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <!-- Section Header -->
+      <div class="text-center mb-16">
+        <span class="inline-block px-4 py-1 bg-blue-50 text-blue-700 rounded-full text-sm font-medium mb-4 shadow-sm">Our Portfolio</span>
+        <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-5">Accomplished Projects</h2>
+        <div class="flex items-center justify-center mb-6">
+          <div class="h-1 w-12 bg-yellow-400 rounded-full"></div>
+          <div class="h-1 w-24 bg-blue-600 rounded-full mx-2"></div>
+          <div class="h-1 w-12 bg-yellow-400 rounded-full"></div>
+        </div>
+        <p class="text-gray-600 max-w-2xl mx-auto text-lg">Discover our premium architectural solutions and custom cabinet designs created for clients who value quality and craftsmanship.</p>
+      </div>
+
+      <!-- Projects Display - Masonry Style -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <!-- Project Card 1 - Featured (Large) -->
+        <div class="col-span-1 lg:col-span-2 group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-80">
+              <img src="./images/project-1.png" alt="Modern Kitchen Design" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <span class="px-3 py-1 bg-yellow-500 text-xs font-bold uppercase tracking-wider rounded-full">Featured</span>
+                  <h3 class="text-2xl font-bold mt-2">Modern Kitchen Design</h3>
+                  <p class="text-sm text-white/80 mt-1">Premium modular kitchen cabinets with high-end finishes</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-xl text-gray-800">Modern Kitchen Design</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Custom cabinetry with integrated smart storage solutions designed for modern family needs.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Cabinetry</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Modern</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-60">
+              <img src="./images/project-2.png" alt="Custom Living Room" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <h3 class="text-xl font-bold">Custom Living Room</h3>
+                  <p class="text-sm text-white/80 mt-1">Contemporary furniture solutions</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-lg text-gray-800">Custom Living Room</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Elegant living room design with custom-built furniture for maximum comfort.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Living Space</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-60">
+              <img src="./images/project-3.png" alt="Minimalist Office Setup" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <h3 class="text-xl font-bold">Minimalist Office</h3>
+                  <p class="text-sm text-white/80 mt-1">Functional workspace solutions</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-lg text-gray-800">Minimalist Office Setup</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Clean, ergonomic workspace design optimized for productivity and comfort.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Office</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Minimalist</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 4 -->
+        <div class="group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-60">
+              <img src="./images/project-4.png" alt="Industrial Bar Counter" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <h3 class="text-xl font-bold">Industrial Bar Counter</h3>
+                  <p class="text-sm text-white/80 mt-1">Stylish bar design solutions</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-lg text-gray-800">Industrial Bar Counter</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Urban-inspired bar counter with industrial finishes for entertainment spaces.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Bar</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Industrial</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 4 -->
+        <div class="group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-60">
+              <img src="./images/project-4.png" alt="Industrial Bar Counter" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <h3 class="text-xl font-bold">Industrial Bar Counter</h3>
+                  <p class="text-sm text-white/80 mt-1">Stylish bar design solutions</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-lg text-gray-800">Industrial Bar Counter</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Urban-inspired bar counter with industrial finishes for entertainment spaces.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Bar</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Industrial</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 4 -->
+        <div class="group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-60">
+              <img src="./images/project-4.png" alt="Industrial Bar Counter" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <h3 class="text-xl font-bold">Industrial Bar Counter</h3>
+                  <p class="text-sm text-white/80 mt-1">Stylish bar design solutions</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-lg text-gray-800">Industrial Bar Counter</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Urban-inspired bar counter with industrial finishes for entertainment spaces.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Bar</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Industrial</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project Card 5 -->
+        <div class="col-span-1 lg:col-span-2 group" data-aos="fade-up">
+          <div class="bg-white rounded-xl overflow-hidden shadow-lg transition duration-300 hover:shadow-2xl h-full flex flex-col transform hover:-translate-y-1">
+            <div class="relative h-80">
+              <img src="./images/project-5.png" alt="Cozy Bedroom Cabinetry" class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end">
+                <div class="p-6 text-white w-full">
+                  <span class="px-3 py-1 bg-yellow-500 text-xs font-bold uppercase tracking-wider rounded-full">Featured</span>
+                  <h3 class="text-2xl font-bold mt-2">Cozy Bedroom Cabinetry</h3>
+                  <p class="text-sm text-white/80 mt-1">Space-efficient bedroom storage solutions with elegant design</p>
+                </div>
+              </div>
+            </div>
+            <div class="p-6 flex-grow">
+              <div class="flex items-center justify-between mb-3">
+                <h3 class="font-bold text-xl text-gray-800">Cozy Bedroom Cabinetry</h3>
+                <span class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded-full">Completed</span>
+              </div>
+              <p class="text-gray-600 mb-4">Custom bedroom storage solutions designed to maximize space while maintaining aesthetic appeal.</p>
+              <div class="flex items-center justify-between mt-auto">
+                <div class="flex items-center space-x-1">
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Bedroom</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Storage</span>
+                </div>
+                <a href="allproject/allofproject.php" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                  View Details
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- "View All Projects" Button -->
       <div class="text-center mt-12">
-        <a href="allproject/allofproject.php" class="group inline-flex items-center px-8 py-4 bg-white text-sky-600 font-semibold rounded-full border-2 border-sky-500 shadow-md hover:bg-gradient-to-r hover:from-sky-600 hover:to-blue-700 hover:text-white transition-all duration-300">
-          <span>View All Projects</span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        <a href="allproject/allofproject.php" class="inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-gradient-to-r from-blue-600 to-blue-800 rounded-full shadow-lg hover:from-blue-700 hover:to-blue-900 transform hover:-translate-y-1 transition-all duration-300">
+          <span>Explore All Projects</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
           </svg>
         </a>
       </div>

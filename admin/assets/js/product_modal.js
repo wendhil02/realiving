@@ -4,7 +4,7 @@ function handleCardClick(e, id, image, name, description, size, price, supplier,
 }
 
 function openModal(id, image, name, description, size, price, supplier, contact, serial) {
-    console.log('Modal values:', { id, image, name, description, size, price, supplier, contact, serial });
+    console.log('Modal values:', { id, image, name, description, size, price, supplier, contact, serial});
 
     const modal = document.getElementById('productModal');
     const modalContent = document.getElementById('modalContent');
