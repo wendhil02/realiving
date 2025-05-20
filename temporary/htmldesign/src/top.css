@@ -1,0 +1,274 @@
+
+/* ===== RESPONSIVE MEDIA QUERIES FOR ALL DEVICE CLASSIFICATIONS ===== */
+
+/* Base styles apply to all devices */
+:root {
+  --header-height: 5rem; /* 80px - matches your h-20 */
+}
+
+/* ===== 1. MOBILE FIRST APPROACH ===== */
+
+/* Extra Small Devices (Portrait phones) */
+/* Base styles are mobile-first, so no media query needed */
+
+/* ===== 2. SMALL DEVICES (Landscape phones) ===== */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+  }
+  
+  /* Slightly increase text size on small landscape devices */
+  body {
+    font-size: 16px;
+  }
+  
+  /* Adjust header elements for small screens */
+  header .container {
+    padding: 0 1rem;
+  }
+}
+
+/* ===== 3. MEDIUM DEVICES (Tablets) ===== */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+  }
+  
+  /* Navigation adjustments for tablets */
+  #mainNav {
+    display: flex !important; /* Force display on tablets and up */
+  }
+  
+  #navToggle {
+    display: none; /* Hide mobile toggle on tablets and up */
+  }
+  
+  /* Reset any mobile menu styles */
+  .dropdown-menu {
+    background-color: var(--white);
+    border-top: none;
+    border-bottom: none;
+    margin: 0;
+  }
+  
+  /* Adjust header elements spacing */
+  header .container {
+    padding: 0 1.5rem;
+  }
+  
+  /* CTA button size adjustment */
+  header .cta-button {
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+/* ===== 4. LARGE DEVICES (Desktops) ===== */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+  }
+  
+  /* Improve spacing in navigation */
+  #mainNav ul {
+    gap: 0.5rem;
+  }
+  
+  /* Enhance header elements */
+  header .logo img {
+    height: 3rem; /* 48px */
+  }
+  
+  /* More room for dropdown menus */
+  .dropdown-menu {
+    width: 18rem; /* 288px */
+  }
+  
+  /* Increase CTA button prominence */
+  header .cta-button {
+    padding: 0.75rem 1.5rem;
+  }
+}
+
+/* ===== 5. EXTRA LARGE DEVICES (Large Desktops) ===== */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+  
+  /* Improved spacing and sizing for xl screens */
+  #mainNav ul {
+    gap: 1rem;
+  }
+  
+  /* Make dropdowns a bit larger */
+  .dropdown-menu {
+    width: 20rem; /* 320px */
+  }
+}
+
+/* ===== 6. EXTRA EXTRA LARGE DEVICES (TV/Ultra-wide) ===== */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+  
+  /* Ultra-wide screen optimizations */
+  header .container {
+    padding: 0 2rem;
+  }
+  
+  /* Even more space between nav items */
+  #mainNav ul {
+    gap: 1.5rem;
+  }
+}
+
+/* ===== 7. SPECIAL DEVICE HANDLING ===== */
+
+/* iPhone SE and other small devices */
+@media (max-width: 375px) {
+  header .logo img {
+    height: 2.25rem; /* 36px */
+  }
+  
+  /* Reduce padding to fit all elements */
+  header .container {
+    padding: 0 0.75rem;
+  }
+}
+
+/* iPad Pro and other large tablets */
+@media (min-width: 1024px) and (max-width: 1366px) and (orientation: landscape) {
+  /* Specific adjustments for iPad Pro in landscape */
+  .container {
+    max-width: 1000px;
+  }
+}
+
+/* ===== 8. ORIENTATION SPECIFIC ===== */
+
+/* Portrait Mode */
+@media (orientation: portrait) {
+  /* Mobile menu adjustments for portrait mode */
+  @media (max-width: 767px) {
+    #mainNav {
+      height: calc(100vh - var(--header-height));
+    }
+  }
+}
+
+/* Landscape Mode */
+@media (orientation: landscape) {
+  /* Mobile menu in landscape needs less height but more width */
+  @media (max-width: 767px) {
+    #mainNav {
+      height: calc(100vh - var(--header-height));
+      overflow-y: auto;
+    }
+  }
+}
+
+/* ===== 9. FEATURE SPECIFIC ===== */
+
+/* Touch Device Optimizations */
+@media (hover: none) {
+  /* Larger touch targets for touch devices */
+  header nav a, 
+  header button {
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Simplify hover effects that don't work well on touch */
+  .main-link:hover {
+    transform: none;
+  }
+}
+
+/* Non-touch Device Enhancements */
+@media (hover: hover) {
+  /* Enhanced hover effects for desktop/laptop */
+  .main-link:hover {
+    transform: translateY(-1px);
+  }
+  
+  .dropdown-toggle:hover + .dropdown-menu,
+  .dropdown-menu:hover {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 10. PRINT SPECIFIC ===== */
+@media print {
+  header {
+    position: static;
+    box-shadow: none;
+  }
+  
+  #navToggle,
+  .cta-button {
+    display: none !important;
+  }
+  
+  /* Other print-specific adjustments */
+  body {
+    font-size: 12pt;
+  }
+  
+  .container {
+    max-width: 100%;
+  }
+}
+
+/* ===== 11. DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  .header.auto-dark-mode {
+    background-color: #1a1a2e;
+    color: #f1f1f1;
+  }
+  
+  .auto-dark-mode .dropdown-menu {
+    background-color: #252525;
+    border-color: #333;
+  }
+  
+  .auto-dark-mode .main-link span {
+    color: #e1e1e1;
+  }
+  
+  /* Only apply if .auto-dark-mode class is used */
+}
+
+/* ===== 12. REDUCED MOTION ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.001ms !important;
+    animation-duration: 0.001ms !important;
+  }
+}
+
+/* ===== 13. JAVASCRIPT SUPPLEMENTARY CLASSES ===== */
+/* These classes are for JS to toggle - no media queries needed */
+
+/* For mobile menu open state */
+body.menu-open {
+  overflow: hidden;
+}
+
+.dropdown-menu.active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  visibility: visible;
+}
+
+/* Header shadow on scroll */ 
+.header-scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header-scrolled #headerShadow {
+  opacity: 1;
+}

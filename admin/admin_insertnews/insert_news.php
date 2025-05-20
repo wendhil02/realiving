@@ -9,6 +9,19 @@ require_role(['superadmin']);
 $message = $_SESSION['message'] ?? '';
 unset($_SESSION['message']);
 
+
+// ← Show the logged‑in user here:
+if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
+    echo '
+      <div class="mb-4 p-2 bg-gray-100 rounded text-sm text-gray-700 flex justify-end space-x-4">
+        <span>Logged in as:</span>
+        <span class="font-medium">' . htmlspecialchars($_SESSION['admin_email']) . '</span>
+        <span class="text-gray-500">|</span>
+        <span class="font-semibold">' . htmlspecialchars($_SESSION['admin_role']) . '</span>
+      </div>
+    ';
+}
+
 // DELETE LOGIC
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_id'])) {
     $delete_id = $_POST['delete_id'];
@@ -127,6 +140,8 @@ $newsRecords = $conn->query("SELECT * FROM news ORDER BY created_at DESC");
             <h1 class="text-3xl font-bold text-gray-800">
                 <i class="fas fa-newspaper text-blue-600 mr-2"></i>News Management
             </h1>
+
+
             <div class="text-sm text-gray-500">
                 <span class="mr-2"><i class="far fa-calendar-alt"></i> <?= date('F j, Y') ?></span>
                 <span><i class="far fa-user"></i> Super Admin</span>

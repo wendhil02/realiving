@@ -28,10 +28,15 @@ if (isset($_POST['update_id'])) {
     $nameproject = $_POST['edit_nameproject'];
     $client_type = $_POST['edit_client_type'];
     $client_class = $_POST['edit_client_class'];
+    // New fields for edit form
+    $contact = $_POST['edit_contact'];
+    $country = $_POST['edit_country'];
+    $address = $_POST['edit_address'];
+    $gender = $_POST['edit_gender'];
     $updateTime = date('Y-m-d H:i:s');
 
-    $stmt = $conn->prepare("UPDATE user_info SET clientname=?, status=?, nameproject=?, updatestatus=?, update_time=?, client_type=?, client_class=? WHERE id=?");
-    $stmt->bind_param("sssssssi", $clientname, $status, $nameproject, $status, $updateTime, $client_type, $client_class, $updateId);
+    $stmt = $conn->prepare("UPDATE user_info SET clientname=?, status=?, nameproject=?, updatestatus=?, update_time=?, client_type=?, client_class=?, contact=?, country=?, address=?, gender=? WHERE id=?");
+    $stmt->bind_param("ssssssssssi", $clientname, $status, $nameproject, $status, $updateTime, $client_type, $client_class, $contact, $country, $address, $gender, $updateId);
     
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Client updated successfully!";
@@ -56,13 +61,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['
     $status = $_POST['status'];
     $nameproject = $_POST['nameproject'];
     $client_type = $_POST['client_type'];
-    $client_class = $_POST['client_class']; // NEW
+    $client_class = $_POST['client_class'];
+    // New fields
+    $contact = $_POST['contact'];
+    $country = $_POST['country'];
+    $address = $_POST['address'];
+    $gender = $_POST['gender'];
     $updateTime = date('Y-m-d H:i:s');
 
     $reference_number = "REF" . date("YmdHis") . strtoupper(substr(md5(uniqid()), 0, 4));
 
-    $stmt = $conn->prepare("INSERT INTO user_info (clientname, status, nameproject, updatestatus, update_time, reference_number, client_type, client_class) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $clientname, $status, $nameproject, $status, $updateTime, $reference_number, $client_type, $client_class);
+    $stmt = $conn->prepare("INSERT INTO user_info (clientname, status, nameproject, updatestatus, update_time, reference_number, client_type, client_class, contact, country, address, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssssss", $clientname, $status, $nameproject, $status, $updateTime, $reference_number, $client_type, $client_class, $contact, $country, $address, $gender);
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "New client added successfully!";
@@ -79,13 +89,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['
 
 // Export logic
 if (isset($_POST['export'])) {
-    $sql = "SELECT clientname, reference_number, nameproject, client_type FROM user_info";
+    $sql = "SELECT clientname, reference_number, nameproject, client_type, contact, country, address, gender FROM user_info";
     $result = $conn->query($sql);
 
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="clientRef.csv"');
     $output = fopen("php://output", "w");
-    fputcsv($output, ['Client Name', 'Reference Number', 'Project Name', 'Client Type']);
+    fputcsv($output, ['Client Name', 'Reference Number', 'Project Name', 'Client Type', 'Contact', 'Country', 'Address', 'Gender']);
 
     while ($row = $result->fetch_assoc()) {
         fputcsv($output, $row);
@@ -132,7 +142,7 @@ if ($result && $result->num_rows > 0) {
         $tableRows .= '
             <tr class="hover:bg-gray-50 border-b border-gray-200 transition duration-150">
                 <td class="py-4 px-6">' . htmlspecialchars($row["clientname"]) . '</td>
-                <td class="py-4 px-6">
+                <td class="py-4 px-6 ">
                     <span class="px-3 py-1 rounded-full text-xs font-medium ' . $status_class . '">
                         ' . htmlspecialchars($row["status"]) . '
                     </span>
@@ -149,9 +159,11 @@ if ($result && $result->num_rows > 0) {
                         ' . htmlspecialchars($row["client_class"]) . '
                     </span>
                 </td>
+                <td class="py-4 px-6">' . htmlspecialchars($row["contact"] ?? '') . '</td>
+                <td class="py-4 px-6 max-w-xs truncate" title="' . htmlspecialchars($row["address"] ?? '') . '">' . htmlspecialchars($row["address"] ?? '') . '</td>
                 <td class="py-4 px-6 text-center">
                     <div class="flex justify-center space-x-3">
-                        <button type="button" onclick="openEditModal(' . $row["id"] . ', \'' . htmlspecialchars($row["clientname"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["status"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["nameproject"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_type"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_class"], ENT_QUOTES) . '\')" class="text-blue-600 hover:text-blue-800 hover:underline focus:outline-none">
+                        <button type="button" onclick="openEditModal(' . $row["id"] . ', \'' . htmlspecialchars($row["clientname"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["status"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["nameproject"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_type"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_class"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["contact"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["country"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["address"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["gender"] ?? '', ENT_QUOTES) . '\')" class="text-blue-600 hover:text-blue-800 hover:underline focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
@@ -169,7 +181,7 @@ if ($result && $result->num_rows > 0) {
             </tr>';
     }
 } else {
-    $tableRows = '<tr><td colspan="7" class="py-4 px-6 text-center text-gray-500">No clients found</td></tr>';
+    $tableRows = '<tr><td colspan="11" class="py-4 px-6 text-center text-gray-500">No clients found</td></tr>';
 }
 
 $conn->close();
@@ -185,71 +197,7 @@ $conn->close();
     <title>Client Management System</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        .animate-fade {
-            animation: fadeOut 5s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% {
-                opacity: 1;
-            }
-
-            70% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-            }
-        }
-
-        .card-shadow {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: modalFadeIn 0.3s;
-        }
-        
-        @keyframes modalFadeIn {
-            from {opacity: 0; transform: translateY(-20px);}
-            to {opacity: 1; transform: translateY(0);}
-        }
-        
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
+   <link rel="stylesheet" href="src/allclient.css">
 </head>
 
 <body class="bg-gradient-to-br from-gray-100 to-gray-200 min-h-screen">
@@ -315,6 +263,7 @@ $conn->close();
             <!-- Form to add new client -->
             <form method="post" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- First row -->
                     <div>
                         <label for="clientname" class="block text-sm font-medium text-gray-700 mb-1">Client Name</label>
                         <div class="relative">
@@ -366,16 +315,76 @@ $conn->close();
                         </div>
                     </div>
                 </div>
+                
+                <!-- Second row - New fields -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div>
+                        <label for="contact" class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-phone text-gray-400"></i>
+                            </div>
+                            <input type="text" name="contact" id="contact" placeholder="Enter contact number"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-globe text-gray-400"></i>
+                            </div>
+                            <input type="text" name="country" id="country" placeholder="Enter country"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-venus-mars text-gray-400"></i>
+                            </div>
+                            <select name="gender" id="gender"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="client_class" class="block text-sm font-medium text-gray-700 mb-1">Client Classification</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-award text-gray-400"></i>
+                            </div>
+                            <select name="client_class" id="client_class"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                                <option value="VIP">VIP</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Walk-in">Walk-in</option>
+                                <option value="Returning">Returning</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Address field (full width) -->
                 <div>
-                    <label for="client_class" class="block mb-1 text-sm font-medium text-gray-700">Client Classification</label>
-                    <select name="client_class" id="client_class" class="w-[200px] p-2 border rounded">
-                        <option value="VIP">VIP</option>
-                        <option value="Regular">Regular</option>
-                        <option value="Walk-in">Walk-in</option>
-                        <option value="Returning">Returning</option>
-                    </select>
-
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i class="fas fa-map-marker-alt text-gray-400"></i>
+                        </div>
+                        <textarea name="address" id="address" placeholder="Enter full address" rows="3"
+                            class="pl-10 w-[200px] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                            required></textarea>
+                    </div>
                 </div>
 
                 <div class="flex justify-center mt-6">
@@ -383,74 +392,63 @@ $conn->close();
                         class="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105">
                         <i class="fas fa-plus"></i> Add Client
                     </button>
-
                 </div>
             </form>
         </div>
 
-        <!-- Search and Filter Bar -->
-        <div class="bg-white rounded-xl shadow-md p-4 mb-6">
-            <form method="get" class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-gray-400"></i>
-                    </div>
-                    <input type="text" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search clients..."
-                        class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+        <!-- Search and Filter -->
+        <div class="bg-white rounded-xl shadow-lg p-6 mb-8">
+            <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
+                    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search clients..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-filter text-gray-400"></i>
-                    </div>
-                    <select name="filter_status" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="" <?php echo $filter_status === '' ? 'selected' : ''; ?>>All Status</option>
+                <div>
+                    <label for="filter_status" class="block text-sm font-medium text-gray-700 mb-1">Filter by Status</label>
+                    <select id="filter_status" name="filter_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Status</option>
                         <option value="New Client" <?php echo $filter_status === 'New Client' ? 'selected' : ''; ?>>New Client</option>
                         <option value="Old Client" <?php echo $filter_status === 'Old Client' ? 'selected' : ''; ?>>Old Client</option>
                     </select>
                 </div>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-building text-gray-400"></i>
-                    </div>
-                    <select name="filter_type" class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option value="" <?php echo $filter_type === '' ? 'selected' : ''; ?>>All Types</option>
+                <div>
+                    <label for="filter_type" class="block text-sm font-medium text-gray-700 mb-1">Filter by Type</label>
+                    <select id="filter_type" name="filter_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">All Types</option>
                         <option value="Noblehome" <?php echo $filter_type === 'Noblehome' ? 'selected' : ''; ?>>Noblehome</option>
                         <option value="Realiving" <?php echo $filter_type === 'Realiving' ? 'selected' : ''; ?>>Realiving</option>
                     </select>
-
                 </div>
-
-
-                <div class="flex space-x-2">
-                    <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition duration-150 flex items-center justify-center">
+                <div class="md:col-span-3 flex justify-center">
+                    <button type="submit" class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-300 ease-in-out">
                         <i class="fas fa-search mr-2"></i> Search
                     </button>
-                    <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-150 flex items-center justify-center">
+                    <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="ml-4 px-6 py-2 bg-gray-500 text-white font-medium rounded-lg shadow hover:bg-gray-600 transition duration-300 ease-in-out">
                         <i class="fas fa-redo mr-2"></i> Reset
                     </a>
                 </div>
             </form>
         </div>
 
-        <!-- Client Table -->
-        <div class="bg-white rounded-xl shadow-xl card-shadow overflow-hidden">
-            <div class="p-6 border-b border-gray-200">
-                <h2 class="text-2xl font-bold text-gray-800 flex items-center">
-                    <i class="fas fa-users mr-3 text-blue-600"></i>
-                    Client Directory
-                </h2>
-            </div>
+        <!-- Client table -->
+        <div class="bg-white rounded-xl shadow-xl p-6 overflow-hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <i class="fas fa-list mr-3 text-blue-600"></i>
+                Client List
+            </h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Name</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference Number</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project Name</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference No.</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                             <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Type</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Class</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact </th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address </th>
+                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -459,122 +457,91 @@ $conn->close();
                 </table>
             </div>
         </div>
+    </div>
 
-        <!-- Edit Modal -->
-        <div id="editModal" class="modal">
-            <div class="modal-content">
-                <div class="flex justify-between items-center mb-4">
-                    <h2 class="text-xl font-bold text-gray-800">Edit Client</h2>
-                    <span class="close">&times;</span>
-                </div>
-                <form method="post" id="editForm" class="space-y-4">
-                    <input type="hidden" name="update_id" id="edit_id">
-                    
+    <!-- Edit Modal -->
+    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full" style="z-index: 100;">
+        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
+            <div class="flex justify-between items-center pb-4 mb-4 border-b">
+                <h3 class="text-xl font-semibold text-gray-800">Edit Client</h3>
+                <button type="button" onclick="closeEditModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+            </div>
+            <form method="post" id="editForm">
+                <input type="hidden" name="update_id" id="edit_id">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                     <div>
                         <label for="edit_clientname" class="block text-sm font-medium text-gray-700 mb-1">Client Name</label>
-                        <input type="text" name="edit_clientname" id="edit_clientname" 
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                        <input type="text" name="edit_clientname" id="edit_clientname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
-                    
                     <div>
                         <label for="edit_status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select name="edit_status" id="edit_status"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                        <select name="edit_status" id="edit_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                             <option value="New Client">New Client</option>
                             <option value="Old Client">Old Client</option>
                         </select>
                     </div>
-                    
                     <div>
                         <label for="edit_nameproject" class="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
-                        <input type="text" name="edit_nameproject" id="edit_nameproject"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                        <input type="text" name="edit_nameproject" id="edit_nameproject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
-                    
                     <div>
                         <label for="edit_client_type" class="block text-sm font-medium text-gray-700 mb-1">Client Type</label>
-                        <select name="edit_client_type" id="edit_client_type"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                        <select name="edit_client_type" id="edit_client_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                             <option value="Noblehome">Noblehome</option>
                             <option value="Realiving">Realiving</option>
                         </select>
                     </div>
-                    
+                    <div>
+                        <label for="edit_contact" class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
+                        <input type="text" name="edit_contact" id="edit_contact" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="edit_country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                        <input type="text" name="edit_country" id="edit_country" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                    </div>
+                    <div>
+                        <label for="edit_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
+                        <select name="edit_gender" id="edit_gender" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                            <option value="Prefer not to say">Prefer not to say</option>
+                        </select>
+                    </div>
                     <div>
                         <label for="edit_client_class" class="block text-sm font-medium text-gray-700 mb-1">Client Classification</label>
-                        <select name="edit_client_class" id="edit_client_class"
-                            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                            required>
+                        <select name="edit_client_class" id="edit_client_class" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
                             <option value="VIP">VIP</option>
                             <option value="Regular">Regular</option>
                             <option value="Walk-in">Walk-in</option>
                             <option value="Returning">Returning</option>
                         </select>
                     </div>
-                    
-                    <div class="flex justify-end mt-6">
-                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-800 font-medium rounded-lg mr-2">
-                            Cancel
-                        </button>
-                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-150">
-                            <i class="fas fa-save mr-1"></i> Save Changes
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="mt-8 text-center text-gray-600 text-sm">
-            <p>&copy; <?php echo date('Y'); ?> Client Management System. All rights reserved.</p>
+                </div>
+                
+                <!-- Address field (full width) -->
+                <div class="mb-4">
+                    <label for="edit_address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <textarea name="edit_address" id="edit_address" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
+                </div>
+                
+                <div class="flex justify-center">
+                    <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-300 ease-in-out">
+                        <i class="fas fa-save mr-2"></i> Save Changes
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
-
-    <script>
-        // Modal functions
-        var modal = document.getElementById("editModal");
-        var span = document.getElementsByClassName("close")[0];
-        
-        function openEditModal(id, clientname, status, nameproject, client_type, client_class) {
-            document.getElementById("edit_id").value = id;
-            document.getElementById("edit_clientname").value = clientname;
-            document.getElementById("edit_status").value = status;
-            document.getElementById("edit_nameproject").value = nameproject;
-            document.getElementById("edit_client_type").value = client_type;
-            document.getElementById("edit_client_class").value = client_class;
-            modal.style.display = "block";
-        }
-        
-        function closeModal() {
-            modal.style.display = "none";
-        }
-        
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            closeModal();
-        }
-        
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-    
-        // Auto-hide alerts after 5 seconds
-        setTimeout(function() {
-            const alerts = document.querySelectorAll('#success-alert, #error-alert');
-            alerts.forEach(alert => {
-                if (alert) {
-                    alert.style.display = 'none';
-                }
-            });
-        }, 5000);
-    </script>
+      <footer class="mt-12 py-6 border-t border-gray-200 bg-white">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
+            &copy; <?= date('Y') ?> Inquiries Dashboard. All rights reserved.
+        </div>
+    </footer>
+    <script src="js/allclient.js"></script>
 </body>
-
 </html>

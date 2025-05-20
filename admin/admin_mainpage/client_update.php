@@ -84,6 +84,7 @@ function getStepUpdateDetails($conn, $clientId, $step)
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="src/client_update.css">
 
     <script>
         tailwind.config = {
@@ -108,32 +109,6 @@ function getStepUpdateDetails($conn, $clientId, $step)
         }
     </script>
 
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9fafb;
-        }
-
-        .card-shadow {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-
-        .progress-item {
-            transition: all 0.3s ease;
-        }
-
-        .progress-item:hover {
-            transform: translateY(-2px);
-        }
-
-        .hover-raise {
-            transition: transform 0.2s ease;
-        }
-
-        .hover-raise:hover {
-            transform: translateY(-3px);
-        }
-    </style>
 </head>
 
 <body class="min-h-screen bg-gray-50">
@@ -149,12 +124,18 @@ function getStepUpdateDetails($conn, $clientId, $step)
                         <p class="text-gray-600"><span class="font-semibold text-gray-700">Client Name:</span> <?= htmlspecialchars($clientName) ?></p>
                     </div>
                 </div>
-                <div class="mt-4 md:mt-0">
-                    <a href="export_step_updates.php?id=<?= $id ?>" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium text-sm">
-                        <i class="fas fa-file-excel mr-2 text-primary-600"></i>
-                        Export Data
-                    </a>
-                </div>
+              <div class="flex flex-wrap items-center gap-2 md:gap-3">
+    <a href="export_step_updates.php?id=<?= $id ?>" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium text-sm">
+        <i class="fas fa-file-excel mr-2 text-primary-600"></i>
+        Export Data
+    </a>
+
+    <a href="billing.php?id=<?= $id ?>" class="inline-flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition-colors font-medium text-sm">
+        <i class="fas fa-file-invoice-dollar mr-2 text-primary-600"></i>
+        Billing Progress
+    </a>
+</div>
+
             </div>
         </div>
 
@@ -343,7 +324,7 @@ function getStepUpdateDetails($conn, $clientId, $step)
         <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4 animate__animated animate__fadeInUp">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-xl font-semibold text-gray-800">Update Client Status</h2>
-                <button id="closeUpdateModalX" class="text-gray-400 hover:text-gray-600">
+                <button id="closeUpdateModal" class="text-gray-400 hover:text-gray-600">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
@@ -404,9 +385,6 @@ function getStepUpdateDetails($conn, $clientId, $step)
 
                 <!-- Modal Action Buttons -->
                 <div id="normalButtons" class="flex justify-between items-center mt-6">
-                    <button type="button" id="closeUpdateModal" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors text-sm font-medium">
-                        Cancel
-                    </button>
                     <button type="button" id="saveButton" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors text-sm font-medium flex items-center">
                         <i class="fas fa-save mr-2"></i>
                         Save Changes
@@ -429,63 +407,8 @@ function getStepUpdateDetails($conn, $clientId, $step)
                     </div>
                 </div>
             </form>
-
-
         </div>
     </div>
-
-    <script src="../../js/clientupdate.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Set Date and Time on Load
-            const today = new Date();
-            const dateString = today.toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
-            const timeString = today.toTimeString().split(' ')[0].slice(0, 5); // Current time in HH:MM format
-
-            // Set date and time to the form inputs
-            document.querySelector('[name="update_date"]').value = dateString;
-            document.querySelector('[name="update_time"]').value = timeString;
-
-            // Step-related fields
-            const stepSelect = document.getElementById('stepSelect');
-            const endDateContainer = document.getElementById('endDateContainer');
-            const descriptionContainer = document.getElementById('descriptionContainer');
-            const revisionContainer = document.getElementById('revisionContainer');
-
-            // Toggle visibility of fields based on selected step
-            function toggleFields() {
-                const selectedStep = parseInt(stepSelect.value);
-
-                // Show "End of Date" for steps 3 to 10
-                if (selectedStep >= 3 && selectedStep <= 10) {
-                    endDateContainer.classList.remove('hidden');
-                } else {
-                    endDateContainer.classList.add('hidden');
-                }
-
-                // Show "Description" only for Order Processing (step 6)
-                if (selectedStep === 6) {
-                    descriptionContainer.classList.remove('hidden');
-                } else {
-                    descriptionContainer.classList.add('hidden');
-                }
-
-                // Show "Revision Count" only for step 4
-                if (selectedStep === 4) {
-                    revisionContainer.classList.remove('hidden');
-                } else {
-                    revisionContainer.classList.add('hidden');
-                }
-            }
-
-            // Add event listener for step selection change
-            if (stepSelect) {
-                stepSelect.addEventListener('change', toggleFields);
-                // Run on page load to set initial state
-                toggleFields();
-            }
-
-            // Handle Notifications (if any)
             <?php if (isset($_SESSION['error'])): ?>
                 showNotification("<?= $_SESSION['error']; ?>", "error");
                 <?php unset($_SESSION['error']); ?>
@@ -496,62 +419,9 @@ function getStepUpdateDetails($conn, $clientId, $step)
                 <?php unset($_SESSION['success']); ?>
             <?php endif; ?>
 
-            // Show Notification function
-            function showNotification(message, type = 'success') {
-                const notification = document.getElementById('notification');
-                const notificationMessage = document.getElementById('notificationMessage');
-
-                if (notification && notificationMessage) {
-                    // Set the message
-                    notificationMessage.textContent = message;
-
-                    // Apply appropriate styling based on the message type
-                    if (type === 'error') {
-                        notification.classList.remove('border-primary-500');
-                        notification.classList.add('border-red-500');
-                        document.querySelector('#notification i').classList.remove('text-primary-500');
-                        document.querySelector('#notification i').classList.add('text-red-500');
-                        document.querySelector('#notification i').classList.remove('fa-info-circle');
-                        document.querySelector('#notification i').classList.add('fa-exclamation-circle');
-                    } else {
-                        notification.classList.remove('border-red-500');
-                        notification.classList.add('border-primary-500');
-                        document.querySelector('#notification i').classList.remove('text-red-500');
-                        document.querySelector('#notification i').classList.add('text-primary-500');
-                        document.querySelector('#notification i').classList.remove('fa-exclamation-circle');
-                        document.querySelector('#notification i').classList.add('fa-info-circle');
-                    }
-
-                    // Show notification
-                    notification.classList.remove('hidden');
-
-                    // Auto hide after 5 seconds
-                    setTimeout(() => {
-                        notification.classList.add('hidden');
-                    }, 5000);
-                }
-            }
-
-            // Close notification manually
-            function closeNotification() {
-                document.getElementById('notification').classList.add('hidden');
-            }
-
-            // Enable edit mode for description
-            function enableEdit(id) {
-                document.getElementById('desc-display-' + id).classList.add('hidden');
-                document.getElementById('desc-form-' + id).classList.remove('hidden');
-                document.getElementById('desc-input-' + id).focus();
-            }
-
-            // Cancel the edit mode and revert back
-            function cancelEdit(id) {
-                document.getElementById('desc-display-' + id).classList.remove('hidden');
-                document.getElementById('desc-form-' + id).classList.add('hidden');
-            }
-        });
-    </script>
-
+    <script src="js/clientupdate.js"></script>
+    <script src="js/client_update.js"></script>
+    
 </body>
 
 </html>

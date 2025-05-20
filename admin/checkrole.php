@@ -13,7 +13,7 @@
     
         // If user's role is not allowed
         if (!in_array($_SESSION['admin_role'], $allowed_roles)) {
-            $_SESSION['noti'] = '⚠️ Access Denied: You do not have permission to view this page.';
+            $_SESSION['noti'] = 'Access Denied: You do not have permission to view this page.';
     
             // Redirect based on actual role to avoid redirect loops
             switch ($_SESSION['admin_role']) {

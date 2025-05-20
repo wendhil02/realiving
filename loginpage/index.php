@@ -99,104 +99,132 @@ $conn->close();
             theme: {
                 extend: {
                     colors: {
-                        primary: "#3b82f6",
-                        secondary: "#2563eb",
-                        accent: "#1e40af",
-                        dark: "#1e293b"
+                        primary: "#4f46e5",
+                        secondary: "#4338ca",
+                        accent: "#3730a3"
                     },
-                    borderRadius: {
-                        button: "12px",
-                    },
-                    fontFamily: {
-                        poppins: ['Poppins', 'sans-serif'],
-                    },
-                    boxShadow: {
-                        custom: '0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(59, 130, 246, 0.1)',
-                    }
-                },
+                }
             },
         };
 
-        // Show the loading spinner and hide the form, then submit after delay
+        // Simple loading function - no disabling of inputs
         function showLoading(event) {
-            event.preventDefault(); // Prevent the form from being submitted immediately
+            event.preventDefault();
             document.getElementById("loading-button").classList.remove("hidden");
-            document.getElementById("login-form").classList.add("hidden");
-
-            // Wait for 3 seconds and then submit the form
+            
+            // Wait for 1 second and then submit the form normally
             setTimeout(function() {
                 document.getElementById("login-form").submit();
-            }, 3000); // 3 seconds delay
+            }, 1000);
+        }
+
+        // Toggle password visibility
+        function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const passwordIcon = document.getElementById('password-icon');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                passwordIcon.classList.remove('ri-eye-line');
+                passwordIcon.classList.add('ri-eye-off-line');
+            } else {
+                passwordField.type = 'password';
+                passwordIcon.classList.remove('ri-eye-off-line');
+                passwordIcon.classList.add('ri-eye-line');
+            }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
         
-        .glass-effect {
-            backdrop-filter: blur(16px);
-            background: rgba(255, 255, 255, 0.85);
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
         
-        .input-field:focus {
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
         }
         
-        .custom-checkbox {
-            border-radius: 4px;
-            width: 18px;
-            height: 18px;
-            accent-color: #3b82f6;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
         
-        .login-animation {
-            animation: fadeIn 0.6s ease-in-out;
-        }
-        
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: translateY(20px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-        
-        .form-container {
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .logo-glow {
-            filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+        .pulse-animation {
+            animation: pulse 3s ease-in-out infinite;
         }
     </style>
 </head>
-<body class="h-screen w-full flex items-center justify-center bg-cover bg-center relative" style="background-image: url('../realivingpage/images/new.png');">
-
-    <!-- Left half: Background image with overlay -->
-    <div class="absolute left-0 top-0 w-1/2 h-full bg-cover bg-center z-0" style="background-image: url('../logo/bg.png');"></div>
-    <div class="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-dark to-primary/80 opacity-80 z-10"></div>
-
-    <!-- Left half: Logos and text -->
-    <div class="absolute left-0 top-0 w-1/2 h-full flex flex-col items-center justify-center space-y-10 z-20 login-animation">
-        <img src="../logo/mmone.png" alt="Logo" class="h-32 object-contain logo-glow transition-all duration-300 hover:scale-105" />
-        <div class="text-center max-w-md px-6">
-            <h1 class="text-3xl font-bold text-white mb-4">Welcome Back</h1>
-            <p class="text-white/90 text-lg">Access your admin dashboard to manage your system effectively.</p>
-        </div>
-    </div>
-
-    <!-- Right half: Login Form -->
-    <div class="relative z-30 w-full max-w-md ml-auto mr-12 login-animation">
-        <div class="form-container glass-effect rounded-2xl p-10">
-            <div class="flex items-center justify-center mb-8">
-                <div class="bg-primary/10 rounded-full p-4">
-                    <i class="ri-admin-line text-primary text-3xl"></i>
+<body class="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 flex items-center justify-center p-4">
+    <div class="w-full max-w-6xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col lg:flex-row">
+        <!-- Left side - decorative area -->
+        <div class="hidden lg:block lg:w-1/2 relative bg-gradient-to-br from-indigo-600 to-purple-700">
+            <div class="absolute inset-0 bg-black opacity-30"></div>
+            
+            <!-- Decorative elements -->
+            <div class="absolute top-8 left-8 z-10">
+                <img src="../logo/mmone.png" alt="Logo" class="h-16 object-contain" />
+            </div>
+            
+            <div class="absolute inset-0 flex flex-col justify-center items-center z-10 px-12">
+                <div class="float-animation">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="90" height="90" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="mb-8 opacity-90">
+                        <path d="M21 13V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8"></path>
+                        <path d="M16 2v4"></path>
+                        <path d="M8 2v4"></path>
+                        <path d="M3 10h18"></path>
+                        <circle cx="18" cy="18" r="3"></circle>
+                        <path d="M18 14v1"></path>
+                        <path d="M18 21v1"></path>
+                        <path d="M14 18h1"></path>
+                        <path d="M21 18h1"></path>
+                    </svg>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-4 text-center">Admin Portal</h1>
+                <p class="text-white/80 text-center mb-6">Access your dashboard to manage and monitor your system</p>
+                
+                <div class="grid grid-cols-2 gap-4 w-full max-w-xs">
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 pulse-animation">
+                        <div class="text-white/90 text-sm font-medium mb-1">Analytics</div>
+                        <div class="text-white/70 text-xs">Real-time Insights</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 pulse-animation">
+                        <div class="text-white/90 text-sm font-medium mb-1">Management</div>
+                        <div class="text-white/70 text-xs">Efficient Control</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 pulse-animation">
+                        <div class="text-white/90 text-sm font-medium mb-1">Security</div>
+                        <div class="text-white/70 text-xs">Advanced Protection</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-md rounded-2xl p-4 pulse-animation">
+                        <div class="text-white/90 text-sm font-medium mb-1">Reporting</div>
+                        <div class="text-white/70 text-xs">Detailed Insights</div>
+                    </div>
                 </div>
             </div>
-
-            <h2 class="text-2xl font-bold text-center text-dark mb-2">Admin Login</h2>
-            <p class="text-gray-500 text-center mb-8">Enter your credentials to continue</p>
-
+            
+            <div class="absolute bottom-8 left-8 right-8 text-white/70 text-sm z-10">
+                Secure Admin Dashboard © 2025
+            </div>
+        </div>
+        
+        <!-- Right side - login form -->
+        <div class="w-full lg:w-1/2 p-6 sm:p-10 lg:p-16 flex flex-col justify-center">
+            <div class="flex items-center justify-center lg:hidden mb-10">
+                <img src="../logo/mmone.png" alt="Logo" class="h-16 object-contain" />
+            </div>
+            
+            <div class="mb-10">
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Welcome back</h2>
+                <p class="text-gray-500">Please enter your credentials to access the admin panel</p>
+            </div>
+            
             <!-- Error Message -->
             <?php if (!empty($error_message)): ?>
                 <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-lg">
@@ -214,14 +242,14 @@ $conn->close();
             <?php endif; ?>
 
             <!-- Loading Button -->
-            <div id="loading-button" class="hidden text-center">
-                <button type="button" class="bg-primary text-white w-full py-4 rounded-button font-medium flex items-center justify-center shadow-lg shadow-primary/30 hover:shadow-primary/40 transition-all duration-300" disabled>
-                    <svg class="mr-3 animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <div id="loading-button" class="hidden mb-6">
+                <div class="w-full py-4 bg-primary text-white rounded-xl flex items-center justify-center">
+                    <svg class="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0l4 4-4 4V4a4 4 0 00-4 4 4 4 0 004 4v4a8 8 0 01-8-8z"></path>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Authenticating...
-                </button>
+                    <span>Authenticating...</span>
+                </div>
             </div>
 
             <!-- Login Form -->
@@ -229,7 +257,7 @@ $conn->close();
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                             <i class="ri-mail-line"></i>
                         </div>
                         <input
@@ -237,39 +265,49 @@ $conn->close();
                             name="email"  
                             id="email"
                             required
+                            autocomplete="email"
                             placeholder="admin@example.com"
-                            class="input-field w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-gray-800 bg-gray-50/80 transition-all duration-200 font-medium text-sm" />
+                            class="w-full pl-12 pr-4 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white text-gray-800 transition-all duration-200 text-sm" />
                     </div>
                 </div>
 
                 <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                       
-                    </div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
                     <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center text-gray-500">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
                             <i class="ri-lock-line"></i>
                         </div>
                         <input
                             type="password"
-                            name="password"  
+                            name="password"
+                            id="password"
                             required
+                            autocomplete="current-password"
                             placeholder="••••••••"
-                            class="input-field w-full pl-12 pr-4 py-4 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary text-gray-800 bg-gray-50/80 transition-all duration-200 font-medium text-sm" />
+                            class="w-full pl-12 pr-12 py-3.5 border border-gray-300 rounded-xl focus:ring-2 focus:ring-primary/20 focus:border-primary bg-white text-gray-800 transition-all duration-200 text-sm" />
+                        <div class="absolute inset-y-0 right-0 pr-4 flex items-center">
+                            <button type="button" onclick="togglePassword()" class="text-gray-400 hover:text-gray-600 focus:outline-none">
+                                <i id="password-icon" class="ri-eye-line"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
-                <div class="flex items-center space-x-3">
-                    <input type="checkbox" id="remember" name="remember" class="custom-checkbox">
-                    <label for="remember" class="text-sm text-gray-600">Keep me signed in</label>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" name="remember" class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/20">
+                        <label for="remember" class="ml-2 text-sm text-gray-600">Remember me</label>
+                    </div>
                 </div>
 
                 <button
                     type="submit"
-                    class="w-full bg-primary hover:bg-secondary text-white py-4 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-primary/40 transform hover:-translate-y-1">
+                    class="w-full bg-primary hover:bg-secondary text-white py-3.5 rounded-xl font-medium transition-all duration-300 shadow-lg shadow-primary/30 hover:shadow-primary/40 flex items-center justify-center">
+                    <i class="ri-login-box-line mr-2"></i>
                     Sign in to Dashboard
                 </button>
+                
+               
             </form>
             
             <div class="text-center mt-8">

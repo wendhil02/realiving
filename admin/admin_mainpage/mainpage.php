@@ -13,7 +13,18 @@ $inquiries = $conn->query("SELECT * FROM contact_inquiries ORDER BY created_at D
 
 // Fetch admin emails, client_status, and role
 $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
+ 
 
+if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
+    echo '
+      <div class="mb-4 p-2 bg-gray-100 rounded text-sm text-gray-700 flex justify-end space-x-4">
+        <span>Logged in as:</span>
+        <span class="font-medium">' . htmlspecialchars($_SESSION['admin_email']) . '</span>
+        <span class="text-gray-500">|</span>
+        <span class="font-semibold">' . htmlspecialchars($_SESSION['admin_role']) . '</span>
+      </div>
+    ';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +39,7 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- Google Fonts: Inter -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="src/mainpage.css">
   <script>
     tailwind.config = {
       theme: {
@@ -65,64 +76,18 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
     }
   </script>
 
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-
-    .chart-container {
-      position: relative;
-      height: 220px;
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-      height: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #f1f5f9;
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #94a3b8;
-    }
-
-    /* Animation for notifications */
-    @keyframes slideInNotification {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    .notification-animate {
-      animation: slideInNotification 0.3s ease forwards;
-    }
-  </style>
+  
 </head>
 
 <body class="bg-slate-50 min-h-screen">
 
   <!-- Notification -->
   <?php if (isset($_SESSION['noti'])): ?>
-    <div id="notifBox" class="fixed top-20 right-4 bg-white border-l-4 border-green-500 shadow-lg rounded-lg p-4 w-80 notification-animate z-50">
+    <div id="notifBox" class="fixed top-20 right-4 bg-white border-l-4 border-red-500 shadow-lg rounded-lg p-4 w-80 notification-animate z-50">
       <div class="flex items-center">
-        <i class="fas fa-check-circle text-green-500 mr-3 text-xl"></i>
+        <i class="fa-solid fa-square-xmark text-red-600 mr-3"></i>
         <div>
-          <p class="text-sm font-medium text-gray-900">Success</p>
+          <p class="text-sm font-medium text-gray-900">Warning</p>
           <p class="text-xs text-gray-600"><?= $_SESSION['noti']; ?></p>
         </div>
         <button onclick="this.parentElement.parentElement.remove()" class="ml-auto text-gray-400 hover:text-gray-500">
@@ -208,8 +173,6 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
               <option value="desc">Z to A</option>
             </select>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -228,6 +191,7 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
               <th class="px-6 py-4 font-medium">Name</th>
               <th class="px-6 py-4 font-medium">Project Name</th>
               <th class="px-6 py-4 font-medium">Client Type</th>
+              <th class="px-6 py-4 font-medium">Client Class</th>
               <th class="px-6 py-4 font-medium">Status</th>
               <th class="px-6 py-4 font-medium">Last Updated</th>
               <th class="px-6 py-4 font-medium text-right">Action</th>
@@ -285,6 +249,24 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
                     ?>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
+                    <?php
+                    $clientClass = htmlspecialchars($row['client_class'] ?? 'N/A');
+                    
+                    // Display client_class with different styling based on value
+                    if (!empty($clientClass) && $clientClass != 'N/A') {
+                      echo '<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-800">
+                              <span class="h-1.5 w-1.5 rounded-full bg-blue-500 mr-1"></span>
+                              ' . $clientClass . '
+                            </span>';
+                    } else {
+                      echo '<span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-800">
+                              <span class="h-1.5 w-1.5 rounded-full bg-gray-500 mr-1"></span>
+                              ' . $clientClass . '
+                            </span>';
+                    }
+                    ?>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap">
                     <?php if ($row['step10_done'] > 0): ?>
                       <span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-1 text-xs font-medium text-green-800">
                         <span class="h-1.5 w-1.5 rounded-full bg-green-500 mr-1"></span>
@@ -315,7 +297,7 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
             else:
               ?>
               <tr>
-                <td colspan="7" class="px-6 py-10 text-center text-gray-500">
+                <td colspan="8" class="px-6 py-10 text-center text-gray-500">
                   <div class="flex flex-col items-center">
                     <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -342,257 +324,8 @@ $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <script>
-    // Fetch client data and create charts
-    fetch('get_client_data.php')
-      .then(response => response.json())
-      .then(data => {
-        if (data.error) {
-          console.error('Error:', data.error);
-          return;
-        }
-
-        // Chart 1: New vs Old Clients
-        const ctxType = document.getElementById('combinedClientChart').getContext('2d');
-        new Chart(ctxType, {
-          type: 'doughnut',
-          data: {
-            labels: ['New Clients', 'Old Clients'],
-            datasets: [{
-              data: [data.newClientCount, data.oldClientCount],
-              backgroundColor: ['#3b82f6', '#10b981'],
-              borderColor: ['#ffffff', '#ffffff'],
-              borderWidth: 2,
-              hoverOffset: 15
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  padding: 15,
-                  font: {
-                    size: 12
-                  }
-                }
-              },
-              tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                padding: 12,
-                titleFont: {
-                  size: 14
-                },
-                bodyFont: {
-                  size: 13
-                },
-                displayColors: false,
-                callbacks: {
-                  label: function(context) {
-                    const label = context.label || '';
-                    const value = context.parsed || 0;
-                    const total = context.dataset.data.reduce((acc, val) => acc + val, 0);
-                    const percentage = Math.round((value / total) * 100);
-                    return `${label}: ${value} (${percentage}%)`;
-                  }
-                }
-              }
-            }
-          }
-        });
-
-        const ctxTotal = document.getElementById('totalClientsBar').getContext('2d');
-        new Chart(ctxTotal, {
-          type: 'bar',
-          data: {
-            labels: ['Client Categories'],
-            datasets: [{
-                label: 'New Clients',
-                data: [data.newClientCount],
-                backgroundColor: '#3b82f6', // Blue
-                borderRadius: 5,
-                barThickness: 20
-              },
-              {
-                label: 'Old Clients',
-                data: [data.oldClientCount],
-                backgroundColor: '#10b981', // Green
-                borderRadius: 5,
-                barThickness: 20
-              },
-              {
-                label: 'Realiving',
-                data: [data.realivingClientCount],
-                backgroundColor: '#FFCC00', // Yellow
-                borderRadius: 5,
-                barThickness: 20
-              },
-              {
-                label: 'Noblehome',
-                data: [data.noblehomeClientCount],
-                backgroundColor: '#FF7A00', // Orange
-                borderRadius: 5,
-                barThickness: 20
-              },
-              {
-                label: 'Total Clients',
-                data: [data.totalClientCount],
-                backgroundColor: '#8B5CF6', // Purple
-                borderRadius: 5,
-                barThickness: 20
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                display: false,
-                grid: {
-                  display: false
-                }
-              },
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  precision: 0
-                },
-                grid: {
-                  color: 'rgba(0, 0, 0, 0.05)'
-                }
-              }
-            },
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  padding: 15,
-                  boxWidth: 10,
-                  font: {
-                    size: 12
-                  }
-                }
-              },
-              tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                padding: 12,
-                titleFont: {
-                  size: 14
-                },
-                bodyFont: {
-                  size: 13
-                }
-              }
-            }
-          }
-        });
-
-
-        // Chart 3: Completed vs Incomplete Clients
-        const ctxStatus = document.getElementById('statusClientChart').getContext('2d');
-        const totalStatus = data.completedClients + data.incompleteClients;
-        new Chart(ctxStatus, {
-          type: 'doughnut',
-          data: {
-            labels: ['Completed', 'Incomplete'],
-            datasets: [{
-              data: [data.completedClients, data.incompleteClients],
-              backgroundColor: ['#10b981', '#ef4444'],
-              borderColor: ['#ffffff', '#ffffff'],
-              borderWidth: 2,
-              hoverOffset: 15
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            cutout: '70%',
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: {
-                  usePointStyle: true,
-                  padding: 15,
-                  font: {
-                    size: 12
-                  }
-                }
-              },
-              tooltip: {
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                padding: 12,
-                titleFont: {
-                  size: 14
-                },
-                bodyFont: {
-                  size: 13
-                },
-                displayColors: false,
-                callbacks: {
-                  label: function(context) {
-                    const value = context.parsed;
-                    const percent = ((value / totalStatus) * 100).toFixed(1);
-                    return `${context.label}: ${value} (${percent}%)`;
-                  }
-                }
-              }
-            }
-          }
-        });
-      })
-      .catch(error => {
-        console.error('Fetch error:', error);
-      });
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const searchInput = document.getElementById('searchInput');
-
-      searchInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
-          performSearch();
-        }
-      });
-
-      function performSearch() {
-        const filter = searchInput.value.trim().toLowerCase();
-        const rows = document.querySelectorAll('.client-row');
-
-        rows.forEach(row => {
-          const text = row.textContent.toLowerCase();
-          row.style.display = text.includes(filter) ? '' : 'none';
-        });
-      }
-    });
-    // Sorting functionality
-    const sortSelect = document.getElementById('sortOrder');
-    const clientTableBody = document.getElementById('clientTableBody');
-    const clientRows = Array.from(clientTableBody.querySelectorAll('.client-row'));
-
-    sortSelect.addEventListener('change', sortTable);
-
-    function sortTable() {
-      const sortOrder = sortSelect.value;
-      const sortedRows = clientRows.sort((rowA, rowB) => {
-        const nameA = rowA.querySelector('.client-name').textContent.trim().toLowerCase();
-        const nameB = rowB.querySelector('.client-name').textContent.trim().toLowerCase();
-
-        return sortOrder === 'asc' ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-      });
-
-      sortedRows.forEach(row => clientTableBody.appendChild(row));
-    }
-
-    // Initial sort
-    sortTable();
-  </script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/mainpage.js"></script>
 
 </body>
 

@@ -1,0 +1,95 @@
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f3f4f6;
+        }
+        
+        .calendar-day {
+            transition: all 0.2s ease;
+            background-color: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            height: 120px;
+            overflow-y: auto;
+        }
+        
+        .calendar-day:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .today {
+            background-color: #ecfdf5;
+            border: 2px solid #10b981;
+        }
+        
+        .has-appointment {
+            background-color: #eff6ff;
+        }
+        
+        .done-date {
+            background-color: #d1fae5 !important;
+        }
+        
+        .appointment-item {
+            transition: all 0.2s ease;
+        }
+        
+        .appointment-item:hover {
+            transform: translateX(2px);
+        }
+        
+        .calendar-header {
+            background-color: #1e40af;
+            color: white;
+            border-radius: 0.5rem;
+        }
+        
+        .modal-container {
+            backdrop-filter: blur(5px);
+        }
+        
+        .month-title {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        
+        /* Custom button styles */
+        .btn-gradient {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+        }
+        
+        .btn-action {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }

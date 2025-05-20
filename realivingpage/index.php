@@ -1,393 +1,673 @@
-<?php
-/**
- * RealLiving Design Center - Footer Template
- * 
- * This file contains the footer section with action buttons
- * to be included across the RealLiving website.
- */
-?>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Additional Styles -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realiving - Interior Design</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="coupon/coupon.css">
+</head>
 <style>
-/* Fallback styles for custom elements and animations */
-.backdrop-blur-sm {
-  backdrop-filter: blur(8px);
-}
-
-/* Gradient backgrounds */
-.bg-gradient-to-r {
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
-}
-
-.from-blue-500 {
-  --tw-gradient-from: #3b82f6;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(59, 130, 246, 0));
-}
-
-.to-blue-600 {
-  --tw-gradient-to: #2563eb;
-}
-
-.from-yellow-400 {
-  --tw-gradient-from: #fbbf24;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(251, 191, 36, 0));
-}
-
-.to-yellow-500 {
-  --tw-gradient-to: #f59e0b;
-}
-
-/* Enhanced shadow effects */
-.drop-shadow-2xl {
-  filter: drop-shadow(0 25px 25px rgb(0 0 0 / 0.3));
-}
-
-.shadow-blue-500\/30 {
-  box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -4px rgba(59, 130, 246, 0.3);
-}
-
-.shadow-yellow-500\/30 {
-  box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.3), 0 4px 6px -4px rgba(245, 158, 11, 0.3);
-}
-
-/* Animation durations */
-.duration-2000 {
-  transition-duration: 2000ms;
-}
-
-/* Custom positions */
-.left-1\/5 {
-  left: 20%;
-}
-
-.right-1\/5 {
-  right: 20%;
-}
-
-.left-1\/3 {
-  left: 33.333333%;
-}
-
-.right-1\/4 {
-  right: 25%;
-}
+    .hero-bg {
+        background-image: url('img/navimg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+    }
 </style>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Enhanced Hero Section with Advanced Animation Effects and Modern Design -->
-<section class="relative w-full h-screen overflow-hidden">
-  <!-- Background Slider with Improved Dynamic Transitions -->
-  <div class="relative w-full h-full" id="heroSlider">
-    <!-- Semi-transparent overlay with enhanced gradient -->
-    <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/80 z-20"></div>
-    
-    <!-- Parallax Background Effect on Slides -->
-    <div class="absolute w-full h-full opacity-100 transition-all duration-2000 ease-in-out transform scale-110 origin-center hero-slide">
-      <img src="./images/background-image.jpg" class="w-full h-full object-cover" alt="Modern Kitchen Design">
-    </div>
-    <div class="absolute w-full h-full opacity-0 transition-all duration-2000 ease-in-out transform scale-110 origin-center hero-slide">
-      <img src="./images/background-image2.jpg" class="w-full h-full object-cover" alt="Elegant Living Room">
-    </div>
-    <div class="absolute w-full h-full opacity-0 transition-all duration-2000 ease-in-out transform scale-110 origin-center hero-slide">
-      <img src="./images/background-image3.jpg" class="w-full h-full object-cover" alt="Contemporary Bathroom">
-    </div>
-  </div>
-  
-  <!-- Floating Elements - Geometric Shapes -->
-  <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-10">
-    <div class="absolute top-1/4 left-1/5 w-16 h-16 border border-white/10 rounded-full animate-floatSlow opacity-60 hidden md:block"></div>
-    <div class="absolute top-2/3 right-1/4 w-24 h-24 border border-white/10 rounded-full animate-floatFast opacity-40 hidden md:block"></div>
-    <div class="absolute bottom-1/4 left-1/3 w-32 h-32 border-2 border-white/5 rounded-full animate-pulse opacity-30 hidden md:block"></div>
-    <div class="absolute top-1/3 right-1/5 w-20 h-20 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-full blur-lg animate-floatMedium hidden md:block"></div>
-  </div>
-  
-  <!-- Centered Content with Modern Glass Morphism -->
-  <div class="absolute z-30 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center px-8 py-12 w-full max-w-5xl">
-    <!-- Top Accent Line -->
-    <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-500 mx-auto mb-8 animate-pulse"></div>
-    
-    <!-- Logo with Enhanced Animation -->
-    <div class="mb-10 animate-fadeInUp">
-      <img src="../logo/mmone.png" alt="RealLiving Design Center" class="max-w-full h-auto w-80 md:w-96 mx-auto transition-all duration-700 hover:scale-105 drop-shadow-2xl">
-    </div>
-    
-    <!-- Tagline with Split Character Animation -->
-    <h2 class="text-white text-2xl md:text-3xl font-light mb-8 tracking-wider leading-relaxed split-text-animation">
-      <span>TRANSFORMING</span> <span>SPACES</span> <span>INTO</span> <span>EXTRAORDINARY</span> <span>EXPERIENCES</span>
-    </h2>
-    
-    <!-- Short Descriptive Text -->
-    <p class="text-gray-200 text-lg mb-10 max-w-2xl mx-auto leading-relaxed font-light opacity-0 animate-fadeInDelay">
-      Award-winning interior design solutions crafted for modern living. Elevate your space with our expert team.
-    </p>
-    
-    <!-- Interactive Pagination with Thumbnails -->
-    <div class="flex justify-center items-center space-x-4 mt-8">
-      <button class="group relative h-2 w-16 bg-blue-500 rounded-full transition-all duration-300 slider-dot active" data-slide="0">
-        <span class="absolute -top-14 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        
-        </span>
-      </button>
-      <button class="group relative h-2 w-6 bg-white/40 rounded-full transition-all duration-300 slider-dot" data-slide="1">
-        <span class="absolute -top-14 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-        
-        </span>
-      </button>
-      <button class="group relative h-2 w-6 bg-white/40 rounded-full transition-all duration-300 slider-dot" data-slide="2">
-        <span class="absolute -top-14 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          
-        </span>
-      </button>
-    </div>
-    
-    <!-- CTA Buttons with Modern Design -->
-    <div class="flex flex-col sm:flex-row justify-center gap-6 mt-12 opacity-0 animate-fadeInDelay2">
-      <a href="mainpage.php" class="px-10 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-medium rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-blue-500/30 group">
-        <span class="flex items-center justify-center">
-          <span>Explore</span>
-          <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
-          </svg>
-        </span>
-      </a>
-      <a href="contact.php" class="px-10 py-4 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-medium rounded-lg transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg hover:shadow-yellow-500/30 group">
-        <span class="flex items-center justify-center">
-          <span>Free Consultation</span>
-          <svg class="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-          </svg>
-        </span>
-      </a>
-    </div>
-  </div>
+<body class="text-white">
+    <div class="min-h-screen flex flex-col">
 
-</section>
+        <!-- Include the Navbar -->
+        <?php include 'header/headernav.php'; ?>
 
-<script>
-  document.querySelector('a[href="mainpage.php"]').addEventListener('click', function (e) {
-    e.preventDefault();
-    const button = this;
+        <!-- Main Body Content with Video Background -->
+        <main class="flex-grow flex items-center justify-start relative overflow-hidden hero-bg">
+            <!-- Overlay -->
+            <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
 
-    // Change button text to "Loading..." or add spinner
-    button.innerHTML = `<span class="flex items-center justify-center">
-      <svg class="w-5 h-5 mr-2 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
-      </svg>
-      <span>Loading...</span>
-    </span>`;
+            <!-- Hero Content -->
+            <div class="relative z-10 p-6 md:p-16">
+                <p class="mb-2 text-sm md:text-base">Modern interiors, crafted with purpose and personality.</p>
+                <h1 class="text-4xl md:text-6xl font-light mb-4">
+                    <span class="block">Transform your space</span>
+                    <span class="block">with timeless design</span>
+                </h1>
+                <button class="bg-white text-black px-8 py-3 font-medium mt-4 hover:bg-gray-100 transition duration-300">GET STARTED</button>
+            </div>
+        </main>
 
-    // Optional: disable the button to prevent repeated clicks
-    button.classList.add('pointer-events-none', 'opacity-70');
 
-    // After 2 seconds, redirect
-    setTimeout(() => {
-      window.location.href = 'mainpage.php';
-    }, 2000);
-  });
-</script>
- 
+       <section class="w-full max-w-8xl mx-auto mt-5">
+        <div class="bg-white shadow-lg overflow-hidden">
+            <!-- Main carousel container -->
+            <div class="relative">
+                <h1 class="text-center text-lg md:text-4xl font-bold text-gray-800 tracking-wide font-light mb-4">
+                    Design Ideas
+                </h1>
+                
+                <!-- Image container -->
+                <div class="overflow-hidden" id="carousel-container">
+                    <div class="flex transition-transform duration-300 ease-in-out" id="carousel-slides">
+                        <!-- Replace with your actual images -->
+                        <div class="min-w-full">
+                            <img src="img/idea/a.jpg" alt="Image 1" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="min-w-full">
+                            <img src="img/idea/b.jpg" alt="Image 2" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="min-w-full">
+                            <img src="img/idea/c.jpg" alt="Image 3" class="w-full h-64 object-cover">
+                        </div>
+                        <div class="min-w-full">
+                            <img src="img/idea/d.jpg" alt="Image 4" class="w-full h-64 object-cover">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Navigation buttons -->
+                <button id="prev-btn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+                <button id="next-btn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+                
+                <!-- Dots indicator -->
+                <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+                    <button class="w-3 h-3 rounded-full bg-gray-200 dot active" data-index="0"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="1"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="2"></button>
+                    <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="3"></button>
+                </div>
+            </div>
+            
+            <!-- Additional Images Section -->
+            <div class="px-4 py-6">
+                <h2 class="text-2xl font-light text-gray-800 mb-4">More Ideas For You</h2>
+                
+                <!-- Image Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    <!-- Image 1 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="img/moreonidea/a.png" alt="Additional idea 1" class="w-full h-[350px] object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Creative Design Idea</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 2 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="img/moreonidea/b.png" alt="Additional idea 2" class="w-full h-[350px] object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Minimalist Concept</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 3 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Additional idea 3" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Nature Inspired</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 4 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Additional idea 4" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Modern Architecture</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 5 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Additional idea 5" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Industrial Style</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 6 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Additional idea 6" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Rustic Elements</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 7 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Additional idea 7" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Eco-Friendly Design</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Image 8 -->
+                    <div class="relative group overflow-hidden rounded-lg shadow-md">
+                        <img src="/api/placeholder/400/300" alt="Additional idea 8" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                            <p class="text-white p-3 text-sm font-medium">Contemporary Fusion</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- View All Ideas Button -->
+                <div class="mt-6 flex justify-center">
+                    <button class="bg-brown-900 text-white font-semibold px-8 py-2 rounded-full shadow-md hover:bg-blue-600 hover:text-gray-500 transition duration-300 ease-in-out" style="background-color: #3b1d0e;">
+                        View All Ideas
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- JavaScript for Enhanced Functionality -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  const slides = document.querySelectorAll('.hero-slide');
-  const dots = document.querySelectorAll('.slider-dot');
-  let currentSlide = 0;
-  let slideInterval;
-  
-  // Function to change slide with enhanced transitions
-  function showSlide(index) {
-    // Hide all slides
-    slides.forEach(slide => {
-      slide.style.opacity = '0';
-      slide.style.transform = 'scale(1.1)';
-    });
-    
-    // Reset all dots
-    dots.forEach(dot => {
-      dot.classList.remove('active', 'bg-blue-500', 'w-16');
-      dot.classList.add('bg-white/40', 'w-6');
-    });
-    
-    // Show the current slide with dynamic scale
-    slides[index].style.opacity = '1';
-    
-    // Create a zoom effect
-    setTimeout(() => {
-      slides[index].style.transform = 'scale(1.2)';
-    }, 100);
-    
-    // Highlight the current dot
-    dots[index].classList.remove('bg-white/40', 'w-6');
-    dots[index].classList.add('active', 'bg-blue-500', 'w-16');
-    
-    // Update current slide index
-    currentSlide = index;
-  }
-  
-  // Start auto-rotation with enhanced timing
-  function startSlideShow() {
-    slideInterval = setInterval(function() {
-      let nextSlide = (currentSlide + 1) % slides.length;
-      showSlide(nextSlide);
-    }, 7000); // Longer time for better user experience
-  }
-  
-  // Stop auto-rotation when user interacts
-  function stopSlideShow() {
-    clearInterval(slideInterval);
-  }
-  
-  // Click event for dots with pause/resume functionality
-  dots.forEach((dot, index) => {
-    dot.addEventListener('click', function() {
-      stopSlideShow();
-      showSlide(index);
-      startSlideShow(); // Resume after user interaction
-    });
-  });
-  
-  // Scroll Down indicator functionality
-  const scrollIndicator = document.querySelector('.scroll-indicator');
-  if (scrollIndicator) {
-    scrollIndicator.addEventListener('click', function() {
-      // Calculate the height of the viewport
-      const viewportHeight = window.innerHeight;
-      
-      // Smooth scroll to just past the hero section
-      window.scrollTo({
-        top: viewportHeight,
-        behavior: 'smooth'
-      });
-    });
-  }
-  
-  // Initialize split text animation
-  const splitTextElements = document.querySelectorAll('.split-text-animation span');
-  splitTextElements.forEach((element, index) => {
-    // Add staggered delay to each word
-    element.style.display = 'inline-block';
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    element.style.transitionDelay = `${0.3 + (index * 0.15)}s`;
-    
-    // Trigger animation after a small delay
-    setTimeout(() => {
-      element.style.opacity = '1';
-      element.style.transform = 'translateY(0)';
-    }, 100);
-  });
-  
-  // Initialize fade-in animations
-  const fadeElements = document.querySelectorAll('.animate-fadeInDelay');
-  fadeElements.forEach((element) => {
-    element.style.transition = 'opacity 1s ease, transform 1s ease';
-    element.style.transitionDelay = '1.5s';
-    
-    setTimeout(() => {
-      element.style.opacity = '1';
-    }, 100);
-  });
-  
-  const fadeElements2 = document.querySelectorAll('.animate-fadeInDelay2');
-  fadeElements2.forEach((element) => {
-    element.style.transition = 'opacity 1s ease, transform 1s ease';
-    element.style.transitionDelay = '2s';
-    
-    setTimeout(() => {
-      element.style.opacity = '1';
-    }, 100);
-  });
-  
-  // Add keyframe animations
-  const styleSheet = document.styleSheets[0];
-  
-  // Enhanced Ken Burns animation
-  styleSheet.insertRule(`
-    @keyframes kenburns {
-      0% { transform: scale(1.1) translate(0, 0); }
-      25% { transform: scale(1.2) translate(-10px, 5px); }
-      50% { transform: scale(1.3) translate(0, -10px); }
-      75% { transform: scale(1.2) translate(10px, 0); }
-      100% { transform: scale(1.1) translate(0, 0); }
-    }
-  `, 0);
-  
-  // Floating animations
-  styleSheet.insertRule(`
-    @keyframes floatSlow {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-20px) rotate(5deg); }
-      100% { transform: translateY(0) rotate(0deg); }
-    }
-  `, 0);
-  
-  styleSheet.insertRule(`
-    @keyframes floatMedium {
-      0% { transform: translateY(0) translateX(0); }
-      33% { transform: translateY(-15px) translateX(10px); }
-      66% { transform: translateY(10px) translateX(-10px); }
-      100% { transform: translateY(0) translateX(0); }
-    }
-  `, 0);
-  
-  styleSheet.insertRule(`
-    @keyframes floatFast {
-      0% { transform: translateY(0) translateX(0) scale(1); }
-      50% { transform: translateY(-10px) translateX(15px) scale(1.05); }
-      100% { transform: translateY(0) translateX(0) scale(1); }
-    }
-  `, 0);
-  
-  styleSheet.insertRule(`
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  `, 0);
-  
-  styleSheet.insertRule(`
-    @keyframes scrollBounce {
-      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-      40% { transform: translateY(-8px); }
-      60% { transform: translateY(-4px); }
-    }
-  `, 0);
-  
-  // Apply animations to elements
-  document.querySelectorAll('.animate-floatSlow').forEach(el => {
-    el.style.animation = 'floatSlow 10s ease-in-out infinite';
-  });
-  
-  document.querySelectorAll('.animate-floatMedium').forEach(el => {
-    el.style.animation = 'floatMedium 14s ease-in-out infinite';
-  });
-  
-  document.querySelectorAll('.animate-floatFast').forEach(el => {
-    el.style.animation = 'floatFast 8s ease-in-out infinite';
-  });
-  
-  document.querySelectorAll('.animate-fadeInUp').forEach(el => {
-    el.style.animation = 'fadeInUp 1.2s ease-out forwards';
-  });
-  
-  document.querySelectorAll('.animate-scrollBounce').forEach(el => {
-    el.style.animation = 'scrollBounce 2s infinite';
-  });
-  
-  // Apply Ken Burns effect to all slides
-  slides.forEach(slide => {
-    slide.style.animation = 'kenburns 20s infinite alternate ease-in-out';
-  });
-  
-  // Start the slideshow
-  showSlide(0);
-  startSlideShow();
-  
-  // Add responsive pause/resume
-  window.addEventListener('blur', stopSlideShow);
-  window.addEventListener('focus', startSlideShow);
-});
-</script>
+        <!-- Cabinet Section with Background Image -->
+        <section class="cabinet-section" data-aos="fade-up">
+            <div class="relative bg-cover bg-center h-96" style="background-image: url('https://images.unsplash.com/photo-1556702571-3e11dd2b1a92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
+                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-2">Want a customized cabinet?</h2>
+                    <p class="text-lg md:text-xl text-white mb-8">Stylish. Affordable. Ready for your space.</p>
+                    <button class="bg-white hover:bg-gray-100 text-gray-800 px-8 py-3 font-medium">
+                        INQUIRE NOW
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Rooms Section -->
+        <section class="rooms-section bg-white text-black py-16" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">ROOMS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
+
+                    <!-- Kitchen -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/kitchen/a.jpg" alt="Kitchen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Kitchen</h3>
+                    </div>
+
+                    <!-- Bathroom -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/bath/a.jpg" alt="Bathroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Bathroom</h3>
+                    </div>
+
+                    <!-- Living Room -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="" alt="Living Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Living Room</h3>
+                    </div>
+
+                    <!-- Bedroom -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/bed/a.jpg" alt="Bedroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Bedroom</h3>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="text-black">
+            <div class="text-center my-12">
+                <h2 class="text-3xl font-light tracking-widest text-gray-800">TOP MODULAR CABINETS</h2>
+            </div>
+
+            <!-- Product Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Cabinet 1 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
+                        <img src="/api/placeholder/400/320" alt="Cabinet 1" class="w-full h-auto object-contain">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+
+                <!-- Cabinet 2 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
+                        <img src="/api/placeholder/400/320" alt="Cabinet 2" class="w-full h-auto object-contain">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+
+                <!-- Cabinet 3 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
+                        <img src="/api/placeholder/400/320" alt="Cabinet 3" class="w-full h-auto object-contain">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+
+                <!-- Cabinet 4 -->
+                <div class="text-center">
+                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
+                        <img src="/api/placeholder/400/320" alt="Cabinet 4" class="w-full h-auto object-contain">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+            </div>
+
+            <!-- Advertisement Banner -->
+            <div class="banner-container">
+                <div class="banner-image">
+                    <!-- Using a placeholder image -->
+                    <img src="img/coupon.jpg" alt="Promotional Background" class="w-full h-full object-cover">
+                </div>
+                <div class="banner-overlay">
+                    <div class="banner-text">
+                        <div class="banner-title">SPECIAL OFFER</div>
+                        <div class="banner-subtitle">Limited time discount on all premium products</div>
+
+                        <div class="coupon">
+                            <div class="scissors">✂️</div>
+                            <div class="coupon-code">SAVE25</div>
+                            <div class="coupon-text">25% OFF WHEN YOUR PURCHASE</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="py-16 bg-gray-200 text-gray-800">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-light mb-4">Our Services</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Crafted for comfort. Delivered with care.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                        <div class="mb-6">
+                            <img src="img/ourservices/real.png" alt="Design Service" class="w-full h-[180px] rounded-lg">
+                        </div>
+                        <h3 class="text-xl font-medium mb-3 text-center">Design</h3>
+                        <p class="text-gray-600 text-center">We create smart, space-saving, and stylish designs tailored to your space and lifestyle needs.</p>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <img src="img/ourservices/noblehome.png" alt="Fabricate Service" class="w-full h-[180px] rounded-lg">
+                        </div>
+                        <h3 class="text-xl font-medium mb-3 text-center">Fabricate</h3>
+                        <p class="text-gray-600 text-center">Using quality materials, we build each piece with precision to ensure durability and a modern finish.</p>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <img src="img/ourservices/deli.png" alt="Delivery Service" class="w-full h-[180px] rounded-lg">
+                        </div>
+                        <h3 class="text-xl font-medium mb-3 text-center">Delivery</h3>
+                        <p class="text-gray-600 text-center">We transport your furniture safely and on time—straight to your doorstep.</p>
+                    </div>
+
+                    <!-- Service 4 -->
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="mb-6">
+                            <img src="img/ourservices/installer.png" alt="Installation Service" class="w-full h-[180px] rounded-lg">
+                        </div>
+                        <h3 class="text-xl font-medium mb-3 text-center">Installation</h3>
+                        <p class="text-gray-600 text-center">Our team handles the setup efficiently, making sure everything is perfectly fitted and ready to use.</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-12">
+                    <button class="bg-gray-800 text-white px-8 py-3 font-medium hover:bg-gray-700 transition duration-300">VIEW SERVICES</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl mb-4">What Clients Say</h2>
+                    <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                        Don't just take our word for it. Here's what our valued clients have to say about their experience with Realiving Design Center Corp.
+                    </p>
+                </div>
+
+                <!-- Testimonials Container -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Testimonial 1 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                        <!-- Stars -->
+                        <div class="flex mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Exceptional Design Service</h3>
+                        <p class="text-gray-600 mb-6">Working with Realiving Design Center was a game-changer for our home renovation. Their attention to detail and creative solutions exceeded our expectations.</p>
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                <span class="text-gray-600 font-bold">MS</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Maria Santos</p>
+                                <p class="text-sm text-gray-500">April 15, 2025</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 2 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                        <!-- Stars -->
+                        <div class="flex mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Professional and Reliable</h3>
+                        <p class="text-gray-600 mb-6">The team at Realiving delivered our project on time and within budget. Their communication throughout the process made everything stress-free.</p>
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                <span class="text-gray-600 font-bold">JW</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">James Wilson</p>
+                                <p class="text-sm text-gray-500">March 22, 2025</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial 3 -->
+                    <div class="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+                        <!-- Stars -->
+                        <div class="flex mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 text-gray-900">Transformed Our Space</h3>
+                        <p class="text-gray-600 mb-6">We couldn't be happier with the results. Realiving understood our vision perfectly and brought it to life with their expertise and innovative ideas.</p>
+                        <div class="flex items-center">
+                            <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center mr-3">
+                                <span class="text-gray-600 font-bold">EM</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Elena Morales</p>
+                                <p class="text-sm text-gray-500">February 10, 2025</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-center items-center mt-12 space-x-2">
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                        PREVIOUS
+                    </button>
+                    <div class="h-1 bg-gray-300 w-64 mx-4 rounded-full">
+                        <div class="h-1 bg-gray-800 w-1/3 rounded-full"></div>
+                    </div>
+                    <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                        NEXT
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest News Section -->
+        <section class="py-16 px-6 bg-brown-900" style="background-color: #3b1d0e;">
+            <h2 class="text-4xl font-bold text-white text-center mb-12">Latest News</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- News Card 1 -->
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
+                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
+                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
+                    </div>
+                </div>
+
+                <!-- News Card 2 -->
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
+                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
+                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
+                    </div>
+                </div>
+
+                <!-- News Card 3 -->
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
+                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
+                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
+                    </div>
+                </div>
+
+                <!-- News Card 4 -->
+                <div class="bg-white rounded-lg overflow-hidden">
+                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
+                    <div class="p-4">
+                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
+                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
+                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation Controls Bottom -->
+        <div class="flex justify-between items-center px-6 py-4 bg-brown-900" style="background-color: #3b1d0e;">
+            <button class="font-medium text-white">PREVIOUS</button>
+            <div class="h-0.5 flex-1 mx-4 bg-gray-600"></div>
+            <button class="font-medium text-white">NEXT</button>
+        </div>
+
+        <div class="max-w-6xl mx-auto">
+            <!-- Contact Section -->
+            <div class="bg-white py-12 px-4 md:px-12">
+                <div class="flex flex-col md:flex-row">
+                    <!-- Left Side Content -->
+                    <div class="w-full md:w-1/2 pr-0 md:pr-8 mb-8 md:mb-0 mt-[150px]">
+                        <h1 class="text-5xl font-bold text-[#3c1f0e] mb-4">Contact us</h1>
+                        <p class="text-gray-600 mb-6">We would love to speak with you.</p>
+                    </div>
+
+                    <!-- Right Side Form -->
+                    <div class="w-full md:w-1/2 contact-form">
+                        <form>
+                            <input type="text" placeholder="Name" class="w-full mb-4 p-3 border border-gray-300 rounded" />
+                            <input type="text" placeholder="Address" class="w-full mb-4 p-3 border border-gray-300 rounded" />
+                            <input type="text" placeholder="Number" class="w-full mb-4 p-3 border border-gray-300 rounded" />
+                            <input type="email" placeholder="Email" class="w-full mb-4 p-3 border border-gray-300 rounded" />
+                            <textarea placeholder="Type your message here" class="w-full mb-4 p-3 border border-gray-300 rounded h-32"></textarea>
+                            <button type="submit" class="w-full bg-[#3c1f0e] hover:bg-[#592e14] text-white py-3 font-medium rounded transition duration-300">SUBMIT</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-[#faf6f0] py-8 px-4 md:px-12 text-black">
+            <div class="flex flex-col md:flex-row justify-between items-start mb-8">
+                <!-- Logo and Contact Info -->
+                <div class="mb-6 md:mb-0 md:w-1/3">
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold text-[#0096c7]">Real</span><span class="text-4xl font-bold text-[#f59e0b]">Living</span>
+                        <p class="text-xs text-gray-500">DESIGN · CENTER · CORPORATION</p>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-[#f59e0b] flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">☏</span>
+                            </div>
+                            <span class="text-sm">(+63) 912 345 6789</span>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-[#f59e0b] flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">✉</span>
+                            </div>
+                            <span class="text-sm">info@realliving.com</span>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-[#f59e0b] flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">◎</span>
+                            </div>
+                            <span class="text-sm">MC Premier-EDSA Balintawak, Quezon City</span>
+                        </div>
+
+                        <div class="flex items-center">
+                            <div class="w-6 h-6 rounded-full bg-[#f59e0b] flex items-center justify-center mr-3">
+                                <span class="text-white text-xs">⏱</span>
+                            </div>
+                            <span class="text-sm">Mon-Fr: 7AM-5PM | Sat 7AM-12PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Links Section -->
+                <div class="mb-6 md:mb-0 md:w-1/3">
+                    <h3 class="text-lg font-semibold mb-4 text-[#3c1f0e]">Quick Links</h3>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <ul class="space-y-2">
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Home</a></li>
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">About Us</a></li>
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Services</a></li>
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Projects</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="space-y-2">
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Appointment</a></li>
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Contact</a></li>
+                                <li><a href="#" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media Links -->
+                <div class="md:w-1/4">
+                    <h3 class="text-lg font-semibold mb-4 text-[#3c1f0e]">Follow us</h3>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-700 hover:text-[#f59e0b] transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-[#f59e0b] transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-[#f59e0b] transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                            </svg>
+                        </a>
+                        <a href="#" class="text-gray-700 hover:text-[#f59e0b] transition-colors duration-200">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h4.969v-8.399c0-4.67 6.029-5.052 6.029 0v8.399h4.988v-10.131c0-7.88-8.922-7.593-11.018-3.714v-2.155z" />
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="mt-6">
+                        <h3 class="text-sm font-medium mb-2 text-[#3c1f0e]">Subscribe to our newsletter</h3>
+                        <div class="flex">
+                            <input type="email" placeholder="Your email" class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-l-md focus:outline-none focus:ring-1 focus:ring-[#f59e0b] w-full" />
+                            <button class="bg-[#f59e0b] text-white px-3 py-2 rounded-r-md hover:bg-[#e59000] transition-colors duration-200">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="border-t border-gray-300 pt-4 text-center">
+                <p class="text-xs uppercase text-gray-700">All rights reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/js_index//carosel.js"></script>
+    <script>
+        AOS.init();
+    </script>
+
+</body>
+
+</html>

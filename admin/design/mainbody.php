@@ -51,6 +51,7 @@ ob_start();
             }, 500);
         }
     </script>
+   
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -172,6 +173,290 @@ ob_start();
         .avatar-glow:hover::after {
             opacity: 1;
         }
+
+        /* Base Styles for the Header */
+.header {
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+.avatar-glow:hover {
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.shadow-nav {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.shadow-dropdown {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Mobile Menu - Hidden by Default */
+.mobile-overlay {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mobile-menu {
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+.mobile-menu.active {
+  transform: translateX(0);
+}
+
+/* Dropdown Animation */
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.2s ease;
+}
+
+.dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* Text and UI Colors */
+.text-primary {
+  color: #3b82f6; /* Blue-500 */
+}
+
+.text-dark {
+  color: #1f2937; /* Gray-800 */
+}
+
+/* Media Queries */
+
+/* Small Phones (320px - 374px) */
+@media screen and (max-width: 374px) {
+  nav {
+    height: 60px !important;
+  }
+  
+  .header img.logo {
+    height: 24px;
+  }
+  
+  .profile-dropdown {
+    width: 240px !important;
+  }
+  
+  #mobileMenu {
+    width: 85% !important;
+  }
+}
+
+/* Regular Phones (375px - 639px) */
+@media screen and (min-width: 375px) and (max-width: 639px) {
+  nav {
+    height: 64px !important;
+  }
+  
+  .header img.logo {
+    height: 28px;
+  }
+  
+  #mobileMenu {
+    width: 80% !important;
+  }
+  
+  .profile-dropdown {
+    width: 260px !important;
+  }
+}
+
+/* Small Tablets/Large Phones (640px - 767px) */
+@media screen and (min-width: 640px) and (max-width: 767px) {
+  nav {
+    height: 68px !important;
+  }
+  
+  #mobileMenu {
+    width: 320px;
+  }
+  
+  .px-4 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  nav {
+    height: 72px !important;
+  }
+  
+  #mobileMenu {
+    width: 350px;
+  }
+  
+  .sm\:px-6 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+/* Small Laptops (1024px - 1279px) */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .lg\:space-x-6 {
+    column-gap: 1.5rem !important;
+  }
+  
+  .nav-link {
+    font-size: 0.85rem !important;
+  }
+  
+  .lg\:px-8 {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
+/* Regular Laptops & Small Desktops (1280px - 1535px) */
+@media screen and (min-width: 1280px) and (max-width: 1535px) {
+  .lg\:space-x-8 {
+    column-gap: 2rem !important;
+  }
+}
+
+/* Large Desktops (1536px and above) */
+@media screen and (min-width: 1536px) {
+  .max-w-7xl {
+    max-width: 1400px !important;
+  }
+  
+  nav {
+    height: 80px !important;
+  }
+}
+
+/* Print Styles - Hide Navigation Elements */
+@media print {
+  .header {
+    position: static !important;
+    box-shadow: none !important;
+  }
+  
+  .nav-link, #profileButton, #mobileMenuButton {
+    display: none !important;
+  }
+  
+  .max-w-7xl {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .header.dark-mode {
+    background-color: #111827 !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  .dark-mode .text-dark {
+    color: #f3f4f6 !important; /* Gray-100 */
+  }
+  
+  .dark-mode .shadow-dropdown {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+  }
+}
+
+/* Animation for dropdown rotations */
+@keyframes rotateDown {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes rotateUp {
+  from {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+/* JavaScript enhancement for dropdown animation */
+.dropdown-arrow-rotate {
+  animation: rotateDown 0.3s forwards;
+}
+
+.dropdown-arrow-rotate-back {
+  animation: rotateUp 0.3s forwards;
+}
+
+/* Fix for mobile dropdown panel spacing */
+@media screen and (max-width: 1023px) {
+  .mobile-dropdown-button + div {
+    transition: max-height 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .mobile-dropdown-button + div.active {
+    max-height: 200px;
+  }
+  
+  /* Transition for mobile menu icons */
+  .mobile-dropdown-button i {
+    transition: transform 0.3s ease;
+  }
+  
+  .mobile-dropdown-button.active i {
+    transform: rotate(180deg);
+  }
+}
+
+/* Custom scrollbar for dropdown menus with many items */
+.dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.dropdown::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.dropdown::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* Maximum height for dropdown with scrollbar */
+.dropdown.with-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+}
     </style>
 </head>
 

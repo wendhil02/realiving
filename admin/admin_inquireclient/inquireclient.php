@@ -3,6 +3,23 @@ include '../design/mainbody.php';
 include '../../connection/connection.php';
 session_start();
 
+include '../checkrole.php';
+
+
+// Allow only admin1 to admin5
+require_role([ 'admin4', 'admin5', 'superadmin']);
+
+if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
+    echo '
+      <div class="mb-4 p-2 bg-gray-100 rounded text-sm text-gray-700 flex justify-end space-x-4">
+        <span>Logged in as:</span>
+        <span class="font-medium">' . htmlspecialchars($_SESSION['admin_email']) . '</span>
+        <span class="text-gray-500">|</span>
+        <span class="font-semibold">' . htmlspecialchars($_SESSION['admin_role']) . '</span>
+      </div>
+    ';
+}
+
 // Check if the 'status' filter is set
 $status_filter = isset($_GET['status']) ? $_GET['status'] : '';
 
@@ -31,7 +48,6 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -151,7 +167,7 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
 
                 <?php if ($inquiries->num_rows > 0): ?>
                     <?php while ($row = $inquiries->fetch_assoc()): ?>
-                        <div class="bg-white shadow-md rounded-xl p-6 border border-gray-200 transition-all duration-300 card-hover mb-4" x-data="{ open: false }">
+                        <div class="bg-white shadow-md rounded-xl p-6 border border-gray-200 transition-all duration-300 card-hover mb-4" x-data="{ open: false, showCustomEmail: false }">
                             <div class="flex flex-col md:flex-row justify-between">
                                 <div class="mb-4 md:mb-0">
                                     <div class="flex items-center mb-2">
@@ -218,26 +234,61 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                                         <i class="fas fa-check-circle mr-2"></i> Sent to Admin
                                     </div>
                                 <?php else: ?>
-                                    <form action="send_inquiry.php" method="POST" class="flex flex-col md:flex-row gap-3">
-                                        <input type="hidden" name="inquiry_id" value="<?= $row['id'] ?>">
-                                        <div class="flex-grow">
-                                            <select name="recipient_email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                                <option value="">-- Select Admin --</option>
-                                                <?php 
-                                                // Reset pointer for admins
-                                                $admins->data_seek(0);
-                                                foreach ($admins as $admin): 
-                                                ?>
-                                                    <option value="<?= htmlspecialchars($admin['email']) ?>">
-                                                        <?= htmlspecialchars($admin['email']) ?> - <?= htmlspecialchars($admin['client_status']) ?>
-                                                    </option>
-                                                <?php endforeach; ?>
-                                            </select>
+                                    <div class="flex flex-col space-y-3">
+                                        <!-- Existing Admin Selection Form -->
+                                        <form action="send_inquiry.php" method="POST" class="flex flex-col md:flex-row gap-3">
+                                            <input type="hidden" name="inquiry_id" value="<?= $row['id'] ?>">
+                                            <div class="flex-grow">
+                                                <select name="recipient_email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                                    <option value="">-- Select Admin --</option>
+                                                    <?php 
+                                                    // Reset pointer for admins
+                                                    $admins->data_seek(0);
+                                                    foreach ($admins as $admin): 
+                                                    ?>
+                                                        <option value="<?= htmlspecialchars($admin['email']) ?>">
+                                                            <?= htmlspecialchars($admin['email']) ?> - <?= htmlspecialchars($admin['client_status']) ?>
+                                                        </option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center whitespace-nowrap">
+                                                <i class="fas fa-paper-plane mr-2"></i> Send to Admin
+                                            </button>
+                                        </form>
+                                        
+                                        <!-- Custom Email Option -->
+                                        <div class="flex items-center">
+                                            <button 
+                                                @click="showCustomEmail = !showCustomEmail" 
+                                                class="text-blue-600 hover:text-blue-800 text-sm flex items-center focus:outline-none"
+                                            >
+                                                <i class="fas" :class="showCustomEmail ? 'fa-chevron-up mr-1' : 'fa-chevron-down mr-1'"></i>
+                                                <span x-text="showCustomEmail ? 'Hide Custom Email Form' : 'Send to Custom Email'"></span>
+                                            </button>
                                         </div>
-                                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center whitespace-nowrap">
-                                            <i class="fas fa-paper-plane mr-2"></i> Send
-                                        </button>
-                                    </form>
+                                        
+                                    <!-- Custom Email Form -->
+<div x-show="showCustomEmail" x-cloak class="mt-2">
+    <form action="send_inquiry.php" method="POST" class="flex flex-col md:flex-row gap-3">
+        <input type="hidden" name="inquiry_id" value="<?= $row['id'] ?>">
+        <input type="hidden" name="message_type" value="admin">
+        <div class="flex-grow">
+            <input 
+                type="email" 
+                name="custom_email" 
+                placeholder="Enter email address" 
+                required 
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+        </div>
+        <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center whitespace-nowrap">
+            <i class="fas fa-envelope mr-2"></i> Send to Email
+        </button>
+    </form>
+</div>
+
+                                    </div>
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -301,6 +352,10 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                             <li class="flex items-start gap-2">
                                 <i class="fas fa-circle-check text-green-500 mt-1"></i>
                                 <span class="text-gray-700">Select an admin based on their client status</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fas fa-circle-check text-green-500 mt-1"></i>
+                                <span class="text-gray-700">Send to a custom email address when needed</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <i class="fas fa-circle-check text-green-500 mt-1"></i>
