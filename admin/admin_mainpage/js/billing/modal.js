@@ -1,4 +1,5 @@
 
+    
     document.addEventListener('DOMContentLoaded', function() {
             // Modal elements
             const paymentModal = document.getElementById('paymentModal');

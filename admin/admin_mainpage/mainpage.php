@@ -13,10 +13,10 @@ $inquiries = $conn->query("SELECT * FROM contact_inquiries ORDER BY created_at D
 
 // Fetch admin emails, client_status, and role
 $admins = $conn->query("SELECT id, email, client_status, role FROM account WHERE role LIKE 'admin%'");
- 
+
 
 if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
-    echo '
+  echo '
       <div class="mb-4 p-2 bg-gray-100 rounded text-sm text-gray-700 flex justify-end space-x-4">
         <span>Logged in as:</span>
         <span class="font-medium">' . htmlspecialchars($_SESSION['admin_email']) . '</span>
@@ -61,11 +61,6 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
               DEFAULT: '#FFCC00',
               light: '#FFED7D',
               dark: '#E6B800'
-            },
-            noblehome: {
-              DEFAULT: '#FF7A00',
-              light: '#FFA552',
-              dark: '#E66D00'
             }
           },
           fontFamily: {
@@ -76,7 +71,7 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
     }
   </script>
 
-  
+
 </head>
 
 <body class="bg-slate-50 min-h-screen">
@@ -190,6 +185,8 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
               <th class="px-6 py-4 font-medium">Reference No.</th>
               <th class="px-6 py-4 font-medium">Name</th>
               <th class="px-6 py-4 font-medium">Project Name</th>
+              <th class="px-6 py-4 font-medium">Total Cost</th>
+              <th class="px-6 py-4 font-medium">Remaining Balance</th>
               <th class="px-6 py-4 font-medium">Client Type</th>
               <th class="px-6 py-4 font-medium">Client Class</th>
               <th class="px-6 py-4 font-medium">Status</th>
@@ -201,11 +198,11 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
             <?php
             // Connect to your database (make sure $conn is already initialized)
             $result = $conn->query("
-                  SELECT u.*, 
-                      (SELECT COUNT(*) FROM step_updates s WHERE s.client_id = u.id AND s.step = 10) AS step10_done 
-                  FROM user_info u 
-                  ORDER BY u.created_at DESC
-              ");
+              SELECT u.*, 
+                  (SELECT COUNT(*) FROM step_updates s WHERE s.client_id = u.id AND s.step = 10) AS step10_done 
+              FROM user_info u 
+              ORDER BY u.created_at DESC
+          ");
 
             if ($result->num_rows > 0):
               while ($row = $result->fetch_assoc()):
@@ -226,43 +223,63 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
                   <td class="px-6 py-4 whitespace-nowrap text-gray-700">
                     <?php echo htmlspecialchars($row['nameproject']); ?>
                   </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700">
+                    <?php
+                    if (isset($row['total_project_cost']) && $row['total_project_cost'] !== null) {
+                      echo '₱' . number_format($row['total_project_cost'], 2);
+                    } else {
+                      echo '<span class="text-gray-400">Not set</span>';
+                    }
+                    ?>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-gray-700">
+                    <?php
+                    if (isset($row['remaining_balance']) && $row['remaining_balance'] !== null) {
+                      $remainingBalance = floatval($row['remaining_balance']);
+                      if ($remainingBalance > 0) {
+                        echo '<span class="text-red-600 font-medium">₱' . number_format($remainingBalance, 2) . '</span>';
+                      } elseif ($remainingBalance == 0) {
+                        echo '<span class="text-green-600 font-medium">₱0.00</span>';
+                      } else {
+                        echo '<span class="text-blue-600 font-medium">₱' . number_format($remainingBalance, 2) . '</span>';
+                      }
+                    } else {
+                      echo '<span class="text-gray-400">Not set</span>';
+                    }
+                    ?>
+                  </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <?php
                     $clientType = htmlspecialchars($row['client_type'] ?? 'N/A');
 
                     if (strtolower($clientType) === 'realiving') {
                       echo '<span class="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-800">
-                                <span class="h-1.5 w-1.5 rounded-full bg-yellow-500 mr-1"></span>
-                                Realiving
-                              </span>';
-                    } elseif (strtolower($clientType) === 'noblehome') {
-                      echo '<span class="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-800">
-                                <span class="h-1.5 w-1.5 rounded-full bg-orange-500 mr-1"></span>
-                                Noblehome
-                              </span>';
+                            <span class="h-1.5 w-1.5 rounded-full bg-yellow-500 mr-1"></span>
+                            Realiving
+                          </span>';
                     } else {
                       echo '<span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-800">
-                                <span class="h-1.5 w-1.5 rounded-full bg-gray-500 mr-1"></span>
-                                ' . $clientType . '
-                              </span>';
+                            <span class="h-1.5 w-1.5 rounded-full bg-gray-500 mr-1"></span>
+                            ' . $clientType . '
+                          </span>';
                     }
                     ?>
                   </td>
                   <td class="px-6 py-4 whitespace-nowrap">
                     <?php
                     $clientClass = htmlspecialchars($row['client_class'] ?? 'N/A');
-                    
+
                     // Display client_class with different styling based on value
                     if (!empty($clientClass) && $clientClass != 'N/A') {
                       echo '<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-800">
-                              <span class="h-1.5 w-1.5 rounded-full bg-blue-500 mr-1"></span>
-                              ' . $clientClass . '
-                            </span>';
+                          <span class="h-1.5 w-1.5 rounded-full bg-blue-500 mr-1"></span>
+                          ' . $clientClass . '
+                        </span>';
                     } else {
                       echo '<span class="inline-flex items-center rounded-full bg-gray-100 px-2.5 py-1 text-xs font-medium text-gray-800">
-                              <span class="h-1.5 w-1.5 rounded-full bg-gray-500 mr-1"></span>
-                              ' . $clientClass . '
-                            </span>';
+                          <span class="h-1.5 w-1.5 rounded-full bg-gray-500 mr-1"></span>
+                          ' . $clientClass . '
+                        </span>';
                     }
                     ?>
                   </td>
@@ -297,7 +314,7 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
             else:
               ?>
               <tr>
-                <td colspan="8" class="px-6 py-10 text-center text-gray-500">
+                <td colspan="10" class="px-6 py-10 text-center text-gray-500">
                   <div class="flex flex-col items-center">
                     <svg class="w-12 h-12 text-gray-300 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
@@ -324,8 +341,8 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
     </div>
   </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="js/mainpage.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/mainpage.js"></script>
 
 </body>
 

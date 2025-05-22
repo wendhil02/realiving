@@ -28,7 +28,7 @@
         <!-- Main Body Content with Video Background -->
         <main class="flex-grow flex items-center justify-start relative overflow-hidden hero-bg">
             <!-- Overlay -->
-            <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+            <div class="absolute inset-0 bg-black bg-opacity-30 z-0"></div>
 
             <!-- Hero Content -->
             <div class="relative z-10 p-6 md:p-16">
@@ -42,134 +42,134 @@
         </main>
 
 
-       <section class="w-full max-w-8xl mx-auto mt-5">
-        <div class="bg-white shadow-lg overflow-hidden">
-            <!-- Main carousel container -->
-            <div class="relative">
-                <h1 class="text-center text-lg md:text-4xl font-bold text-gray-800 tracking-wide font-light mb-4">
-                    Design Ideas
-                </h1>
-                
-                <!-- Image container -->
-                <div class="overflow-hidden" id="carousel-container">
-                    <div class="flex transition-transform duration-300 ease-in-out" id="carousel-slides">
-                        <!-- Replace with your actual images -->
-                        <div class="min-w-full">
-                            <img src="img/idea/a.jpg" alt="Image 1" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="min-w-full">
-                            <img src="img/idea/b.jpg" alt="Image 2" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="min-w-full">
-                            <img src="img/idea/c.jpg" alt="Image 3" class="w-full h-64 object-cover">
-                        </div>
-                        <div class="min-w-full">
-                            <img src="img/idea/d.jpg" alt="Image 4" class="w-full h-64 object-cover">
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Navigation buttons -->
-                <button id="prev-btn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button id="next-btn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-                
-                <!-- Dots indicator -->
-                <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
-                    <button class="w-3 h-3 rounded-full bg-gray-200 dot active" data-index="0"></button>
-                    <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="1"></button>
-                    <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="2"></button>
-                    <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="3"></button>
-                </div>
-            </div>
-            
-            <!-- Additional Images Section -->
-            <div class="px-4 py-6">
-                <h2 class="text-2xl font-light text-gray-800 mb-4">More Ideas For You</h2>
-                
-                <!-- Image Grid -->
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    <!-- Image 1 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="img/moreonidea/a.png" alt="Additional idea 1" class="w-full h-[350px] object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Creative Design Idea</p>
+        <section class="w-full max-w-8xl mx-auto mt-5">
+            <div class="bg-white shadow-lg overflow-hidden">
+                <!-- Main carousel container -->
+                <div class="relative">
+                    <h1 class="text-center text-lg md:text-4xl font-bold text-gray-800 tracking-wide font-light mb-4">
+
+                    </h1>
+
+                    <!-- Image container -->
+                    <div class="overflow-hidden" id="carousel-container">
+                        <div class="flex transition-transform duration-300 ease-in-out" id="carousel-slides">
+                            <!-- Replace with your actual images -->
+                            <div class="min-w-full">
+                                <img src="img/idea/a.jpg" alt="Image 1" class="w-full h-64 object-cover">
+                            </div>
+                            <div class="min-w-full">
+                                <img src="img/idea/b.jpg" alt="Image 2" class="w-full h-64 object-cover">
+                            </div>
+                            <div class="min-w-full">
+                                <img src="img/idea/c.jpg" alt="Image 3" class="w-full h-64 object-cover">
+                            </div>
+                            <div class="min-w-full">
+                                <img src="img/idea/d.jpg" alt="Image 4" class="w-full h-64 object-cover">
+                            </div>
                         </div>
                     </div>
-                    
-                    <!-- Image 2 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="img/moreonidea/b.png" alt="Additional idea 2" class="w-full h-[350px] object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Minimalist Concept</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 3 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Additional idea 3" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Nature Inspired</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 4 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Additional idea 4" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Modern Architecture</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 5 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Additional idea 5" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Industrial Style</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 6 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Additional idea 6" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Rustic Elements</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 7 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Additional idea 7" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Eco-Friendly Design</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Image 8 -->
-                    <div class="relative group overflow-hidden rounded-lg shadow-md">
-                        <img src="/api/placeholder/400/300" alt="Additional idea 8" class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-110">
-                        <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                            <p class="text-white p-3 text-sm font-medium">Contemporary Fusion</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- View All Ideas Button -->
-                <div class="mt-6 flex justify-center">
-                    <button class="bg-brown-900 text-white font-semibold px-8 py-2 rounded-full shadow-md hover:bg-blue-600 hover:text-gray-500 transition duration-300 ease-in-out" style="background-color: #3b1d0e;">
-                        View All Ideas
+
+                    <!-- Navigation buttons -->
+                    <button id="prev-btn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
                     </button>
+                    <button id="next-btn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+
+                    <!-- Dots indicator -->
+                    <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+                        <button class="w-3 h-3 rounded-full bg-gray-200 dot active" data-index="0"></button>
+                        <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="1"></button>
+                        <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="2"></button>
+                        <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="3"></button>
+                    </div>
+                </div>
+
+                <!-- Additional Images Section -->
+                <div class="px-4 py-6">
+                    <h2 class="text-2xl font-light text-gray-800 mb-4"></h2>
+
+                    <!-- Image Grid -->
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                        <!-- Image 1 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/a.jpg" alt="Additional idea 1" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Creative Design Idea</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 2 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/b.jpg" alt="Additional idea 2" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Minimalist Concept</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 3 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/c.jpg" alt="Additional idea 3" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Nature Inspired</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 4 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/d.jpg" alt="Additional idea 4" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Modern Architecture</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 5 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/d.jpg" alt="Additional idea 5" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Industrial Style</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 6 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/e.jpg" alt="Additional idea 6" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Rustic Elements</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 7 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/f.jpg" alt="Additional idea 7" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Eco-Friendly Design</p>
+                            </div>
+                        </div>
+
+                        <!-- Image 8 -->
+                        <div class="relative group overflow-hidden rounded-lg shadow-md">
+                            <img src="img/moreonidea/g.jpg" alt="Additional idea 8" class="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                <p class="text-white p-3 text-sm font-medium">Contemporary Fusion</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- View All Ideas Button -->
+                    <div class="mt-6 flex justify-center">
+                        <button class="bg-brown-900 text-white font-semibold px-8 py-2 rounded-full shadow-md hover:bg-blue-600 hover:text-gray-500 transition duration-300 ease-in-out" style="background-color: #3b1d0e;">
+                            View All Ideas
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
         <!-- Cabinet Section with Background Image -->
         <section class="cabinet-section" data-aos="fade-up">
@@ -211,7 +211,7 @@
                     <!-- Living Room -->
                     <div class="bg-gray-100 h-80 flex flex-col">
                         <div class="h-64 overflow-hidden">
-                            <img src="" alt="Living Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                            <img src="img/rooms/livingroom/a.jpg" alt="Living Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
                         <h3 class="text-center text-lg font-medium mt-2">Living Room</h3>
                     </div>
@@ -233,12 +233,19 @@
                 <h2 class="text-3xl font-light tracking-widest text-gray-800">TOP MODULAR CABINETS</h2>
             </div>
 
+              <!-- Semantic version -->
+                <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center">
+                    <a href="page/modular/allmodular.php" class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">
+                        ALL MODULAR CABINET
+                    </a>
+                </div>
+
             <!-- Product Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 mt-8">
                 <!-- Cabinet 1 -->
                 <div class="text-center">
                     <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="/api/placeholder/400/320" alt="Cabinet 1" class="w-full h-auto object-contain">
+                        <img src="img/topmodularcabinet/a.jpg" alt="Cabinet 1" class="w-full h-[300px] object-contain">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
                     <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
@@ -247,7 +254,7 @@
                 <!-- Cabinet 2 -->
                 <div class="text-center">
                     <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="/api/placeholder/400/320" alt="Cabinet 2" class="w-full h-auto object-contain">
+                        <img src="img/topmodularcabinet/b.png" alt="Cabinet 2" class="w-full h-[300px] object-contain">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
                     <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
@@ -256,7 +263,7 @@
                 <!-- Cabinet 3 -->
                 <div class="text-center">
                     <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="/api/placeholder/400/320" alt="Cabinet 3" class="w-full h-auto object-contain">
+                        <img src="img/topmodularcabinet/c.png" alt="Cabinet 3" class="w-full h-[300px] object-contain">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
                     <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
@@ -265,11 +272,13 @@
                 <!-- Cabinet 4 -->
                 <div class="text-center">
                     <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="/api/placeholder/400/320" alt="Cabinet 4" class="w-full h-auto object-contain">
+                        <img src="img/topmodularcabinet/d.png" alt="Cabinet 4" class="w-full h-[300px] object-contain">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
                     <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
+
+              
             </div>
 
             <!-- Advertisement Banner -->

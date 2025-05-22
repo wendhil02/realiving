@@ -88,13 +88,6 @@
                 barThickness: 20
               },
               {
-                label: 'Noblehome',
-                data: [data.noblehomeClientCount],
-                backgroundColor: '#FF7A00', // Orange
-                borderRadius: 5,
-                barThickness: 20
-              },
-              {
                 label: 'Total Clients',
                 data: [data.totalClientCount],
                 backgroundColor: '#8B5CF6', // Purple
