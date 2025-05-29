@@ -33,6 +33,7 @@ if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Client Management Dashboard</title>
+   <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon.ico">
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome CDN -->

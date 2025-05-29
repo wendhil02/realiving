@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realiving - Interior Design</title>
+    <!-- For .ico file -->
+<!-- For PNG fallback (optional) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="../logo/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="coupon/coupon.css">
@@ -23,7 +26,7 @@
     <div class="min-h-screen flex flex-col">
 
         <!-- Include the Navbar -->
-        <?php include 'header/headernav.php'; ?>
+        <?php include 'headernav.php'; ?>
 
         <!-- Main Body Content with Video Background -->
         <main class="flex-grow flex items-center justify-start relative overflow-hidden hero-bg">
@@ -233,53 +236,51 @@
                 <h2 class="text-3xl font-light tracking-widest text-gray-800">TOP MODULAR CABINETS</h2>
             </div>
 
-              <!-- Semantic version -->
-                <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center">
-                    <a href="page/modular/allmodular.php" class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">
-                        ALL MODULAR CABINET
-                    </a>
-                </div>
+            <!-- Semantic version -->
+            <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center">
+                <a href="page/modular/allmodular.php" class="border-2 border-black  px-8 py-2 text-sm hover:bg-red-200 transition-colors">
+                    ALL MODULAR CABINET
+                </a>
+            </div>
 
-            <!-- Product Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 mt-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-8">
                 <!-- Cabinet 1 -->
                 <div class="text-center">
-                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="img/topmodularcabinet/a.jpg" alt="Cabinet 1" class="w-full h-[300px] object-contain">
+                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/a.jpg" alt="Cabinet 1" class="w-full h-full object-cover rounded-md">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
-                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
 
                 <!-- Cabinet 2 -->
                 <div class="text-center">
-                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="img/topmodularcabinet/b.png" alt="Cabinet 2" class="w-full h-[300px] object-contain">
+                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/b.png" alt="Cabinet 2" class="w-full h-full object-cover rounded-md">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
-                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
 
                 <!-- Cabinet 3 -->
                 <div class="text-center">
-                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="img/topmodularcabinet/c.png" alt="Cabinet 3" class="w-full h-[300px] object-contain">
+                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/c.png" alt="Cabinet 3" class="w-full h-full object-cover rounded-md">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
-                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
 
                 <!-- Cabinet 4 -->
                 <div class="text-center">
-                    <div class="bg-gray-100 p-8 mb-4 rounded-lg">
-                        <img src="img/topmodularcabinet/d.png" alt="Cabinet 4" class="w-full h-[300px] object-contain">
+                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/d.png" alt="Cabinet 4" class="w-full h-full object-cover rounded-md">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
-                    <button class="border-2 border-yellow-600 bg-red-400 px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
-
-              
             </div>
+
 
             <!-- Advertisement Banner -->
             <div class="banner-container">

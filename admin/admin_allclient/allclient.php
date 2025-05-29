@@ -28,15 +28,16 @@ if (isset($_POST['update_id'])) {
     $nameproject = $_POST['edit_nameproject'];
     $client_type = $_POST['edit_client_type'];
     $client_class = $_POST['edit_client_class'];
-    // New fields for edit form
+    // Fields including email
     $contact = $_POST['edit_contact'];
+    $email = $_POST['edit_email'];
     $country = $_POST['edit_country'];
     $address = $_POST['edit_address'];
     $gender = $_POST['edit_gender'];
     $updateTime = date('Y-m-d H:i:s');
 
-    $stmt = $conn->prepare("UPDATE user_info SET clientname=?, status=?, nameproject=?, updatestatus=?, update_time=?, client_type=?, client_class=?, contact=?, country=?, address=?, gender=? WHERE id=?");
-    $stmt->bind_param("ssssssssssi", $clientname, $status, $nameproject, $status, $updateTime, $client_type, $client_class, $contact, $country, $address, $gender, $updateId);
+    $stmt = $conn->prepare("UPDATE user_info SET clientname=?, status=?, nameproject=?, updatestatus=?, update_time=?, client_type=?, client_class=?, contact=?, email=?, country=?, address=?, gender=? WHERE id=?");
+    $stmt->bind_param("ssssssssssssi", $clientname, $status, $nameproject, $status, $updateTime, $client_type, $client_class, $contact, $email, $country, $address, $gender, $updateId);
     
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "Client updated successfully!";
@@ -62,8 +63,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['
     $nameproject = $_POST['nameproject'];
     $client_type = $_POST['client_type'];
     $client_class = $_POST['client_class'];
-    // New fields
+    // Fields including email
     $contact = $_POST['contact'];
+    $email = $_POST['email'];
     $country = $_POST['country'];
     $address = $_POST['address'];
     $gender = $_POST['gender'];
@@ -71,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['
 
     $reference_number = "REF" . date("YmdHis") . strtoupper(substr(md5(uniqid()), 0, 4));
 
-    $stmt = $conn->prepare("INSERT INTO user_info (clientname, status, nameproject, updatestatus, update_time, reference_number, client_type, client_class, contact, country, address, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssssssss", $clientname, $status, $nameproject, $status, $updateTime, $reference_number, $client_type, $client_class, $contact, $country, $address, $gender);
+    $stmt = $conn->prepare("INSERT INTO user_info (clientname, status, nameproject, updatestatus, update_time, reference_number, client_type, client_class, contact, email, country, address, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssssssss", $clientname, $status, $nameproject, $status, $updateTime, $reference_number, $client_type, $client_class, $contact, $email, $country, $address, $gender);
 
     if ($stmt->execute()) {
         $_SESSION['success_message'] = "New client added successfully!";
@@ -89,13 +91,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['clientname'], $_POST['
 
 // Export logic
 if (isset($_POST['export'])) {
-    $sql = "SELECT clientname, reference_number, nameproject, client_type, contact, country, address, gender FROM user_info";
+    $sql = "SELECT clientname, reference_number, nameproject, client_type, contact, email, country, address, gender FROM user_info";
     $result = $conn->query($sql);
 
     header('Content-Type: text/csv');
     header('Content-Disposition: attachment; filename="clientRef.csv"');
     $output = fopen("php://output", "w");
-    fputcsv($output, ['Client Name', 'Reference Number', 'Project Name', 'Client Type', 'Contact', 'Country', 'Address', 'Gender']);
+    fputcsv($output, ['Client Name', 'Reference Number', 'Project Name', 'Client Type', 'Contact', 'Email', 'Country', 'Address', 'Gender']);
 
     while ($row = $result->fetch_assoc()) {
         fputcsv($output, $row);
@@ -116,7 +118,7 @@ $sql = "SELECT * FROM user_info WHERE 1=1";
 // Add search condition if search term is provided
 if (!empty($search)) {
     $search = "%$search%";
-    $sql .= " AND (clientname LIKE '$search' OR reference_number LIKE '$search' OR nameproject LIKE '$search')";
+    $sql .= " AND (clientname LIKE '$search' OR reference_number LIKE '$search' OR nameproject LIKE '$search' OR email LIKE '$search')";
 }
 
 // Add filter conditions
@@ -160,10 +162,11 @@ if ($result && $result->num_rows > 0) {
                     </span>
                 </td>
                 <td class="py-4 px-6">' . htmlspecialchars($row["contact"] ?? '') . '</td>
+                <td class="py-4 px-6">' . htmlspecialchars($row["email"] ?? '') . '</td>
                 <td class="py-4 px-6 max-w-xs truncate" title="' . htmlspecialchars($row["address"] ?? '') . '">' . htmlspecialchars($row["address"] ?? '') . '</td>
                 <td class="py-4 px-6 text-center">
                     <div class="flex justify-center space-x-3">
-                        <button type="button" onclick="openEditModal(' . $row["id"] . ', \'' . htmlspecialchars($row["clientname"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["status"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["nameproject"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_type"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_class"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["contact"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["country"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["address"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["gender"] ?? '', ENT_QUOTES) . '\')" class="text-blue-600 hover:text-blue-800 hover:underline focus:outline-none">
+                        <button type="button" onclick="openEditModal(' . $row["id"] . ', \'' . htmlspecialchars($row["clientname"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["status"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["nameproject"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_type"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_class"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["contact"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["email"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["country"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["address"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["gender"] ?? '', ENT_QUOTES) . '\')" class="text-blue-600 hover:text-blue-800 hover:underline focus:outline-none">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
@@ -181,7 +184,7 @@ if ($result && $result->num_rows > 0) {
             </tr>';
     }
 } else {
-    $tableRows = '<tr><td colspan="11" class="py-4 px-6 text-center text-gray-500">No clients found</td></tr>';
+    $tableRows = '<tr><td colspan="12" class="py-4 px-6 text-center text-gray-500">No clients found</td></tr>';
 }
 
 $conn->close();
@@ -195,6 +198,7 @@ $conn->close();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Management System</title>
+     <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
    <link rel="stylesheet" href="src/allclient.css">
@@ -316,7 +320,7 @@ $conn->close();
                     </div>
                 </div>
                 
-                <!-- Second row - New fields -->
+                <!-- Second row - Including Email -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div>
                         <label for="contact" class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
@@ -325,6 +329,17 @@ $conn->close();
                                 <i class="fas fa-phone text-gray-400"></i>
                             </div>
                             <input type="text" name="contact" id="contact" placeholder="Enter contact number"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input type="email" name="email" id="email" placeholder="Enter email address"
                                 class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
                                 required>
                         </div>
@@ -356,6 +371,10 @@ $conn->close();
                             </select>
                         </div>
                     </div>
+                </div>
+
+                <!-- Third row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="client_class" class="block text-sm font-medium text-gray-700 mb-1">Client Classification</label>
                         <div class="relative">
@@ -372,18 +391,17 @@ $conn->close();
                             </select>
                         </div>
                     </div>
-                </div>
-
-                <!-- Address field (full width) -->
-                <div>
-                    <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-map-marker-alt text-gray-400"></i>
+                    <!-- Address field -->
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <div class="relative">
+                            <div class="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
+                                <i class="fas fa-map-marker-alt text-gray-400"></i>
+                            </div>
+                            <textarea name="address" id="address" placeholder="Enter full address" rows="3"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required></textarea>
                         </div>
-                        <textarea name="address" id="address" placeholder="Enter full address" rows="3"
-                            class="pl-10 w-[200px] px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
-                            required></textarea>
                     </div>
                 </div>
 
@@ -401,7 +419,7 @@ $conn->close();
             <form method="get" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                     <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search clients..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <input type="text" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>" placeholder="Search clients, emails..." class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                 </div>
                 <div>
                     <label for="filter_status" class="block text-sm font-medium text-gray-700 mb-1">Filter by Status</label>
@@ -437,21 +455,22 @@ $conn->close();
                 Client List
             </h2>
             <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+                <table class="min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden">
+                    <thead class="bg-gradient-to-r from-blue-600 to-blue-700 text-white">
                         <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Name</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference No.</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Project</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client Type</th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address </th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Client Name</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Status</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Reference #</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Project</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Type</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold uppercase tracking-wider">Class</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Contact</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Email</th>
+                            <th class="py-4 px-6 text-left text-sm font-semibold uppercase tracking-wider">Address</th>
+                            <th class="py-4 px-6 text-center text-sm font-semibold uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
+                    <tbody class="divide-y divide-gray-200">
                         <?php echo $tableRows; ?>
                     </tbody>
                 </table>
@@ -460,88 +479,170 @@ $conn->close();
     </div>
 
     <!-- Edit Modal -->
-    <div id="editModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 hidden overflow-y-auto h-full w-full" style="z-index: 100;">
-        <div class="relative top-20 mx-auto p-5 border w-11/12 md:w-3/4 lg:w-1/2 shadow-lg rounded-md bg-white">
-            <div class="flex justify-between items-center pb-4 mb-4 border-b">
-                <h3 class="text-xl font-semibold text-gray-800">Edit Client</h3>
-                <button type="button" onclick="closeEditModal()" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                </button>
+    <div id="editModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="bg-gradient-to-r from-blue-600 to-blue-700 text-white p-6 rounded-t-xl">
+                <h3 class="text-2xl font-bold flex items-center">
+                    <i class="fas fa-edit mr-3"></i>
+                    Edit Client Information
+                </h3>
             </div>
-            <form method="post" id="editForm">
-                <input type="hidden" name="update_id" id="edit_id">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            
+            <form method="post" class="p-6 space-y-6">
+                <input type="hidden" id="edit_id" name="update_id">
+                
+                <!-- First Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div>
                         <label for="edit_clientname" class="block text-sm font-medium text-gray-700 mb-1">Client Name</label>
-                        <input type="text" name="edit_clientname" id="edit_clientname" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                            <input type="text" name="edit_clientname" id="edit_clientname" 
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
                     </div>
                     <div>
                         <label for="edit_status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                        <select name="edit_status" id="edit_status" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="New Client">New Client</option>
-                            <option value="Old Client">Old Client</option>
-                        </select>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-tag text-gray-400"></i>
+                            </div>
+                            <select name="edit_status" id="edit_status"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                                <option value="New Client">New Client</option>
+                                <option value="Old Client">Old Client</option>
+                            </select>
+                        </div>
                     </div>
                     <div>
                         <label for="edit_nameproject" class="block text-sm font-medium text-gray-700 mb-1">Project Name</label>
-                        <input type="text" name="edit_nameproject" id="edit_nameproject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-project-diagram text-gray-400"></i>
+                            </div>
+                            <input type="text" name="edit_nameproject" id="edit_nameproject"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
                     </div>
                     <div>
                         <label for="edit_client_type" class="block text-sm font-medium text-gray-700 mb-1">Client Type</label>
-                        <select name="edit_client_type" id="edit_client_type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="Noblehome">Noblehome</option>
-                            <option value="Realiving">Realiving</option>
-                        </select>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-building text-gray-400"></i>
+                            </div>
+                            <select name="edit_client_type" id="edit_client_type"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                                <option value="Noblehome">Noblehome</option>
+                                <option value="Realiving">Realiving</option>
+                            </select>
+                        </div>
                     </div>
+                </div>
+                
+                <!-- Second Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                     <div>
                         <label for="edit_contact" class="block text-sm font-medium text-gray-700 mb-1">Contact Number</label>
-                        <input type="text" name="edit_contact" id="edit_contact" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-phone text-gray-400"></i>
+                            </div>
+                            <input type="text" name="edit_contact" id="edit_contact"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit_email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input type="email" name="edit_email" id="edit_email"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
                     </div>
                     <div>
                         <label for="edit_country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
-                        <input type="text" name="edit_country" id="edit_country" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-globe text-gray-400"></i>
+                            </div>
+                            <input type="text" name="edit_country" id="edit_country"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                        </div>
                     </div>
                     <div>
                         <label for="edit_gender" class="block text-sm font-medium text-gray-700 mb-1">Gender</label>
-                        <select name="edit_gender" id="edit_gender" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                            <option value="Other">Other</option>
-                            <option value="Prefer not to say">Prefer not to say</option>
-                        </select>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-venus-mars text-gray-400"></i>
+                            </div>
+                            <select name="edit_gender" id="edit_gender"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                                <option value="Prefer not to say">Prefer not to say</option>
+                            </select>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Third Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="edit_client_class" class="block text-sm font-medium text-gray-700 mb-1">Client Classification</label>
-                        <select name="edit_client_class" id="edit_client_class" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="VIP">VIP</option>
-                            <option value="Regular">Regular</option>
-                            <option value="Walk-in">Walk-in</option>
-                            <option value="Returning">Returning</option>
-                        </select>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-award text-gray-400"></i>
+                            </div>
+                            <select name="edit_client_class" id="edit_client_class"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required>
+                                <option value="VIP">VIP</option>
+                                <option value="Regular">Regular</option>
+                                <option value="Walk-in">Walk-in</option>
+                                <option value="Returning">Returning</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="edit_address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                        <div class="relative">
+                            <div class="absolute top-3 left-0 pl-3 flex items-start pointer-events-none">
+                                <i class="fas fa-map-marker-alt text-gray-400"></i>
+                            </div>
+                            <textarea name="edit_address" id="edit_address" rows="3"
+                                class="pl-10 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-150"
+                                required></textarea>
+                        </div>
                     </div>
                 </div>
-                
-                <!-- Address field (full width) -->
-                <div class="mb-4">
-                    <label for="edit_address" class="block text-sm font-medium text-gray-700 mb-1">Address</label>
-                    <textarea name="edit_address" id="edit_address" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" required></textarea>
-                </div>
-                
-                <div class="flex justify-center">
-                    <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-300 ease-in-out">
-                        <i class="fas fa-save mr-2"></i> Save Changes
+
+                <!-- Modal Buttons -->
+                <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+                    <button type="button" onclick="closeEditModal()"
+                        class="px-6 py-2 bg-gray-500 text-white font-medium rounded-lg shadow hover:bg-gray-600 transition duration-300 ease-in-out">
+                        <i class="fas fa-times mr-2"></i> Cancel
+                    </button>
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg shadow hover:bg-blue-700 transition duration-300 ease-in-out">
+                        <i class="fas fa-save mr-2"></i> Update Client
                     </button>
                 </div>
             </form>
         </div>
     </div>
-      <footer class="mt-12 py-6 border-t border-gray-200 bg-white">
-        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500 text-sm">
-            &copy; <?= date('Y') ?> Inquiries Dashboard. All rights reserved.
-        </div>
-    </footer>
-    <script src="js/allclient.js"></script>
+<script src="js/allclient.js"></script>
 </body>
 </html>

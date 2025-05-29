@@ -1,5 +1,5 @@
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <header class="sticky top-0 text-black bg-gray-100 shadow-md relative z-50 bg-cover bg-center">
 
@@ -18,7 +18,6 @@
                 <a href="#" class="flex items-center hover:text-yellow-500">
                     <i class="fas fa-home mr-2"></i>HOME
                 </a>
-             
                 <a href="#" class="flex items-center hover:text-yellow-500">
                     PROJECTS
                 </a>
@@ -27,6 +26,9 @@
                 </a>
                 <a href="#" class="flex items-center hover:text-yellow-500">
                    CONTACT
+                </a>
+                 <a href="#" class="flex items-center hover:text-yellow-500">
+                   BILLING
                 </a>
                     <a href="#" class="flex items-center hover:text-yellow-500">
                     ABOUT

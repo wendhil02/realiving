@@ -7,7 +7,7 @@ include '../checkrole.php';
 
 
 // Allow only admin1 to admin5
-require_role([ 'admin4', 'admin5', 'superadmin']);
+require_role(['admin4', 'admin5', 'superadmin']);
 
 if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])) {
     echo '
@@ -48,10 +48,12 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Inquiries Dashboard</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -61,13 +63,16 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
             font-family: 'Poppins', sans-serif;
             background-color: #f5f7fa;
         }
+
         .card-hover:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
+
         .gradient-bg {
             background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
         }
+
         .admin-card:hover {
             border-color: #3b82f6;
         }
@@ -104,7 +109,7 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-yellow-500 transition-all duration-300 card-hover">
                 <div class="flex justify-between items-start">
                     <div>
@@ -116,7 +121,7 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                     </div>
                 </div>
             </div>
-            
+
             <div class="bg-white rounded-xl shadow-md p-6 border-l-4 border-green-500 transition-all duration-300 card-hover">
                 <div class="flex justify-between items-start">
                     <div>
@@ -176,7 +181,7 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                                         </div>
                                         <h3 class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($row['full_name']) ?></h3>
                                     </div>
-                                    
+
                                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-2 mt-3">
                                         <p class="text-gray-700 flex items-center">
                                             <i class="fas fa-phone text-gray-500 mr-2"></i>
@@ -204,24 +209,23 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                                     <span class="px-3 py-1 rounded-full text-sm font-medium mb-2 <?= $client_type_class ?>">
                                         <?= $client_type ?>
                                     </span>
-                                    
+
                                     <div class="text-gray-500 text-sm flex items-center">
                                         <i class="far fa-clock mr-1"></i>
                                         <?= date('M j, Y \a\t g:i A', strtotime($row['created_at'])) ?>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <?php if (isset($row['message']) && !empty($row['message'])): ?>
                                 <div class="mt-4">
-                                    <button 
-                                        @click="open = !open" 
-                                        class="text-blue-600 hover:text-blue-800 text-sm flex items-center focus:outline-none"
-                                    >
+                                    <button
+                                        @click="open = !open"
+                                        class="text-blue-600 hover:text-blue-800 text-sm flex items-center focus:outline-none">
                                         <span x-text="open ? 'Hide Message' : 'View Message'"></span>
                                         <i class="fas" :class="open ? 'fa-chevron-up ml-1' : 'fa-chevron-down ml-1'"></i>
                                     </button>
-                                    
+
                                     <div x-show="open" x-cloak class="mt-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
                                         <p class="text-gray-700"><?= nl2br(htmlspecialchars($row['message'])) ?></p>
                                     </div>
@@ -241,10 +245,10 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                                             <div class="flex-grow">
                                                 <select name="recipient_email" required class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                                                     <option value="">-- Select Admin --</option>
-                                                    <?php 
+                                                    <?php
                                                     // Reset pointer for admins
                                                     $admins->data_seek(0);
-                                                    foreach ($admins as $admin): 
+                                                    foreach ($admins as $admin):
                                                     ?>
                                                         <option value="<?= htmlspecialchars($admin['email']) ?>">
                                                             <?= htmlspecialchars($admin['email']) ?> - <?= htmlspecialchars($admin['client_status']) ?>
@@ -256,37 +260,35 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                                                 <i class="fas fa-paper-plane mr-2"></i> Send to Admin
                                             </button>
                                         </form>
-                                        
+
                                         <!-- Custom Email Option -->
                                         <div class="flex items-center">
-                                            <button 
-                                                @click="showCustomEmail = !showCustomEmail" 
-                                                class="text-blue-600 hover:text-blue-800 text-sm flex items-center focus:outline-none"
-                                            >
+                                            <button
+                                                @click="showCustomEmail = !showCustomEmail"
+                                                class="text-blue-600 hover:text-blue-800 text-sm flex items-center focus:outline-none">
                                                 <i class="fas" :class="showCustomEmail ? 'fa-chevron-up mr-1' : 'fa-chevron-down mr-1'"></i>
                                                 <span x-text="showCustomEmail ? 'Hide Custom Email Form' : 'Send to Custom Email'"></span>
                                             </button>
                                         </div>
-                                        
-                                    <!-- Custom Email Form -->
-<div x-show="showCustomEmail" x-cloak class="mt-2">
-    <form action="send_inquiry.php" method="POST" class="flex flex-col md:flex-row gap-3">
-        <input type="hidden" name="inquiry_id" value="<?= $row['id'] ?>">
-        <input type="hidden" name="message_type" value="admin">
-        <div class="flex-grow">
-            <input 
-                type="email" 
-                name="custom_email" 
-                placeholder="Enter email address" 
-                required 
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            >
-        </div>
-        <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center whitespace-nowrap">
-            <i class="fas fa-envelope mr-2"></i> Send to Email
-        </button>
-    </form>
-</div>
+
+                                        <!-- Custom Email Form -->
+                                        <div x-show="showCustomEmail" x-cloak class="mt-2">
+                                            <form action="send_inquiry.php" method="POST" class="flex flex-col md:flex-row gap-3">
+                                                <input type="hidden" name="inquiry_id" value="<?= $row['id'] ?>">
+                                                <input type="hidden" name="message_type" value="admin">
+                                                <div class="flex-grow">
+                                                    <input
+                                                        type="email"
+                                                        name="custom_email"
+                                                        placeholder="Enter email address"
+                                                        required
+                                                        class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                                </div>
+                                                <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg shadow-sm transition-all duration-300 flex items-center justify-center whitespace-nowrap">
+                                                    <i class="fas fa-envelope mr-2"></i> Send to Email
+                                                </button>
+                                            </form>
+                                        </div>
 
                                     </div>
                                 <?php endif; ?>
@@ -338,7 +340,7 @@ $sent_inquiries = $conn->query("SELECT COUNT(*) AS count FROM contact_inquiries 
                             <?php endwhile; ?>
                         </div>
                     </div>
-                    
+
                     <!-- Quick Help Card -->
                     <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-md p-6 border border-blue-100">
                         <h3 class="text-lg font-semibold text-blue-800 mb-3 flex items-center">
