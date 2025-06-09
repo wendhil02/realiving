@@ -253,7 +253,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_payment'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Client Billing Tracker</title>
-     <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../../logo/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -478,107 +478,107 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_payment'])) {
 
         <div class="flex flex-col md:flex-row gap-6">
             <!-- Payment History -->
-           <div class="w-full md:w-2/3 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-    <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
-        <h3 class="text-lg font-semibold text-gray-800">Payment History</h3>
-        <button id="openPaymentModal" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center shadow-sm hover-raise">
-            <i class="fas fa-plus mr-2"></i>
-            Add Payment
-        </button>
-    </div>
-    <div class="p-6">
-        <!-- Payment History Table with Fixed Height and Scroll -->
-        <div class="overflow-x-auto max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50 sticky top-0 z-10">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <?php if ($paymentResult && $paymentResult->num_rows > 0):
-                        // Reset pointer to beginning
-                        $paymentResult->data_seek(0);
-                        while ($payment = $paymentResult->fetch_assoc()):
-                            $paymentDate = date("M d, Y", strtotime($payment['payment_date']));
+            <div class="w-full md:w-2/3 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                <div class="px-6 py-4 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                    <h3 class="text-lg font-semibold text-gray-800">Payment History</h3>
+                    <button id="openPaymentModal" class="px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors flex items-center shadow-sm hover-raise">
+                        <i class="fas fa-plus mr-2"></i>
+                        Add Payment
+                    </button>
+                </div>
+                <div class="p-6">
+                    <!-- Payment History Table with Fixed Height and Scroll -->
+                    <div class="overflow-x-auto max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50 sticky top-0 z-10">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Method</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <?php if ($paymentResult && $paymentResult->num_rows > 0):
+                                    // Reset pointer to beginning
+                                    $paymentResult->data_seek(0);
+                                    while ($payment = $paymentResult->fetch_assoc()):
+                                        $paymentDate = date("M d, Y", strtotime($payment['payment_date']));
 
-                            // Map payment type to display name
-                            $paymentTypeDisplay = [
-                                'downpayment' => 'Downpayment (50%)',
-                                'before_installation' => 'Before Installation (40%)',
-                                'after_installation' => 'After Installation (10%)'
-                            ][$payment['payment_type']] ?? $payment['payment_type'];
-                    ?>
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= $paymentDate ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <?php if ($payment['payment_type'] == 'downpayment'): ?>
-                                        <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                                            <?= $paymentTypeDisplay ?>
-                                        </span>
-                                    <?php elseif ($payment['payment_type'] == 'before_installation'): ?>
-                                        <span class="px-2 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
-                                            <?= $paymentTypeDisplay ?>
-                                        </span>
-                                    <?php else: ?>
-                                        <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">
-                                            <?= $paymentTypeDisplay ?>
-                                        </span>
-                                    <?php endif; ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₱<?= number_format($payment['amount'], 2) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                    <span class="inline-flex items-center">
-                                        <?php if ($payment['payment_method'] == 'cash'): ?>
-                                            <i class="fas fa-money-bill-wave text-green-500 mr-1"></i>
-                                        <?php elseif ($payment['payment_method'] == 'bank_transfer'): ?>
-                                            <i class="fas fa-university text-blue-500 mr-1"></i>
-                                        <?php elseif ($payment['payment_method'] == 'check'): ?>
-                                            <i class="fas fa-money-check text-indigo-500 mr-1"></i>
-                                        <?php elseif ($payment['payment_method'] == 'gcash'): ?>
-                                            <i class="fas fa-mobile-alt text-purple-500 mr-1"></i>
-                                        <?php else: ?>
-                                            <i class="fas fa-credit-card text-gray-500 mr-1"></i>
-                                        <?php endif; ?>
-                                        <?= ucfirst($payment['payment_method']) ?>
-                                    </span>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars($payment['description']) ?></td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    <div class="flex space-x-2">
-                                        <button type="button" class="text-indigo-600 hover:text-indigo-900 edit-payment"
-                                            data-id="<?= $payment['id'] ?>"
-                                            data-type="<?= $payment['payment_type'] ?>"
-                                            data-amount="<?= $payment['amount'] ?>"
-                                            data-date="<?= $payment['payment_date'] ?>"
-                                            data-method="<?= $payment['payment_method'] ?>"
-                                            data-description="<?= $payment['description'] ?>">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button" class="text-red-600 hover:text-red-900 delete-payment"
-                                            data-id="<?= $payment['id'] ?>"
-                                            data-amount="<?= $payment['amount'] ?>">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        <?php endwhile;
-                    else: ?>
-                        <tr>
-                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No payment records found.</td>
-                        </tr>
-                    <?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                                        // Map payment type to display name
+                                        $paymentTypeDisplay = [
+                                            'downpayment' => 'Downpayment (50%)',
+                                            'before_installation' => 'Before Installation (40%)',
+                                            'after_installation' => 'After Installation (10%)'
+                                        ][$payment['payment_type']] ?? $payment['payment_type'];
+                                ?>
+                                        <tr class="hover:bg-gray-50">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= $paymentDate ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <?php if ($payment['payment_type'] == 'downpayment'): ?>
+                                                    <span class="px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
+                                                        <?= $paymentTypeDisplay ?>
+                                                    </span>
+                                                <?php elseif ($payment['payment_type'] == 'before_installation'): ?>
+                                                    <span class="px-2 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
+                                                        <?= $paymentTypeDisplay ?>
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span class="px-2 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">
+                                                        <?= $paymentTypeDisplay ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">₱<?= number_format($payment['amount'], 2) ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
+                                                <span class="inline-flex items-center">
+                                                    <?php if ($payment['payment_method'] == 'cash'): ?>
+                                                        <i class="fas fa-money-bill-wave text-green-500 mr-1"></i>
+                                                    <?php elseif ($payment['payment_method'] == 'bank_transfer'): ?>
+                                                        <i class="fas fa-university text-blue-500 mr-1"></i>
+                                                    <?php elseif ($payment['payment_method'] == 'check'): ?>
+                                                        <i class="fas fa-money-check text-indigo-500 mr-1"></i>
+                                                    <?php elseif ($payment['payment_method'] == 'gcash'): ?>
+                                                        <i class="fas fa-mobile-alt text-purple-500 mr-1"></i>
+                                                    <?php else: ?>
+                                                        <i class="fas fa-credit-card text-gray-500 mr-1"></i>
+                                                    <?php endif; ?>
+                                                    <?= ucfirst($payment['payment_method']) ?>
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700"><?= htmlspecialchars($payment['description']) ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                <div class="flex space-x-2">
+                                                    <button type="button" class="text-indigo-600 hover:text-indigo-900 edit-payment"
+                                                        data-id="<?= $payment['id'] ?>"
+                                                        data-type="<?= $payment['payment_type'] ?>"
+                                                        data-amount="<?= $payment['amount'] ?>"
+                                                        data-date="<?= $payment['payment_date'] ?>"
+                                                        data-method="<?= $payment['payment_method'] ?>"
+                                                        data-description="<?= $payment['description'] ?>">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button type="button" class="text-red-600 hover:text-red-900 delete-payment"
+                                                        data-id="<?= $payment['id'] ?>"
+                                                        data-amount="<?= $payment['amount'] ?>">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile;
+                                else: ?>
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No payment records found.</td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <!-- Payment Summary -->
             <div class="w-full md:w-1/3 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                 <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">

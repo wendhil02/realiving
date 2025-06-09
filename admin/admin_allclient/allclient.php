@@ -163,7 +163,7 @@ if ($result && $result->num_rows > 0) {
                 </td>
                 <td class="py-4 px-6">' . htmlspecialchars($row["contact"] ?? '') . '</td>
                 <td class="py-4 px-6">' . htmlspecialchars($row["email"] ?? '') . '</td>
-                <td class="py-4 px-6 max-w-xs truncate" title="' . htmlspecialchars($row["address"] ?? '') . '">' . htmlspecialchars($row["address"] ?? '') . '</td>
+                <td class="py-4 px-6 max-w-xs overflow-x-auto truncate" title="' . htmlspecialchars($row["address"] ?? '') . '">' . htmlspecialchars($row["address"] ?? '') . '</td>
                 <td class="py-4 px-6 text-center">
                     <div class="flex justify-center space-x-3">
                         <button type="button" onclick="openEditModal(' . $row["id"] . ', \'' . htmlspecialchars($row["clientname"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["status"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["nameproject"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_type"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["client_class"], ENT_QUOTES) . '\', \'' . htmlspecialchars($row["contact"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["email"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["country"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["address"] ?? '', ENT_QUOTES) . '\', \'' . htmlspecialchars($row["gender"] ?? '', ENT_QUOTES) . '\')" class="text-blue-600 hover:text-blue-800 hover:underline focus:outline-none">

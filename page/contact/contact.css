@@ -1,0 +1,789 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding-top: 50px; /* match header height */
+    font-family: 'Playfair Display', serif; /* This might be overridden by Montserrat in some sections */
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Your original sub-header styles */
+.sub-header {
+    background-image: url('../images/background-image.jpg'); /* Replace with your actual image path */
+    background-size: cover;
+    background-position: center;
+    height: 180px; /* or your preferred height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+}
+
+.sub-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* optional overlay for better text readability */
+    z-index: 0;
+}
+
+.sub-header h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+}
+
+.hero-text,
+.sub-header h1 {
+    font-family: 'Crimson Pro', sans-serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 50px !important; /* force consistent size */
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* dark shadow */
+}
+
+/* ------------------------------------------- */
+/* NEW SECTIONS STYLES - Based on Figma image */
+/* ------------------------------------------- */
+
+/* General Container for new sections */
+.container {
+    max-width: 1200px; /* Adjust as needed */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Shared section padding for new sections */
+.contact-info-section,
+.contact-form-section,
+.map-section, /* Map section padding is now also managed here */
+.faq-section {
+    padding: 60px 0; /* Adjust vertical spacing for new sections */
+}
+
+
+/* 1. "Get in touch with us!" / Contact Information Section (NEW) */
+.contact-info-section {
+    padding: 80px 0; /* Increased padding */
+}
+
+.contact-info-section .container {
+    display: flex;
+    max-width: 1400px; /* Wider container */
+    margin: 0 auto;
+    padding: 0 40px; /* More side padding */
+    gap: 10px; /* Larger gap between columns */
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.contact-details {
+    flex: 0 1 500px; /* Wider contact details section */
+    border-radius: 12px; /* Rounded corners */
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px; /* More space between items */
+    gap: 20px; /* Larger gap between icon and text */
+}
+
+.contact-item .icon {
+    width: 32px; /* Bigger icons */
+    height: 32px;
+    flex-shrink: 0;
+}
+
+.contact-item p {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px; /* Larger text */
+    color: #2F1200;
+    font-weight: 500;
+    line-height: 1.5; /* Better readability */
+}
+
+.get-in-touch {
+    flex: 0 1 500px; /* Matching width */
+    padding: 0px 0px 40px 0px; /* More padding */
+    text-align: center;
+    border-radius: 12px; /* Rounded corners */
+}
+
+.get-in-touch h1 {
+    font-family: 'Crimson Pro', sans-serif;
+    font-size: 5rem; /* Even bigger heading */
+    font-weight: 500;
+    font-style: italic;
+    text-align: right;
+    color: #2f1200;
+    line-height: 1.3;
+    margin: 0;
+    padding-top: 20px; /* More spacing */
+    letter-spacing: -1px; /* Better typography */
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .contact-info-section .container {
+        gap: 30px;
+    }
+    
+    .contact-details,
+    .get-in-touch {
+        flex: 0 1 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-info-section {
+        padding: 60px 0;
+    }
+    
+    .contact-info-section .container {
+        padding: 0 30px;
+        flex-direction: column;
+    }
+    
+    .contact-details {
+        padding: 40px;
+        margin-bottom: 40px; /* More space between sections */
+    }
+    
+    .get-in-touch {
+        padding: 40px;
+    }
+    
+    .get-in-touch h1 {
+        font-size: 3.5rem; /* Still big on mobile */
+        text-align: center; /* Centered on mobile */
+    }
+    
+    .contact-item p {
+        font-size: 18px; /* Slightly smaller text on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-details,
+    .get-in-touch {
+        padding: 30px;
+    }
+    
+    .get-in-touch h1 {
+        font-size: 2.8rem;
+    }
+    
+    .contact-item .icon {
+        width: 28px;
+        height: 28px;
+    }
+}
+/* END OF NEW ADDITION IN PROGRESS */
+
+/* 2. "Tell Us About Your Modular Furniture Project" / Contact Form Section (NEW) */
+.contact-form-section {
+    background-color: #fff3e5;
+    padding: 30px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+    justify-content: space-between;
+}
+
+.project-description {
+    flex: 1;
+    min-width: 400px;
+    max-width: 500px;
+}
+
+.project-description h2 {
+    line-height: 50px;
+    margin-top:50px;
+    font-family: 'Crimson Pro', sans-serif;
+    font-size: 3rem;
+    font-weight: 500;
+    font-style: oblique;
+    text-align: left;
+    margin-bottom: 25px;
+    color: #2F1200;
+}
+
+.project-description p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #2F1200;
+    margin-bottom: 20px;
+}
+
+.talk-with-us {
+    font-weight: 600;
+    margin-top: 30px;
+    color: #2F1200;
+}
+
+.social {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.social img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.3s ease;
+}
+
+.social img:hover {
+    transform: scale(1.1);
+}
+
+.contact-form-fields {
+    flex: 1;
+    min-width: 400px;
+    max-width: 700px;
+}
+
+.form-group {
+    display: flex; /* Changed to flex layout */
+    align-items: center; /* Vertically center items */
+    margin-bottom: 15px; /* Reduced spacing */
+    gap: 15px; /* Space between label and input */
+}
+
+.contact-form-fields label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2F1200;
+    letter-spacing: 0.5px;
+    width: 100px; /* Fixed width for labels */
+    text-align: right; /* Align label text to right */
+}
+
+.contact-form-fields input,
+.contact-form-fields textarea {
+    flex: 1; /* Take remaining space */
+    padding: 10px 15px; /* Slightly reduced padding */
+    border: 1px solid #2F1200;
+    background-color: #fff3E5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    min-width: 0; /* Prevent overflow */
+}
+
+.contact-form-fields input:focus,
+.contact-form-fields textarea:focus {
+    border-color: #74420d;
+    outline: none;
+}
+
+.contact-form-fields textarea {
+    min-height: 120px; /* Reduced height */
+    resize: vertical;
+}
+
+/* Special styling for the submit button group */
+.form-group.submit-group {
+    justify-content: flex-end; /* Align button to right */
+    margin-top: 20px;
+}
+
+.submit-btn {
+    background-color: #2F1200;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    max-width: 80%;
+    min-width: 81%;/* Auto width instead of 100% */
+}
+
+.submit-btn:hover {
+    background-color: #7d4e13;
+}
+
+@media (max-width: 900px) {
+    .container {
+        flex-direction: column;
+        gap: 40px;
+    }
+    
+    .project-description,
+    .contact-form-fields {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    
+    .project-description h2 {
+        font-size: 2rem;
+    }
+    
+    /* Stack labels on top for mobile */
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .contact-form-fields label {
+        width: auto;
+        text-align: left;
+    }
+    
+    .contact-form-fields input,
+    .contact-form-fields textarea {
+        width: 100%;
+    }
+    
+    .form-group.submit-group {
+        align-items: flex-end;
+    }
+}
+
+/* 3. "Map" Section (NEW) */
+.map-section {
+    padding: 2rem 0;
+}
+
+.container-map {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.container-map h2 {
+    font-weight:normal;
+    font-size: 3rem;
+    font-family:'Crimson Pro', sans-serif;
+    color: #2F1200;
+    text-align: center;
+}
+
+.map-container {
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem; /* Space between map and promo */
+    height: 600px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .map-container {
+        height: 300px;
+    }
+    
+    .container-map h2 {
+        font-size: 1.5rem;
+    }
+}
+
+
+/* 4. "Frequently Asked Questions" Section (NEW) */
+.faq-section {
+    background-color: #fff;
+    padding: 1rem 1rem 0rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.container-faq {
+    width: 100%;
+}
+
+.faq-section h2 {
+    font-size: 40px;
+    font-family: 'Crimson Pro', sans-serif;
+    color: #2f1200;
+    text-align: center;
+    font-weight: normal;
+}
+
+.description-faq {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.faq-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.faq-item:hover {
+    border-color: #d0d0d0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.faq-item .icon {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    display: inline-block;
+    color: #5a5a5a;
+}
+
+.faq-item p {
+    margin: 0;
+    color: #2F1200;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    display: inline;
+    vertical-align: middle;
+    width: calc(100% - 40px);
+}
+
+.faq-item .answer {
+    font-family: 'Montserrat', sans-serif;
+    max-height: 0;
+    overflow: hidden;
+    transition: 
+        max-height 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.15),
+        padding-top 0.3s ease,
+        margin-top 0.3s ease,
+        opacity 0.2s ease;
+    color: #2F1200;
+    padding-top: 0;
+    margin-top: 0;
+    opacity: 0;
+    line-height: 1.6;
+}
+
+/* Active state - enhanced for smoothness */
+.faq-item.active {
+    border-color: #2F1200;
+    background-color: #faf8f7;
+}
+
+.faq-item.active .icon {
+    transform: rotate(45deg);
+    color: #2F1200;
+}
+
+.faq-item.active .answer {
+    max-height: 500px; /* Increased to accommodate long answers */
+    padding-top: 1rem;
+    margin-top: 1rem;
+    opacity: 1;
+    border-top: 1px solid rgba(47, 18, 0, 0.1);
+    transition: 
+        max-height 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.15),
+        padding-top 0.4s ease,
+        margin-top 0.4s ease,
+        opacity 0.3s ease 0.1s;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .faq-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .faq-section {
+        padding: 2rem 1rem;
+    }
+    
+    .faq-section h2 {
+        font-size: 2rem;
+    }
+    
+    .faq-item {
+        padding: 1.25rem;
+    }
+}
+
+/* ------------------------------------------- */
+/* MODAL STYLES (Your Original) */
+/* ------------------------------------------- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+.modal-content h2 {
+    margin-bottom: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ------------------------------------------- */
+/* RESPONSIVE ADJUSTMENTS (Updated and Combined) */
+/* ------------------------------------------- */
+
+@media (max-width: 768px) {
+    /* Adjustments for the new contact info and form sections */
+    .contact-info-section,
+    .contact-form-section {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 0; /* Slightly less padding on mobile */
+    }
+
+    .contact-info-section .contact-details, /* Specificity for new contact details */
+    .get-in-touch {
+        padding-right: 0;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .contact-info-section .contact-details h2,
+    .get-in-touch h1 {
+        text-align: center;
+    }
+
+    .contact-info-section .contact-item {
+        justify-content: center;
+    }
+
+    .project-description,
+    .contact-form-fields {
+        min-width: unset; /* Remove min-width for smaller screens */
+        max-width: 100%; /* Allow full width */
+        width: 100%; /* Ensure they take full width */
+        padding: 0 10px; /* Add horizontal padding for content within sections */
+        box-sizing: border-box; /* Include padding in width */
+    }
+
+    /* Adjustments for the FAQ grid */
+    .faq-grid {
+        grid-template-columns: 1fr; /* Single column on small screens */
+        padding: 0 20px; /* Add some horizontal padding */
+    }
+
+    /* General responsive adjustments */
+    .container {
+        padding: 10px; /* Less padding on container for small screens */
+    }
+
+    .sub-header h1,
+    .hero-text {
+        font-size: 40px !important; /* Adjust font size for sub-header on small screens */
+    }
+
+    .map-section h2,
+    .faq-section h2,
+    .contact-info-section .contact-details h2 {
+        font-size: 2em; /* Smaller main headings on mobile */
+    }
+}
+
+/* Your original .contact-section and its child styles have been superseded
+   by the new structure and specific class names. If you still have content
+   using these, you might need to adjust them or remove the old HTML. */
+/*
+.contact-section {
+    background-color: #ffffff;
+    padding: 60px 20px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.contact-container {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 40px;
+}
+
+.contact-text {
+    flex: 1 1 100%;
+    text-align: center;
+}
+.contact-text h2 {
+    font-size: 40px;
+    color: #1f96c9;
+    margin-bottom: 10px;
+    font-weight: normal;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+.contact-text p {
+    font-size: 15px;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Original Contact Details (left side) - Largely replaced by .contact-info-section .contact-details */
+/*
+.contact-details {
+    margin-top: 2rem;
+    flex: 1 1 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px;
+    background-color: #f7f7f7;
+    border-left: 4px solid #e4a314;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+.detail-item h4 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #444;
+}
+
+.detail-item p {
+    margin: 2px 0 0 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #111;
+}
+
+.detail-item .icon {
+    width: 24px;
+    height: 24px;
+    color: #e4a314;
+}
+
+@media (max-width: 768px) {
+    .contact-details {
+        flex: 1 1 100%;
+    }
+}
+*/
+/* Original Contact Form (right side) - Largely replaced by .contact-form-fields */
+/*
+.contact-form {
+    flex: 1 1 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form textarea {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #e4a314;
+    outline: none;
+}
+
+.contact-form button {
+    padding: 12px;
+    border-radius: 25px;
+    background-color: #e4a314;
+    font-family: 'Montserrat', sans-serif;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+    background-color: #c27a1e;
+}
+
+@media (max-width: 768px) {
+    .contact-form {
+        flex: 1 1 100%;
+        padding: 15px;
+    }
+
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        font-size: 14px;
+    }
+
+    .contact-form button {
+        font-size: 14px;
+    }
+}
+
+.contact-form .form-heading {
+    font-size: 24px;
+    font-weight: normal;
+    color: #1f96c9;
+}
+*/

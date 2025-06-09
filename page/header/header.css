@@ -1,0 +1,116 @@
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* Full width */
+  height: 55px;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  /* Shadow effect */
+  z-index: 1000;
+}
+
+header nav {
+  display: flex;
+  align-items: center;
+  z-index: 10;
+}
+
+header nav a {
+  text-decoration: none;
+  color: #202020;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  padding: 0.5rem 1rem;
+}
+
+header nav a:hover {
+  color: #e4a314;
+  transition: transform 0.2s ease-in-out, background-color 0.8s ease;
+  transform: scale(105%);
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown>a {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  min-width: 280px;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  padding: 0.5rem 0;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: #202020;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  white-space: normal;
+  line-height: 1.4;
+  transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f7f7f7;
+  color: #e4a314;
+}
+
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.quote-button {
+  background-color: #3f2800;
+  /* Black background */
+  color: #ffffff;
+  /* White text */
+  padding: 8px 20px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+.quote-button:hover {
+  background-color: #241700;
+  /* Darker on hover */
+  color: white;
+  transition: transform 0.1s ease-in-out, background-color 0.3s ease;
+  transform: scale(105%);
+}
+
+.quote-button {
+  transition: transform 0.1s ease-in-out, background-color 0.3s ease;
+}
+.quote-button:active {
+  transform: scale(0.94);
+}

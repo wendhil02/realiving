@@ -1,0 +1,168 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  padding-top: 50px; /* match header height */
+  font-family: 'Crimson Pro', serif;
+  line-height: 1.6;
+  color: #333;
+
+}
+.sub-header {
+  background-image: url('../images/background-image.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 180px; /* or your preferred height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  font-family: 'Crimson Pro', serif;
+  position: relative;
+}
+
+.sub-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4); /* optional overlay for better text readability */
+  z-index: 0;
+}
+
+.sub-header h1 {
+  position: relative;
+  z-index: 1;
+  font-size: 2.5rem;
+}
+
+.hero-text,
+.sub-header h1 {
+  font-family: 'Crimson Pro', serif;
+  font-style: italic;
+  font-weight: normal;
+  font-size: 40px !important; /* force consistent size */
+  color: #ffffff;
+  text-align: center;
+  margin: 0;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* dark shadow */
+}
+
+/* Section Divider */
+.section-divider {
+  border: none;
+  height: 2px;
+  background-color: #FB9526; /* A different color for the divider */
+  opacity: 100%;
+  margin: 0px auto 15px auto;
+  width: 30%;
+  border-radius: 5px;
+}
+
+.design-page {
+  max-width: 1200px;
+  margin: 20px auto; /* Reduced the top and bottom margin */
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px 40px;
+  padding: 20px;
+}
+
+.des-step {
+  display: contents; /* Let the children control their placement */
+}
+
+.des-step-media,
+.des-step-text {
+  width: 100%;
+}
+
+.des-step-media {
+  max-width: 80%; /* Limit the image width to 80% of the column */
+  margin: 0 auto; /* Center the image */
+}
+
+.des-step-media img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+}
+
+/* Layout for each step */
+.des-step:nth-child(odd) .des-step-media {
+  grid-column: 1;
+}
+
+.des-step:nth-child(odd) .des-step-text {
+  grid-column: 2;
+}
+
+.des-step:nth-child(even) .des-step-text {
+  grid-column: 1;
+}
+
+.des-step:nth-child(even) .des-step-media {
+  grid-column: 2;
+}
+
+/* Center the Step Number (h2) */
+.des-step-text h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.8em;
+  color: #1f96c9    ;
+  margin-bottom: 0.1rem; /* Reduced margin to bring it closer to h3 */
+  font-weight: bolder;
+  text-align: center; /* Center the step number */
+  text-transform: uppercase;
+}
+
+/* Center the Step Name (h3) */
+.des-step-text h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 25px;
+  font-weight: normal !important;
+  margin-bottom: 15px; /* Adjust the bottom margin */
+  text-align: center; /* Center the step name */
+}
+
+/* Justify the Description (p) */
+.des-step-text p {
+  font-size: 1.1rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  text-align: justify; /* Justify the description text */
+}
+
+/* Optional: responsive fallback for mobile */
+@media (max-width: 768px) {
+  .design-page .main-container {
+    grid-template-columns: 1fr;
+  }
+
+  .des-step-media,
+  .des-step-text {
+    grid-column: 1 !important;
+  }
+
+  .des-step-media {
+    max-width: 100%; /* Full width on small screens */
+  }
+}
+
+.section-divider-two {
+  border: none;
+  height: 2px;
+  background-color: #000000;
+  opacity: 15%;
+  margin: 0px auto 15px auto; /* top 10px, bottom 0px */
+  width: 30%;
+  border-radius: 5px;
+}

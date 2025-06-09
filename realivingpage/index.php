@@ -6,19 +6,135 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Realiving - Interior Design</title>
     <!-- For .ico file -->
-<!-- For PNG fallback (optional) -->
+    <!-- For PNG fallback (optional) -->
     <link rel="icon" type="image/png" sizes="32x32" href="../logo/favicon.ico">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link rel="stylesheet" href="coupon/coupon.css">
 </head>
 <style>
     .hero-bg {
-        background-image: url('img/navimg.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        height: 100vh;
+        height: 90vh;
+    }
+
+    .glass-effect {
+        background: rgba(0, 0, 0, 0.05);
+
+        position: relative;
+        overflow: hidden;
+    }
+
+    .glass-effect::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%);
+        animation: shimmer 3s ease-in-out infinite;
+        transform: rotate(45deg);
+    }
+
+    .glass-effect::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background:
+            radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.08) 0%, transparent 50%),
+            radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.06) 0%, transparent 50%);
+        animation: floatingOrbs 8s ease-in-out infinite alternate;
+    }
+
+    @keyframes shimmer {
+
+        0%,
+        100% {
+            transform: rotate(45deg) translateX(-100%);
+            opacity: 0;
+        }
+
+        50% {
+            transform: rotate(45deg) translateX(100%);
+            opacity: 1;
+        }
+    }
+
+    @keyframes floatingOrbs {
+        0% {
+            transform: scale(1) rotate(0deg);
+            opacity: 0.3;
+        }
+
+        100% {
+            transform: scale(1.1) rotate(10deg);
+            opacity: 0.6;
+        }
+    }
+
+    .glass-button {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .glass-button:hover {
+        background: rgba(255, 255, 255, 0.25);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-bg {
+        background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.1) 100%);
+    }
+
+    /* Animated gradient background as fallback */
+    /* Glass overlay with animated patterns */
+    .glass-pattern {
+        background:
+            linear-gradient(45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+            linear-gradient(-45deg, rgba(255, 255, 255, 0.03) 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%),
+            linear-gradient(-45deg, transparent 75%, rgba(255, 255, 255, 0.03) 75%);
+        background-size: 60px 60px;
+        background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+        animation: glassPattern 20s linear infinite;
+    }
+
+    @keyframes glassPattern {
+        0% {
+            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+        }
+
+        100% {
+            background-position: 60px 60px, 60px 90px, 90px 30px, 30px 60px;
+        }
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+        font-family: 'Montserrat', sans-serif;
     }
 </style>
 
@@ -26,24 +142,157 @@
     <div class="min-h-screen flex flex-col">
 
         <!-- Include the Navbar -->
-        <?php include 'headernav.php'; ?>
+        <?php include 'header/headernav.php'; ?>
 
-        <!-- Main Body Content with Video Background -->
-        <main class="flex-grow flex items-center justify-start relative overflow-hidden hero-bg">
-            <!-- Overlay -->
-            <div class="absolute inset-0 bg-black bg-opacity-30 z-0"></div>
+        <main class="flex-grow flex items-center justify-between relative overflow-hidden hero-bg min-h-screen">
+            <!-- Video Background -->
+            <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+                <source src="video/realiving.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+
+            <!-- Glass Effect Overlay on Video with Multiple Effects -->
+            <div class="absolute inset-0 glass-effect z-10">
+                <div class="absolute inset-0 glass-pattern opacity-40"></div>
+            </div>
 
             <!-- Hero Content -->
-            <div class="relative z-10 p-6 md:p-16">
-                <p class="mb-2 text-sm md:text-base">Modern interiors, crafted with purpose and personality.</p>
-                <h1 class="text-4xl md:text-6xl font-light mb-4">
-                    <span class="block">Transform your space</span>
-                    <span class="block">with timeless design</span>
+            <div class="relative z-20 p-6 md:p-16 text-white flex-1 font-[Montserrat] ml-9">
+                <h1 class="text-4xl md:text-6xl font-light mb-4 leading-tight">
+                    <span class="block font-bold text-white drop-shadow-lg">Transform your space</span>
+                    <span class="block font-bold text-white drop-shadow-lg">with timeless design</span>
                 </h1>
-                <button class="bg-white text-black px-8 py-3 font-medium mt-4 hover:bg-gray-100 transition duration-300">GET STARTED</button>
+                <p class="mb-2 text-xs md:text-base font-semibold text-gray-200 drop-shadow underline">
+                    Modern interiors, crafted with purpose and personality.
+                </p>
+                <button class="glass-button text-white px-8 py-3 font-medium rounded-full mt-4 hover:text-yellow-300 transition-all duration-300">
+                    GET STARTED
+                </button>
             </div>
+
+            <!-- Inquiry Form -->
+            <div id="inquire" class="relative z-20 p-8 md:p-8 max-w-lg hidden md:block mr-8 font-[Montserrat]">
+                <div class="bg-gray-100 p-6 md:p-8">
+                    <h2 class="text-2xl font-bold text-black mb-6 text-center">Inquiry</h2>
+                    <!-- Font Awesome Link (if not already added) -->
+
+
+                    <form class="space-y-4">
+                        <!-- Full Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-black mb-2">Full Name:</label>
+                            <div class="relative">
+                                <i class="fas fa-user absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg text-black placeholder-gray-300 focus:outline-none transition-all duration-300"
+                                    placeholder="Enter your name">
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-medium text-black mb-2">Email Address:</label>
+                            <div class="relative">
+                                <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="email"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg text-black placeholder-gray-300 focus:outline-none transition-all duration-300"
+                                    placeholder="your@email.com">
+                            </div>
+                        </div>
+
+                        <!-- Contact Number -->
+                        <div>
+                            <label class="block text-sm font-medium text-black mb-2">Contact Number:</label>
+                            <div class="relative">
+                                <i class="fas fa-phone absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="tel"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg text-black placeholder-gray-300 focus:outline-none transition-all duration-300"
+                                    placeholder="+63 xxx xxx xxxx">
+                            </div>
+                        </div>
+
+                        <!-- Project Description -->
+                        <div>
+                            <label class="block text-sm font-medium text-black mb-2">Project Description:</label>
+                            <div class="relative">
+                                <i class="fas fa-pencil-alt absolute left-3 top-4 text-gray-400"></i>
+                                <textarea rows="4"
+                                    class="w-full pl-10 pr-4 py-3 rounded-lg text-black text-base placeholder-gray-300 focus:outline-none resize-none transition-all duration-300"
+                                    placeholder="Tell us about your interior design project..."></textarea>
+
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit"
+                            class="w-full glass-button text-black px-6 py-3 font-medium rounded-full border-3 border-blue-900 hover:text-red-300 transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-paper-plane mr-2"></i>SEND INQUIRY
+                        </button>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Floating Glass Elements for Extra Visual Interest -->
+            <div class="absolute top-20 left-1/4 w-32 h-32 glass-effect rounded-full opacity-5 animate-pulse hidden lg:block"></div>
+            <div class="absolute bottom-20 left-10 w-24 h-24 glass-effect rounded-full opacity-5 animate-bounce hidden md:block"></div>
+            <div class="absolute top-1/2 left-1/3 w-16 h-16 glass-effect rounded-full opacity-5 hidden lg:block"></div>
         </main>
 
+        <!-- Rooms Section -->
+        <section class="rooms-section bg-white text-black py-16" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto px-4">
+                <h2 class="text-4xl font-bold text-center mb-12">ROOMS</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
+
+                    <!-- Kitchen -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/kitchen/a.jpg" alt="Kitchen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Kitchen</h3>
+                    </div>
+
+                    <!-- Bathroom -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/bath/a.jpg" alt="Bathroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Bathroom</h3>
+                    </div>
+
+                    <!-- Living Room -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/livingroom/a.jpg" alt="Living Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Living Room</h3>
+                    </div>
+
+                    <!-- Bedroom -->
+                    <div class="bg-gray-100 h-80 flex flex-col">
+                        <div class="h-64 overflow-hidden">
+                            <img src="img/rooms/bed/a.jpg" alt="Bedroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <h3 class="text-center text-lg font-medium mt-2">Bedroom</h3>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- Cabinet Section with Background Image -->
+        <section class="cabinet-section mt-5" data-aos="fade-up">
+            <div class="relative bg-cover bg-center h-96" style="background-image: url('https://images.unsplash.com/photo-1556702571-3e11dd2b1a92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
+                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+                <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
+                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-2">Want a customized cabinet?</h2>
+                    <p class="text-lg md:text-xl text-white mb-8">Stylish. Affordable. Ready for your space.</p>
+                    <a href="#inquire" class="bg-white hover:bg-gray-100 text-gray-800 px-8 py-3 font-medium">
+                        INQUIRE NOW
+                    </a>
+                </div>
+            </div>
+        </section>
 
         <section class="w-full max-w-8xl mx-auto mt-5">
             <div class="bg-white shadow-lg overflow-hidden">
@@ -52,45 +301,6 @@
                     <h1 class="text-center text-lg md:text-4xl font-bold text-gray-800 tracking-wide font-light mb-4">
 
                     </h1>
-
-                    <!-- Image container -->
-                    <div class="overflow-hidden" id="carousel-container">
-                        <div class="flex transition-transform duration-300 ease-in-out" id="carousel-slides">
-                            <!-- Replace with your actual images -->
-                            <div class="min-w-full">
-                                <img src="img/idea/a.jpg" alt="Image 1" class="w-full h-64 object-cover">
-                            </div>
-                            <div class="min-w-full">
-                                <img src="img/idea/b.jpg" alt="Image 2" class="w-full h-64 object-cover">
-                            </div>
-                            <div class="min-w-full">
-                                <img src="img/idea/c.jpg" alt="Image 3" class="w-full h-64 object-cover">
-                            </div>
-                            <div class="min-w-full">
-                                <img src="img/idea/d.jpg" alt="Image 4" class="w-full h-64 object-cover">
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Navigation buttons -->
-                    <button id="prev-btn" class="absolute top-1/2 left-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                        </svg>
-                    </button>
-                    <button id="next-btn" class="absolute top-1/2 right-2 -translate-y-1/2 bg-white/70 hover:bg-white p-2 rounded-full shadow-md mt-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                        </svg>
-                    </button>
-
-                    <!-- Dots indicator -->
-                    <div class="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
-                        <button class="w-3 h-3 rounded-full bg-gray-200 dot active" data-index="0"></button>
-                        <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="1"></button>
-                        <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="2"></button>
-                        <button class="w-3 h-3 rounded-full bg-gray-400 dot" data-index="3"></button>
-                    </div>
                 </div>
 
                 <!-- Additional Images Section -->
@@ -174,62 +384,6 @@
             </div>
         </section>
 
-        <!-- Cabinet Section with Background Image -->
-        <section class="cabinet-section" data-aos="fade-up">
-            <div class="relative bg-cover bg-center h-96" style="background-image: url('https://images.unsplash.com/photo-1556702571-3e11dd2b1a92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
-                <div class="absolute inset-0 bg-black bg-opacity-40"></div>
-                <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
-                    <h2 class="text-3xl md:text-5xl font-bold text-white mb-2">Want a customized cabinet?</h2>
-                    <p class="text-lg md:text-xl text-white mb-8">Stylish. Affordable. Ready for your space.</p>
-                    <button class="bg-white hover:bg-gray-100 text-gray-800 px-8 py-3 font-medium">
-                        INQUIRE NOW
-                    </button>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- Rooms Section -->
-        <section class="rooms-section bg-white text-black py-16" data-aos="fade-up">
-            <div class="max-w-7xl mx-auto px-4">
-                <h2 class="text-4xl font-bold text-center mb-12">ROOMS</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-
-                    <!-- Kitchen -->
-                    <div class="bg-gray-100 h-80 flex flex-col">
-                        <div class="h-64 overflow-hidden">
-                            <img src="img/rooms/kitchen/a.jpg" alt="Kitchen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Kitchen</h3>
-                    </div>
-
-                    <!-- Bathroom -->
-                    <div class="bg-gray-100 h-80 flex flex-col">
-                        <div class="h-64 overflow-hidden">
-                            <img src="img/rooms/bath/a.jpg" alt="Bathroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Bathroom</h3>
-                    </div>
-
-                    <!-- Living Room -->
-                    <div class="bg-gray-100 h-80 flex flex-col">
-                        <div class="h-64 overflow-hidden">
-                            <img src="img/rooms/livingroom/a.jpg" alt="Living Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Living Room</h3>
-                    </div>
-
-                    <!-- Bedroom -->
-                    <div class="bg-gray-100 h-80 flex flex-col">
-                        <div class="h-64 overflow-hidden">
-                            <img src="img/rooms/bed/a.jpg" alt="Bedroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Bedroom</h3>
-                    </div>
-
-                </div>
-            </div>
-        </section>
 
         <section class="text-black">
             <div class="text-center my-12">
@@ -243,64 +397,106 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6 mt-8">
+            <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center mt-5 font-semibold">
+
+                KITCHEN CABINET
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-6 mt-8 mr-5 ml-5">
                 <!-- Cabinet 1 -->
                 <div class="text-center">
-                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/a.jpg" alt="Cabinet 1" class="w-full h-full object-cover rounded-md">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/baseCabinet/a.jpg" alt="Cabinet 1" class="w-full h-full object-cover rounded-md">
                     </div>
-                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <h3 class="text-lg font-medium mb-3">BASE CABINET</h3>
                     <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
 
                 <!-- Cabinet 2 -->
                 <div class="text-center">
-                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/b.png" alt="Cabinet 2" class="w-full h-full object-cover rounded-md">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/WallCabinet/a.webp" alt="Cabinet 2" class="w-full h-full object-cover rounded-md">
                     </div>
-                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <h3 class="text-lg font-medium mb-3">WALL CABINET</h3>
                     <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
 
                 <!-- Cabinet 3 -->
                 <div class="text-center">
-                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/c.png" alt="Cabinet 3" class="w-full h-full object-cover rounded-md">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/tallCabinet/a.jpg" alt="Cabinet 3" class="w-full h-full object-cover rounded-md">
                     </div>
-                    <h3 class="text-lg font-medium mb-3">CABINET</h3>
+                    <h3 class="text-lg font-medium mb-3">TALLCABINET</h3>
                     <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
 
                 <!-- Cabinet 4 -->
                 <div class="text-center">
-                    <div class="bg-gray-50/100 p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/d.png" alt="Cabinet 4" class="w-full h-full object-cover rounded-md">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/CornerCabinet/a.jpg" alt="Cabinet 4" class="w-full h-full object-cover rounded-md">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">CORNERCABINET</h3>
+                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+                <!-- Cabinet 4 -->
+                <div class="text-center">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/sinkbaseCabinet/a.jpg" alt="Cabinet 5" class="w-full h-full object-cover rounded-md">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">SINK BASE CABINET</h3>
+                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+            </div>
+            <hr>
+
+            <div class="col-span-1 md:col-span-2 lg:col-span-4 flex justify-center mt-9 font-semibold">
+
+                BATHROOM CABINET
+
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 mt-8 mr-5 ml-5">
+                <!-- Cabinet 1 -->
+                <div class="text-center">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/bathroomcabinet/vanitycabinet/a.jpg" alt="Cabinet 1" class="w-full h-full object-cover rounded-md">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">VANITY CABINET</h3>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+
+                <!-- Cabinet 2 -->
+                <div class="text-center">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/bathroomcabinet/medicinecabinet/a.avif" alt="Cabinet 2" class="w-full h-full object-cover rounded-md">
+                    </div>
+                    <h3 class="text-lg font-medium mb-3">MEDICINE CABINET</h3>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                </div>
+
+                <!-- Cabinet 3 -->
+                <div class="text-center">
+                    <div class=" p-4 mb-4 rounded-lg h-[300px]">
+                        <img src="img/topmodularcabinet/bathroomcabinet/linencabinet/a.jpg" alt="Cabinet 3" class="w-full h-full object-cover rounded-md">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
-                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-red-200 transition-colors">GET PRICE</button>
                 </div>
             </div>
 
 
             <!-- Advertisement Banner -->
-            <div class="banner-container">
-                <div class="banner-image">
-                    <!-- Using a placeholder image -->
-                    <img src="img/coupon.jpg" alt="Promotional Background" class="w-full h-full object-cover">
-                </div>
-                <div class="banner-overlay">
-                    <div class="banner-text">
-                        <div class="banner-title">SPECIAL OFFER</div>
-                        <div class="banner-subtitle">Limited time discount on all premium products</div>
-
-                        <div class="coupon">
-                            <div class="scissors">✂️</div>
-                            <div class="coupon-code">SAVE25</div>
-                            <div class="coupon-text">25% OFF WHEN YOUR PURCHASE</div>
+            <div class="relative w-full h-[100px] bg-cover bg-center" style="background-image: url('img/coupon.jpg');">
+                <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                    <div class="text-center text-white p-6 bg-white/10 backdrop-blur-md rounded-xl shadow-lg w-[500px]">
+                        <div class="text-md font-extrabold text-white mb-2  tracking-wide">
+                            25% OFF WHEN YOUR INQUIRE!
                         </div>
                     </div>
                 </div>
             </div>
+
         </section>
 
 
@@ -313,7 +509,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <!-- Service 1 -->
-                    <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <div class=" p-6 rounded-lg">
                         <div class="mb-6">
                             <img src="img/ourservices/real.png" alt="Design Service" class="w-full h-[180px] rounded-lg">
                         </div>
@@ -322,7 +518,7 @@
                     </div>
 
                     <!-- Service 2 -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class=" p-6 rounded-lg">
                         <div class="mb-6">
                             <img src="img/ourservices/noblehome.png" alt="Fabricate Service" class="w-full h-[180px] rounded-lg">
                         </div>
@@ -331,7 +527,7 @@
                     </div>
 
                     <!-- Service 3 -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class=" p-6 rounded-lg">
                         <div class="mb-6">
                             <img src="img/ourservices/deli.png" alt="Delivery Service" class="w-full h-[180px] rounded-lg">
                         </div>
@@ -340,7 +536,7 @@
                     </div>
 
                     <!-- Service 4 -->
-                    <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class=" p-6 rounded-lg">
                         <div class="mb-6">
                             <img src="img/ourservices/installer.png" alt="Installation Service" class="w-full h-[180px] rounded-lg">
                         </div>
@@ -536,30 +732,6 @@
             <button class="font-medium text-white">NEXT</button>
         </div>
 
-        <div class="max-w-6xl mx-auto">
-            <!-- Contact Section -->
-            <div class="bg-white py-12 px-4 md:px-12">
-                <div class="flex flex-col md:flex-row">
-                    <!-- Left Side Content -->
-                    <div class="w-full md:w-1/2 pr-0 md:pr-8 mb-8 md:mb-0 mt-[150px]">
-                        <h1 class="text-5xl font-bold text-[#3c1f0e] mb-4">Contact us</h1>
-                        <p class="text-gray-600 mb-6">We would love to speak with you.</p>
-                    </div>
-
-                    <!-- Right Side Form -->
-                    <div class="w-full md:w-1/2 contact-form">
-                        <form>
-                            <input type="text" placeholder="Name" class="w-full mb-4 p-3 border border-gray-300 rounded" />
-                            <input type="text" placeholder="Address" class="w-full mb-4 p-3 border border-gray-300 rounded" />
-                            <input type="text" placeholder="Number" class="w-full mb-4 p-3 border border-gray-300 rounded" />
-                            <input type="email" placeholder="Email" class="w-full mb-4 p-3 border border-gray-300 rounded" />
-                            <textarea placeholder="Type your message here" class="w-full mb-4 p-3 border border-gray-300 rounded h-32"></textarea>
-                            <button type="submit" class="w-full bg-[#3c1f0e] hover:bg-[#592e14] text-white py-3 font-medium rounded transition duration-300">SUBMIT</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Footer -->
         <footer class="bg-[#faf6f0] py-8 px-4 md:px-12 text-black">
