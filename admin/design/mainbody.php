@@ -541,6 +541,16 @@ ob_start();
                 <i class="ri-archive-line"></i>
                 <span>Inventory</span>
               </a>
+
+                <a href="../adminproductcabinet/editproduct.php" class="block px-4 py-2.5 text-sm hover:bg-blue-50 hover:text-primary rounded-md flex items-center space-x-2 transition-colors">
+                <i class="ri-archive-line"></i>
+                <span>Add Product</span>
+              </a>
+
+                <a href="../adminproductcabinet/updateforedit.php" class="block px-4 py-2.5 text-sm hover:bg-blue-50 hover:text-primary rounded-md flex items-center space-x-2 transition-colors">
+                <i class="ri-archive-line"></i>
+                <span>update product</span>
+              </a>
             </div>
           </div>
 
@@ -558,6 +568,11 @@ ob_start();
                 <i class="ri-calculator-line"></i>
                 <span>Computation</span>
               </a>
+
+              <a href="../adminbilling/adminbilling.php" class="block px-4 py-2.5 text-sm hover:bg-blue-50 hover:text-primary rounded-md flex items-center space-x-2 transition-colors">
+                <i class="ri-calculator-line"></i>
+                <span>Billing Management</span>
+              </a>
             </div>
           </div>
 
@@ -573,51 +588,51 @@ ob_start();
         <div class="flex items-center space-x-5">
           <!-- Profile Dropdown -->
           <div class="relative hidden md:block"> <!-- Only visible on md and up -->
-  <button id="profileButton" class="avatar-glow w-10 h-10 flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-50 rounded-full hover:shadow-md transition-all duration-300 border-2 border-white">
-    <i class="ri-user-smile-line text-xl text-primary"></i>
-  </button>
+            <button id="profileButton" class="avatar-glow w-10 h-10 flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-50 rounded-full hover:shadow-md transition-all duration-300 border-2 border-white">
+              <i class="ri-user-smile-line text-xl text-primary"></i>
+            </button>
 
-  <div id="profileDropdown" class="hidden absolute right-0 mt-3 w-72 bg-white rounded-lg shadow-dropdown z-50 border border-gray-100 overflow-hidden">
-    <div class="px-4 py-3 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
-      <div class="flex items-center space-x-3">
-        <?php
-          $adminInitial = 'A';
-          if (isset($_SESSION['admin_email'])) {
-            $adminInitial = strtoupper(substr($_SESSION['admin_email'], 0, 1));
-          }
-        ?>
-        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-lg font-bold">
-          <?= $adminInitial ?>
-        </div>
-        <div>
-          <?php if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])): ?>
-            <div class="mb-1 text-sm text-gray-700">
-              <span class="block">Logged in as:</span>
-              <span class="font-medium"><?= htmlspecialchars($_SESSION['admin_email']) ?></span>
+            <div id="profileDropdown" class="hidden absolute right-0 mt-3 w-72 bg-white rounded-lg shadow-dropdown z-50 border border-gray-100 overflow-hidden">
+              <div class="px-4 py-3 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+                <div class="flex items-center space-x-3">
+                  <?php
+                  $adminInitial = 'A';
+                  if (isset($_SESSION['admin_email'])) {
+                    $adminInitial = strtoupper(substr($_SESSION['admin_email'], 0, 1));
+                  }
+                  ?>
+                  <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-lg font-bold">
+                    <?= $adminInitial ?>
+                  </div>
+                  <div>
+                    <?php if (isset($_SESSION['admin_email'], $_SESSION['admin_role'])): ?>
+                      <div class="mb-1 text-sm text-gray-700">
+                        <span class="block">Logged in as:</span>
+                        <span class="font-medium"><?= htmlspecialchars($_SESSION['admin_email']) ?></span>
+                      </div>
+                    <?php endif; ?>
+                  </div>
+                </div>
+              </div>
+
+              <button onclick="location.href='#'" class="w-full text-left px-4 py-3 hover:bg-gray-50 flex items-center text-sm group transition-colors">
+                <i class="ri-user-settings-line mr-3 text-lg text-gray-500 group-hover:text-primary"></i>
+                <span class="group-hover:text-primary">Manage Profile</span>
+              </button>
+
+              <button onclick="location.href='dashboard.php'" class="w-full text-left px-4 py-3 hover:bg-gray-50 flex items-center text-sm group transition-colors">
+                <i class="ri-settings-3-line mr-3 text-lg text-gray-500 group-hover:text-primary"></i>
+                <span class="group-hover:text-primary">Account Settings</span>
+              </button>
+
+              <div class="border-t border-gray-100"></div>
+
+              <button onclick="location.href='../../logout.php'" class="w-full text-left px-4 py-3 hover:bg-red-50 flex items-center text-sm group transition-colors">
+                <i class="ri-logout-box-line mr-3 text-lg text-gray-500 group-hover:text-red-500"></i>
+                <span class="group-hover:text-red-500">Sign Out</span>
+              </button>
             </div>
-          <?php endif; ?>
-        </div>
-      </div>
-    </div>
-
-    <button onclick="location.href='#'" class="w-full text-left px-4 py-3 hover:bg-gray-50 flex items-center text-sm group transition-colors">
-      <i class="ri-user-settings-line mr-3 text-lg text-gray-500 group-hover:text-primary"></i>
-      <span class="group-hover:text-primary">Manage Profile</span>
-    </button>
-
-    <button onclick="location.href='dashboard.php'" class="w-full text-left px-4 py-3 hover:bg-gray-50 flex items-center text-sm group transition-colors">
-      <i class="ri-settings-3-line mr-3 text-lg text-gray-500 group-hover:text-primary"></i>
-      <span class="group-hover:text-primary">Account Settings</span>
-    </button>
-
-    <div class="border-t border-gray-100"></div>
-
-    <button onclick="location.href='../../logout.php'" class="w-full text-left px-4 py-3 hover:bg-red-50 flex items-center text-sm group transition-colors">
-      <i class="ri-logout-box-line mr-3 text-lg text-gray-500 group-hover:text-red-500"></i>
-      <span class="group-hover:text-red-500">Sign Out</span>
-    </button>
-  </div>
-</div>
+          </div>
 
 
           <!-- Mobile Toggle -->
@@ -644,11 +659,11 @@ ob_start();
 
       <!-- Mobile User Profile Summary -->
       <div class="p-4 border-b flex items-center space-x-3">
-       <?php
-          $adminInitial = 'A';
-          if (isset($_SESSION['admin_email'])) {
-            $adminInitial = strtoupper(substr($_SESSION['admin_email'], 0, 1));
-          }
+        <?php
+        $adminInitial = 'A';
+        if (isset($_SESSION['admin_email'])) {
+          $adminInitial = strtoupper(substr($_SESSION['admin_email'], 0, 1));
+        }
         ?>
         <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-lg font-bold">
           <?= $adminInitial ?>
@@ -660,77 +675,77 @@ ob_start();
               <span class="font-medium"><?= htmlspecialchars($_SESSION['admin_email']) ?></span>
             </div>
           <?php endif; ?>
-      </div>
-
-      <div class="py-2 space-y-1">
-        <a href="../admin_mainpage/mainpage.php" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary flex items-center space-x-3 transition-colors">
-          <i class="ri-dashboard-line text-lg"></i>
-          <span>Dashboard</span>
-        </a>
-
-        <!-- Mobile Dropdowns - FIXED -->
-        <div>
-          <button class="mobile-dropdown-button w-full text-left px-4 py-3 flex justify-between items-center text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors" data-target="clientMobileDropdown">
-            <div class="flex items-center space-x-3">
-              <i class="ri-user-3-line text-lg"></i>
-              <span>Client Management</span>
-            </div>
-            <i class="ri-arrow-down-s-line mobile-dropdown-arrow transition-transform duration-300"></i>
-          </button>
-          <div id="clientMobileDropdown" class="mobile-dropdown-content bg-gray-50">
-            <div class="pl-12 space-y-1">
-              <a href="../admin_allclient/allclient.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Add New Client</a>
-              <a href="../admin_calendar/calendar.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Appointment</a>
-              <a href="../admin_insertnews/insert_news.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Latest News Edit</a>
-              <a href="../adminstatus/adminstatusforclient.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Update Status</a>
-            </div>
-          </div>
         </div>
 
-        <div>
-          <button class="mobile-dropdown-button w-full text-left px-4 py-3 flex justify-between items-center text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors" data-target="productMobileDropdown">
-            <div class="flex items-center space-x-3">
-              <i class="ri-store-2-line text-lg"></i>
-              <span>Product</span>
-            </div>
-            <i class="ri-arrow-down-s-line mobile-dropdown-arrow transition-transform duration-300"></i>
-          </button>
-          <div id="productMobileDropdown" class="mobile-dropdown-content bg-gray-50">
-            <div class="pl-12 space-y-1">
-              <a href="../admin_product/products.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Inventory</a>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <button class="mobile-dropdown-button w-full text-left px-4 py-3 flex justify-between items-center text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors" data-target="quotationMobileDropdown">
-            <div class="flex items-center space-x-3">
-              <i class="ri-file-list-3-line text-lg"></i>
-              <span>Quotation</span>
-            </div>
-            <i class="ri-arrow-down-s-line mobile-dropdown-arrow transition-transform duration-300"></i>
-          </button>
-          <div id="quotationMobileDropdown" class="mobile-dropdown-content bg-gray-50">
-            <div class="pl-12 space-y-1">
-              <a href="../installation_quotation/quotation.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Computation</a>
-            </div>
-          </div>
-        </div>
-
-        <a href="../admin_inquireclient/inquireclient.php" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary flex items-center space-x-3 transition-colors">
-          <i class="ri-customer-service-2-line text-lg"></i>
-          <span>Client Inquire</span>
-        </a>
-
-        <!-- Mobile Logout -->
-        <div class="border-t border-gray-100 mt-2 pt-2">
-          <a href="../../logout.php" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-500 flex items-center space-x-3 transition-colors">
-            <i class="ri-logout-box-line text-lg"></i>
-            <span>Sign Out</span>
+        <div class="py-2 space-y-1">
+          <a href="../admin_mainpage/mainpage.php" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary flex items-center space-x-3 transition-colors">
+            <i class="ri-dashboard-line text-lg"></i>
+            <span>Dashboard</span>
           </a>
+
+          <!-- Mobile Dropdowns - FIXED -->
+          <div>
+            <button class="mobile-dropdown-button w-full text-left px-4 py-3 flex justify-between items-center text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors" data-target="clientMobileDropdown">
+              <div class="flex items-center space-x-3">
+                <i class="ri-user-3-line text-lg"></i>
+                <span>Client Management</span>
+              </div>
+              <i class="ri-arrow-down-s-line mobile-dropdown-arrow transition-transform duration-300"></i>
+            </button>
+            <div id="clientMobileDropdown" class="mobile-dropdown-content bg-gray-50">
+              <div class="pl-12 space-y-1">
+                <a href="../admin_allclient/allclient.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Add New Client</a>
+                <a href="../admin_calendar/calendar.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Appointment</a>
+                <a href="../admin_insertnews/insert_news.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Latest News Edit</a>
+                <a href="../adminstatus/adminstatusforclient.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Update Status</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="mobile-dropdown-button w-full text-left px-4 py-3 flex justify-between items-center text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors" data-target="productMobileDropdown">
+              <div class="flex items-center space-x-3">
+                <i class="ri-store-2-line text-lg"></i>
+                <span>Product</span>
+              </div>
+              <i class="ri-arrow-down-s-line mobile-dropdown-arrow transition-transform duration-300"></i>
+            </button>
+            <div id="productMobileDropdown" class="mobile-dropdown-content bg-gray-50">
+              <div class="pl-12 space-y-1">
+                <a href="../admin_product/products.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Inventory</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button class="mobile-dropdown-button w-full text-left px-4 py-3 flex justify-between items-center text-gray-700 hover:bg-blue-50 hover:text-primary transition-colors" data-target="quotationMobileDropdown">
+              <div class="flex items-center space-x-3">
+                <i class="ri-file-list-3-line text-lg"></i>
+                <span>Quotation</span>
+              </div>
+              <i class="ri-arrow-down-s-line mobile-dropdown-arrow transition-transform duration-300"></i>
+            </button>
+            <div id="quotationMobileDropdown" class="mobile-dropdown-content bg-gray-50">
+              <div class="pl-12 space-y-1">
+                <a href="../installation_quotation/quotation.php" class="block px-4 py-2 text-sm text-gray-600 hover:text-primary transition-colors">Computation</a>
+              </div>
+            </div>
+          </div>
+
+          <a href="../admin_inquireclient/inquireclient.php" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-primary flex items-center space-x-3 transition-colors">
+            <i class="ri-customer-service-2-line text-lg"></i>
+            <span>Client Inquire</span>
+          </a>
+
+          <!-- Mobile Logout -->
+          <div class="border-t border-gray-100 mt-2 pt-2">
+            <a href="../../logout.php" class="block px-4 py-3 text-gray-700 hover:bg-red-50 hover:text-red-500 flex items-center space-x-3 transition-colors">
+              <i class="ri-logout-box-line text-lg"></i>
+              <span>Sign Out</span>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
   </header>
 
   <script>

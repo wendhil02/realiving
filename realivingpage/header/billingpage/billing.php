@@ -33,8 +33,9 @@
 </head>
 
 <body class="min-h-screen bg-white">
+ 
+
     <!-- Background Pattern -->
-     <?php include '../headernav.php'; ?>
     <div class="absolute inset-0 opacity-10">
         <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.3) 1px, transparent 0); background-size: 40px 40px;"></div>
     </div>
@@ -203,7 +204,7 @@
 
                     <!-- Action Buttons -->
                     <div class="flex flex-col sm:flex-row gap-4 pt-6">
-                        <button type="submit" onclick="showPaymentProof(event)" id="submitBtn"
+                        <button type="submit" id="submitBtn"
                             class="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-green-500/50 flex items-center justify-center">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -235,91 +236,8 @@
         </div>
     </div>
 
-    <!-- Payment Proof Modal -->
-    <div id="paymentProofModal" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
-        <div class="receipt-modal rounded-2xl max-w-md w-full animate-modal-appear p-8">
-            <!-- Receipt Header -->
-            <div class="text-center border-b-2 border-dashed border-gray-300 pb-6 mb-6">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                    <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Payment Submitted</h2>
-                <p class="text-gray-600">Receipt submitted for review</p>
-                <div class="mt-4 text-xs text-gray-500">
-                    <span id="proofTimestamp"></span>
-                </div>
-            </div>
-
-            <!-- Payment Details -->
-            <div class="space-y-4 mb-6">
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Reference Number:</span>
-                    <span class="font-semibold text-gray-800" id="proofReference">-</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Client Name:</span>
-                    <span class="font-semibold text-gray-800" id="proofClientName">-</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Total Project Cost:</span>
-                    <span class="font-semibold text-gray-800" id="proofTotalCost">-</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Remaining Balance:</span>
-                    <span class="font-semibold text-gray-800" id="proofRemainingBalance">-</span>
-                </div>
-                <div class="flex justify-between items-center">
-                    <span class="text-gray-600">Receipt File:</span>
-                    <span class="font-semibold text-gray-800" id="proofFileName">-</span>
-                </div>
-            </div>
-
-            <!-- Status -->
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                <div class="flex items-center">
-                    <svg class="w-5 h-5 text-yellow-600 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span class="text-yellow-800 font-medium text-sm">Pending admin review</span>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="space-y-3">
-                <button onclick="takeScreenshot()" 
-                    class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                    Take Screenshot for Your Records
-                </button>
-                
-                <div class="flex space-x-3">
-                    <button onclick="proceedWithSubmission()" 
-                        class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200">
-                        Continue & Submit
-                    </button>
-                    <button onclick="closeModal()" 
-                        class="flex-1 bg-gray-500 hover:bg-gray-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200">
-                        Cancel
-                    </button>
-                </div>
-            </div>
-
-            <!-- Footer Note -->
-            <div class="mt-6 text-xs text-gray-500 text-center border-t border-dashed border-gray-300 pt-4">
-                <p>📱 <strong>Save this screen:</strong> Take a screenshot as proof of your payment submission</p>
-                <p class="mt-1">You will receive an email confirmation once reviewed</p>
-            </div>
-        </div>
-    </div>
-
+    <!-- JavaScript Files -->
     <script src="js/billing.js"></script>
-   
-
-
 </body>
-</html>        
+
+</html>

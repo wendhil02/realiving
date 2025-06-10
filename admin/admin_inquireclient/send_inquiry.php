@@ -30,10 +30,10 @@ function sendEmailViaPHPMailer($inquiry, $recipient, $conn, $message_type = 'pm'
         $mail->addEmbeddedImage('../../logo/mmone.png', 'realivinglogo');
 
         // Subject & Body
-        $mail->Subject = '📥 Inquiry from ' . $inquiry['full_name'];
+        $mail->Subject = ' Inquiry from ' . $inquiry['full_name'];
         $header = ($message_type === 'admin')
-            ? '📥 Forwarded Client Inquiry'
-            : (($message_type === 'pm') ? '📥 New Client Inquiry (ADMIM)' : '📥 Admin: New Inquiry Received');
+            ? ' Forwarded Client Inquiry'
+            : (($message_type === 'pm') ? ' New Client Inquiry (ADMIM)' : ' Admin: New Inquiry Received');
 
         $mail->Body = '
         <div style="font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px; border-radius: 10px;">
@@ -57,6 +57,7 @@ function sendEmailViaPHPMailer($inquiry, $recipient, $conn, $message_type = 'pm'
 
         $mail->Body .= '
             </div>
+             <p style="text-align: center; color: #999; font-size: 12px; margin-top: 20px;">This client has been assigned to you.</p>
             <p style="text-align: center; color: #999; font-size: 12px; margin-top: 20px;">This is an automated message from Real Living</p>
         </div>';
 

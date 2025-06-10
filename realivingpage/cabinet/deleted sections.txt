@@ -1,0 +1,25 @@
+On line 51----------->>>>>
+
+<div class="stats-group">
+          <div class="stat-item">
+            <div class="stat-number indigo"><?= $result->num_rows ?></div>
+            <div class="stat-label">Total Products</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number green">
+              <?php 
+              $active_count = 0;
+              $result_copy = $conn->query($sql);
+              while($row = $result_copy->fetch_assoc()) {
+                if ($row['status'] === 'Active') $active_count++;
+              }
+              echo $active_count;
+              ?>
+            </div>
+            <div class="stat-label">Active Products</div>
+          </div> 
+        </div>
+
+
+        

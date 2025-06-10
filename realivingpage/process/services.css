@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;      /* 1rem = 16px everywhere */
+  }
+  
+  body {
+    font-family: 'Playfair Display', serif;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .sub-header {
+    background-image: url('../img/about/background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 180px; /* or your preferred height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-family: 'Playfair Display', serif;
+    position: relative;
+  }
+  
+  .sub-header::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4); /* optional overlay for better text readability */
+    z-index: 0;
+  }
+  
+  .sub-header h1 {
+    position: relative;
+    z-index: 1;
+    font-size: 2.5rem;
+  }
+
+  .hero-text,
+  .sub-header h1 {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-weight: normal;
+    font-size: 50px !important; /* force consistent size */
+    color: #ffffff;
+    text-align: center;
+    margin: 0;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6); /* dark shadow */
+  }
+.container {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 20px;
+}
+
+.intro {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 30px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.service-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  padding: 30px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  
+}
+
+.service-card.left {
+  flex-direction: row;
+}
+
+.service-card.right {
+  flex-direction: row-reverse;
+}
+
+.service-card .number {
+  min-width: 70px;
+  min-height: 70px;
+  background: #2e1100;
+  color: white;
+  font-size: 36px;
+  font-family: 'Crimson Pro', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.service-card img {
+  width: 350px;
+  height: auto;
+  border-radius: 25px;
+  box-shadow: 0 8px 20px rgb(0 0 0 / 13%);
+}
+
+.service-card .text {
+  flex: 1;
+}
+
+.service-card h2 {
+  font-size: 28px;
+  color: #2e1100;
+  margin-bottom: 10px;
+  font-family: 'Crimson Pro', serif;
+}
+
+.service-card p {
+  font-size: 15px;
+  line-height: 1.6;
+  font-family: 'Montserrat', sans-serif;
+  color: #555;
+  text-align: justify;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .service-card {
+    flex-direction: column !important;
+    text-align: center;
+  }
+
+  .service-card img {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .service-card .number {
+    margin-bottom: 20px;
+  }
+
+  .service-card .text {
+    width: 100%;
+  }
+}
+

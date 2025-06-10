@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
 <style>
         header {
@@ -12,39 +13,41 @@
             <a href="#">
                 <img src="img/logo.png" alt="Realiving Logo" class="h-10">
             </a>
-            <div class="hidden sm:block">
-                <h1 class="text-xs font-bold text-gray-800">Realiving Design Center </h1>
-                <p class="text-xs text-gray-400">redefining spaces with beauty and intent.</p>
-            </div>
         </div>
 
 
         <!-- Desktop Navigation + Get Quote Button -->
-        <div class="hidden md:flex items-center space-x-8">
+        <div class="hidden md:flex items-center space-x-5 text-orange-900 font-[montserrat]">
             <!-- Navigation Links -->
-            <div class="flex space-x-7">
-                <a href="#" class="flex items-center hover:text-yellow-500">
-                    <i class="fas fa-home mr-2"></i>
+            <div class="flex space-x-5">
+                <a href="index" class="flex items-center hover:text-yellow-500">
+                    HOME
                 </a>
-                <a href="#" class="flex items-center hover:text-yellow-500">
+                <a href="product_cabinet" class="flex items-center hover:text-yellow-500">
+                    CABINET
+                </a>
+                <a href="diymodular" class="flex items-center hover:text-yellow-500">
+                    DIY MODULAR
+                </a>
+                <a href="all-projects" class="flex items-center hover:text-yellow-500">
                     PROJECTS
                 </a>
-                <a href="#" class="flex items-center hover:text-yellow-500">
+                <a href="whatnew" class="flex items-center hover:text-yellow-500">
                     WHAT'S NEW
                 </a>
-                <a href="#" class="flex items-center hover:text-yellow-500">
+                <a href="contact" class="flex items-center hover:text-yellow-500">
                     CONTACT
                 </a>
-                <a href="../page/billingpage/billing.php" class="flex items-center hover:text-yellow-500">
+                <a href="header/billingpage/billing" class="flex items-center hover:text-yellow-500">
                     BILLING
                 </a>
-                <a href="#" class="flex items-center hover:text-yellow-500">
+                <a href="about" class="flex items-center hover:text-yellow-500">
                     ABOUT
                 </a>
             </div>
 
             <!-- Get Quote Button -->
-            <button class="ml-6 bg-yellow-400 text-black px-6 py-2 font-medium flex items-center">
+            <button class="ml-6 bg-white text-black px-6 py-2 font-medium flex items-center hover:bg-orange-900 hover:text-white">
                 <i class="fas fa-file-invoice-dollar mr-2"></i>GET QUOTE
             </button>
         </div>
@@ -58,21 +61,21 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4">
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 text-orange-900 font-[montserrat]">
         <div class="flex flex-col space-y-4">
-            <a href="#" class="flex items-center hover:text-yellow-500">
+            <a href="index" class="flex items-center hover:text-yellow-500">
                 <i class="fas fa-home mr-2 w-6"></i>HOME
             </a>
             <a href="#" class="flex items-center hover:text-yellow-500">
                 SERVICES
             </a>
-            <a href="#" class="flex items-center hover:text-yellow-500">
+            <a href="all-project" class="flex items-center hover:text-yellow-500">
                 PROJECTS
             </a>
             <a href="#" class="flex items-center hover:text-yellow-500">
                 WHAT'S NEW
             </a>
-            <a href="#" class="flex items-center hover:text-yellow-500">
+            <a href="contact" class="flex items-center hover:text-yellow-500">
                 CONTACT
             </a>
             <a href="#" class="flex items-center hover:text-yellow-500">
