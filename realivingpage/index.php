@@ -289,7 +289,7 @@
                     <!-- Service 1 -->
                     <div class=" p-6 rounded-lg border border-gray-300 p-6 shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Design.png" alt="Design Service" class="w-full h-[180px] rounded-lg">
+                            <img src="img/ourservices/Design.png" alt="Design Service" class="w-full h-[180px] rounded-lg "data-aos="fade-up" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Design</h3>
                         <p class="text-gray-600 text-center">We create smart, space-saving, and stylish designs tailored to your space and lifestyle needs.</p>
@@ -298,7 +298,7 @@
                     <!-- Service 2 -->
                     <div class=" p-6 border border-gray-300 p-6 rounded-md shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Fabricate.png" alt="Fabricate Service" class="w-full h-[180px] rounded-lg">
+                            <img src="img/ourservices/Fabricate.png" alt="Fabricate Service" class="w-full h-[180px] rounded-lg "data-aos="fade-down" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Fabricate</h3>
                         <p class="text-gray-600 text-center">Using quality materials, we build each piece with precision to ensure durability and a modern finish.</p>
@@ -307,7 +307,7 @@
                     <!-- Service 3 -->
                     <div class=" p-6 border border-gray-300 p-6 rounded-md shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Delivery.png" alt="Delivery Service" class="w-full h-[180px] rounded-lg">
+                            <img src="img/ourservices/Delivery.png" alt="Delivery Service" class="w-full h-[180px] rounded-lg "data-aos="fade-up" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Delivery</h3>
                         <p class="text-gray-600 text-center">We transport your furniture safely and on time—straight to your doorstep.</p>
@@ -316,7 +316,7 @@
                     <!-- Service 4 -->
                     <div class=" p-6 border border-gray-300 p-6 rounded-md shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Installation.png" alt="Installation Service" class="w-full h-[180px] rounded-lg">
+                            <img src="img/ourservices/Installation.png" alt="Installation Service" class="w-full h-[180px] rounded-lg "data-aos="fade-down" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Installation</h3>
                         <p class="text-gray-600 text-center">Our team handles the setup efficiently, making sure everything is perfectly fitted and ready to use.</p>
@@ -334,7 +334,7 @@
         <!-- Rooms Section -->
         <section class="rooms-section text-orange-900 py-16 font-[crimson]" data-aos="fade-up">
             <div class="max-w-7xl mx-auto px-4">
-                <h2 class="text-3xl font-bold text-center mb-12 ">ROOMS</h2>
+                <h2 class="text-3xl font-bold text-center mb-12 " data-aos="fade-up" data-aos-delay="100">ROOMS</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
 
                     <!-- Kitchen -->
@@ -342,7 +342,7 @@
                         <div class="h-64 overflow-hidden">
                             <img src="img/rooms/kitchen/a.jpg" alt="Kitchen" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Kitchen</h3>
+                        <h3 class="text-center text-lg font-medium mt-2" data-aos="fade-up" data-aos-delay="100">Kitchen</h3>
                     </div>
 
                     <!-- Bathroom -->
@@ -350,7 +350,7 @@
                         <div class="h-64 overflow-hidden">
                             <img src="img/rooms/bath/a.jpg" alt="Bathroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Bathroom</h3>
+                        <h3 class="text-center text-lg font-medium mt-2" data-aos="fade-up" data-aos-delay="100">Bathroom</h3>
                     </div>
 
                     <!-- Living Room -->
@@ -358,7 +358,7 @@
                         <div class="h-64 overflow-hidden">
                             <img src="img/rooms/livingroom/a.jpg" alt="Living Room" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Living Room</h3>
+                        <h3 class="text-center text-lg font-medium mt-2" data-aos="fade-up" data-aos-delay="100">Living Room</h3>
                     </div>
 
                     <!-- Bedroom -->
@@ -366,7 +366,7 @@
                         <div class="h-64 overflow-hidden">
                             <img src="img/rooms/bed/a.jpg" alt="Bedroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
-                        <h3 class="text-center text-lg font-medium mt-2">Bedroom</h3>
+                        <h3 class="text-center text-lg font-medium mt-2"data-aos="fade-up" data-aos-delay="100">Bedroom</h3>
                     </div>
 
                 </div>
@@ -386,8 +386,6 @@
                 </div>
             </div>
         </section>
-
-
 
         <section class="text-black">
             <div class="text-center my-12">
@@ -411,45 +409,45 @@
                 <!-- Cabinet 1 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/baseCabinet/a.png" alt="Cabinet 1" class="w-full h-full object-cover rounded-md">
+                        <img src="img/topmodularcabinet/baseCabinet/a.png" alt="Cabinet 1" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">BASE CABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white"data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
 
                 <!-- Cabinet 2 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/wallcabinet/a.png" alt="Cabinet 2" class="w-full h-full object-cover rounded-md">
+                        <img src="img/topmodularcabinet/wallcabinet/a.png" alt="Cabinet 2" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">WALL CABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
 
                 <!-- Cabinet 3 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/tall/a.png" alt="Cabinet 3" class="w-full h-full object-cover rounded-md">
+                        <img src="img/topmodularcabinet/tall/a.png" alt="Cabinet 3" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">TALLCABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
 
                 <!-- Cabinet 4 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/corner/a.png" alt="Cabinet 4" class="w-full h-full object-cover rounded-md">
+                        <img src="img/topmodularcabinet/corner/a.png" alt="Cabinet 4" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CORNERCABINET</h3>
-                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
                 <!-- Cabinet 4 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/sink/a.png" alt="Cabinet 5" class="w-full h-full object-cover rounded-md">
+                        <img src="img/topmodularcabinet/sink/a.png" alt="Cabinet 5" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">SINK BASE CABINET</h3>
-                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black  px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
             </div>
             <hr>
@@ -464,34 +462,34 @@
                 <!-- Cabinet 1 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/vanity/a.png" alt="Cabinet 1" class="w-full h-full object-contain rounded-md">
+                        <img src="img/topmodularcabinet/vanity/a.png" alt="Cabinet 1" class="w-full h-full object-contain rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">VANITY CABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
 
                 <!-- Cabinet 2 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/medicine/a.png" alt="Cabinet 2" class="w-full h-full object-contain rounded-md">
+                        <img src="img/topmodularcabinet/medicine/a.png" alt="Cabinet 2" class="w-full h-full object-contain rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">MEDICINE CABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
 
                 <!-- Cabinet 3 -->
                 <div class="text-center">
                     <div class=" p-4 mb-4 rounded-lg h-[300px]">
-                        <img src="img/topmodularcabinet/bathroomcabinet/linencabinet/a.jpg" alt="Cabinet 3" class="w-full h-full object-cover rounded-md">
+                        <img src="img/topmodularcabinet/bathroomcabinet/linencabinet/a.jpg" alt="Cabinet 3" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">CABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
             </div>
         </section>
 
 
-        <section class="relative w-full h-[100px]  overflow-hidden font-[montserrat] mt-5">
+        <section class="relative w-full h-[100px]  overflow-hidden font-[montserrat] mt-5" data-aos="fade-up" data-aos-delay="400">
             <!-- Slides -->
             <div class="ads-slide absolute inset-0 bg-cover bg-center transition-opacity duration-1000 opacity-100"
                 style="background-image: url('./images/alphaland-1.jpg');">
@@ -522,7 +520,7 @@
         </section>
 
 
-        <section class="bg-white py-12 text-orange-900">
+        <section class="bg-white py-12 text-orange-900" data-aos="fade-up" data-aos-delay="100">
             <div class="max-w-6xl mx-auto px-4">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-center animate-up delay-1 font-[crimson]">
                     What Clients Say
