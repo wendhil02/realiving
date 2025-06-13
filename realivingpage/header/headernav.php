@@ -47,9 +47,11 @@
             </div>
 
             <!-- Get Quote Button -->
+              <a href="c_quotation" class="flex items-center hover:text-yellow-500">
             <button class="ml-6 bg-white text-black px-6 py-2 font-medium flex items-center hover:bg-orange-900 hover:text-white">
                 <i class="fas fa-file-invoice-dollar mr-2"></i>GET QUOTE
             </button>
+              </a>
         </div>
 
         <!-- Mobile Menu Button -->

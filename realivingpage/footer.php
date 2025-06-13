@@ -49,6 +49,7 @@
                                 <li><a href="about" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">About Us</a></li>
                                 <li><a href="services" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Services</a></li>
                                 <li><a href="all-projects" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Projects</a></li>
+                                <li><a href="header/billingpage/billing" class="text-sm hover:text-[#f59e0b] transition-colors duration-200">Billing</a></li>
                             </ul>
                         </div>
                         <div>

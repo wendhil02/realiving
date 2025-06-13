@@ -289,7 +289,7 @@
                     <!-- Service 1 -->
                     <div class=" p-6 rounded-lg border border-gray-300 p-6 shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Design.png" alt="Design Service" class="w-full h-[180px] rounded-lg "data-aos="fade-up" data-aos-delay="100">
+                            <img src="img/ourservices/Design.png" alt="Design Service" class="w-full h-[180px] rounded-lg " data-aos="fade-up" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Design</h3>
                         <p class="text-gray-600 text-center">We create smart, space-saving, and stylish designs tailored to your space and lifestyle needs.</p>
@@ -298,7 +298,7 @@
                     <!-- Service 2 -->
                     <div class=" p-6 border border-gray-300 p-6 rounded-md shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Fabricate.png" alt="Fabricate Service" class="w-full h-[180px] rounded-lg "data-aos="fade-down" data-aos-delay="100">
+                            <img src="img/ourservices/Fabricate.png" alt="Fabricate Service" class="w-full h-[180px] rounded-lg " data-aos="fade-down" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Fabricate</h3>
                         <p class="text-gray-600 text-center">Using quality materials, we build each piece with precision to ensure durability and a modern finish.</p>
@@ -307,7 +307,7 @@
                     <!-- Service 3 -->
                     <div class=" p-6 border border-gray-300 p-6 rounded-md shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Delivery.png" alt="Delivery Service" class="w-full h-[180px] rounded-lg "data-aos="fade-up" data-aos-delay="100">
+                            <img src="img/ourservices/Delivery.png" alt="Delivery Service" class="w-full h-[180px] rounded-lg " data-aos="fade-up" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Delivery</h3>
                         <p class="text-gray-600 text-center">We transport your furniture safely and on time—straight to your doorstep.</p>
@@ -316,7 +316,7 @@
                     <!-- Service 4 -->
                     <div class=" p-6 border border-gray-300 p-6 rounded-md shadow-lg bg-white hover:-translate-y-3 transition-transform duration-300">
                         <div class="mb-6">
-                            <img src="img/ourservices/Installation.png" alt="Installation Service" class="w-full h-[180px] rounded-lg "data-aos="fade-down" data-aos-delay="100">
+                            <img src="img/ourservices/Installation.png" alt="Installation Service" class="w-full h-[180px] rounded-lg " data-aos="fade-down" data-aos-delay="100">
                         </div>
                         <h3 class="text-xl font-medium mb-3 text-center">Installation</h3>
                         <p class="text-gray-600 text-center">Our team handles the setup efficiently, making sure everything is perfectly fitted and ready to use.</p>
@@ -366,12 +366,14 @@
                         <div class="h-64 overflow-hidden">
                             <img src="img/rooms/bed/a.jpg" alt="Bedroom" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
                         </div>
-                        <h3 class="text-center text-lg font-medium mt-2"data-aos="fade-up" data-aos-delay="100">Bedroom</h3>
+                        <h3 class="text-center text-lg font-medium mt-2" data-aos="fade-up" data-aos-delay="100">Bedroom</h3>
                     </div>
 
                 </div>
             </div>
         </section>
+
+        
         <!-- Cabinet Section with Background Image -->
         <section class="cabinet-section mt-5" data-aos="fade-up">
             <div class="relative bg-cover bg-center h-96" style="background-image: url('https://images.unsplash.com/photo-1556702571-3e11dd2b1a92?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80');">
@@ -379,13 +381,23 @@
                 <div class="relative max-w-7xl mx-auto px-4 h-full flex flex-col justify-center items-center text-center">
                     <h2 class="text-3xl md:text-5xl font-bold text-white mb-2 font-[montserrat]">Want a customized cabinet?</h2>
                     <p class="text-lg md:text-xl text-white mb-8">Stylish. Affordable. Ready for your space.</p>
-                    <a href="#inquire" class="bg-white text-orange-900 hover:text-white hover:scale-105 transition-all duration-300 px-8 py-3 font-semibold hover:bg-orange-900">
+                    <a href="#inquire" onclick="openModal()" class="bg-white text-orange-900 hover:text-white hover:scale-105 transition-all duration-300 px-8 py-3 font-semibold hover:bg-orange-900">
                         INQUIRE NOW
                     </a>
-
                 </div>
             </div>
         </section>
+
+        <!-- Modal Container -->
+        <div id="inquiryModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 items-center justify-center">
+            <div class="bg-white w-full max-w-lg rounded-lg shadow-lg relative">
+                <!-- Close Button -->
+                <button onclick="closeModal()" class="absolute top-2 right-2 text-gray-500 hover:text-black text-2xl">&times;</button>
+                <!-- Iframe (external file) -->
+                <iframe src="inquiremodal/inquire_form.php" class="w-full h-[500px] rounded-b-lg" frameborder="0"></iframe>
+            </div>
+        </div>
+
 
         <section class="text-black">
             <div class="text-center my-12">
@@ -412,7 +424,7 @@
                         <img src="img/topmodularcabinet/baseCabinet/a.png" alt="Cabinet 1" class="w-full h-full object-cover rounded-md" data-aos="fade-up" data-aos-delay="300">
                     </div>
                     <h3 class="text-lg font-medium mb-3">BASE CABINET</h3>
-                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white"data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
+                    <button class="border-2 border-black px-8 py-2 text-sm hover:bg-orange-900 transition-colors hover:text-white" data-aos="fade-up" data-aos-delay="300">Not Available for Now</button>
                 </div>
 
                 <!-- Cabinet 2 -->
@@ -574,61 +586,56 @@
 
 
         <!-- Latest News Section -->
-        <section class="py-16 px-6 bg-brown-900" style="background-color: #3b1d0e;">
-            <h2 class="text-4xl font-bold text-white text-center mb-12">Latest News</h2>
+        <section class="py-16 px-6 bg-brown-900 ">
+            <h2 class="text-4xl font-bold text-black text-center mb-12">Latest News</h2>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- News Card 1 -->
-                <div class="bg-white rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
-                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
-                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
-                    </div>
+            <div class="text-center px-6 py-12 max-w-2xl mx-auto" data-aos="fade-up">
+                <!-- Icon -->
+                <div class="mb-8">
+                    <i class="fas fa-tools text-6xl text-indigo-500 mb-4"></i>
                 </div>
 
-                <!-- News Card 2 -->
-                <div class="bg-white rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
-                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
-                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
-                    </div>
+                <!-- Main Message -->
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6" style="font-family: 'Crimson Pro', serif;">
+                    Not Available for Now
+                </h1>
+
+                <p class="text-xl text-gray-600 mb-8" style="font-family: 'Montserrat', sans-serif;">
+                    We're working hard to bring you something amazing. This feature is currently under development and will be available soon.
+                </p>
+
+                <!-- Status Badge -->
+                <div class="inline-flex items-center px-4 py-2 bg-yellow-100 text-yellow-800 rounded-full text-sm font-medium mb-8">
+                    <i class="fas fa-clock mr-2"></i>
+                    Coming Soon
                 </div>
 
-                <!-- News Card 3 -->
-                <div class="bg-white rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
-                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
-                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
-                    </div>
+                <!-- Additional Info -->
+                <div class="bg-white/60 backdrop-blur-sm rounded-lg p-6 mb-8 border border-white/20">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3" style="font-family: 'Montserrat', sans-serif;">
+                        What to expect:
+                    </h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            Enhanced user experience
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            New features and functionality
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-500 mr-3"></i>
+                            Improved performance
+                        </li>
+                    </ul>
                 </div>
 
-                <!-- News Card 4 -->
-                <div class="bg-white rounded-lg overflow-hidden">
-                    <img src="/api/placeholder/400/300" alt="Modern kitchen with island" class="w-full h-64 object-cover">
-                    <div class="p-4">
-                        <h3 class="text-xl font-semibold mb-2">News Title</h3>
-                        <p class="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet consectetur adipiscing elit. Dolor sit amet consectetur adipiscing elit quisque faucibus.</p>
-                        <button class="bg-brown-900 text-white uppercase text-sm font-medium py-2 px-4 rounded" style="background-color: #3b1d0e;">READ MORE</button>
-                    </div>
-                </div>
             </div>
         </section>
 
-        <!-- Navigation Controls Bottom -->
-        <div class="flex justify-between items-center px-6 py-4 bg-brown-900" style="background-color: #3b1d0e;">
-            <button class="font-medium text-white">PREVIOUS</button>
-            <div class="h-0.5 flex-1 mx-4 bg-gray-600"></div>
-            <button class="font-medium text-white">NEXT</button>
-        </div>
 
-
-       <?php include 'footer.php'; ?>
+        <?php include 'footer.php'; ?>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -650,6 +657,16 @@
                 adsSlides[adsIndex].classList.add('opacity-100');
             }, 4000);
         });
+
+        function openModal() {
+            document.getElementById('inquiryModal').classList.remove('hidden');
+            document.getElementById('inquiryModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('inquiryModal').classList.add('hidden');
+            document.getElementById('inquiryModal').classList.remove('flex');
+        }
     </script>
 
 </body>

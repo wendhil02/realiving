@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Billing Lookup</title>
     <link rel="stylesheet" href="css/billing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -33,7 +35,7 @@
 </head>
 
 <body class="min-h-screen bg-white">
- 
+
 
     <!-- Background Pattern -->
     <div class="absolute inset-0 opacity-10">
@@ -225,6 +227,16 @@
                             </svg>
                             Reset Form
                         </button>
+
+
+                        <a href="../../index">
+                            <button type="button"
+                                class="flex-1 sm:flex-none bg-gray-500 hover:bg-gray-600 text-white font-semibold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-gray-500/50 flex items-center justify-center">
+
+                                Return
+                            </button>
+                        </a>
+
                     </div>
                 </form>
             </div>

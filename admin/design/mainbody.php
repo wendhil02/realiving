@@ -564,7 +564,7 @@ ob_start();
               </div>
             </button>
             <div id="quotationDropdown" class="dropdown absolute bg-white shadow-dropdown rounded-lg p-2 mt-2 z-50 w-40 border border-gray-100">
-              <a href="../installation_quotation/quotation.php" class="block px-4 py-2.5 text-sm hover:bg-blue-50 hover:text-primary rounded-md flex items-center space-x-2 transition-colors">
+              <a href="../admin_quotation/quotation_list.php" class="block px-4 py-2.5 text-sm hover:bg-blue-50 hover:text-primary rounded-md flex items-center space-x-2 transition-colors">
                 <i class="ri-calculator-line"></i>
                 <span>Computation</span>
               </a>
