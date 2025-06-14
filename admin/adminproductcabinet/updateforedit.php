@@ -21,49 +21,26 @@ include '../design/mainbody.php';
 
 // Handle delete request
 if (isset($_GET['delete_id'])) {
-    $product_id = intval($_GET['delete_id']);
+    $id = intval($_GET['delete_id']);
     
     $conn->begin_transaction();
     
     try {
-        // Get all images before deletion for cleanup
-        $images_query = "
-            SELECT p.main_image, pt.type_image, pc.color_image 
-            FROM products p 
-            LEFT JOIN product_types pt ON p.product_id = pt.product_id 
-            LEFT JOIN product_colors pc ON pt.type_id = pc.type_id 
-            WHERE p.product_id = ?";
-        
-        $stmt = $conn->prepare($images_query);
-        $stmt->bind_param("i", $product_id);
+        // First, check if the product exists
+        $check_query = "SELECT id, product_name FROM products WHERE id = ?";
+        $stmt = $conn->prepare($check_query);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
-        $images_result = $stmt->get_result();
+        $result = $stmt->get_result();
         
-        $images_to_delete = [];
-        while ($row = $images_result->fetch_assoc()) {
-            if (!empty($row['main_image'])) $images_to_delete[] = "../../" . $row['main_image'];
-            if (!empty($row['type_image'])) $images_to_delete[] = "../../" . $row['type_image'];
-            if (!empty($row['color_image'])) $images_to_delete[] = "../../" . $row['color_image'];
+        if ($result->num_rows === 0) {
+            throw new Exception("Product not found");
         }
         
-        // Delete in reverse order of creation (colors -> sizes -> types -> product)
-        $conn->query("DELETE pc FROM product_colors pc 
-                     INNER JOIN product_types pt ON pc.type_id = pt.type_id 
-                     WHERE pt.product_id = $product_id");
-        
-        $conn->query("DELETE ps FROM product_sizes ps 
-                     INNER JOIN product_types pt ON ps.type_id = pt.type_id 
-                     WHERE pt.product_id = $product_id");
-        
-        $conn->query("DELETE FROM product_types WHERE product_id = $product_id");
-        $conn->query("DELETE FROM products WHERE product_id = $product_id");
-        
-        // Delete image files
-        foreach (array_unique($images_to_delete) as $image_path) {
-            if (file_exists($image_path)) {
-                unlink($image_path);
-            }
-        }
+        // Delete the main product
+        $delete_product = $conn->prepare("DELETE FROM products WHERE id = ?");
+        $delete_product->bind_param("i", $id);
+        $delete_product->execute();
         
         $conn->commit();
         $_SESSION['success_msg'] = "Product deleted successfully!";
@@ -77,19 +54,21 @@ if (isset($_GET['delete_id'])) {
     exit();
 }
 
-// Fetch products with their types count using correct column names
+// Simplified query that only uses the products table
+// Based on your database structure, using 'id' instead of 'product_id'
 $products_query = "
     SELECT 
-        p.*,
-        COUNT(DISTINCT pt.type_id) as types_count,
-        COUNT(DISTINCT ps.id) as sizes_count,
-        COUNT(DISTINCT pc.id) as colors_count
-    FROM products p
-    LEFT JOIN product_types pt ON p.product_id = pt.product_id
-    LEFT JOIN product_sizes ps ON pt.type_id = ps.type_id
-    LEFT JOIN product_colors pc ON pt.type_id = pc.type_id
-    GROUP BY p.product_id
-    ORDER BY p.created_at DESC";
+        id,
+        product_name,
+        description,
+        status,
+        main_image_blob,
+        main_image_type,
+        main_image_name,
+        created_at,
+        updated_at
+    FROM products
+    ORDER BY created_at DESC";
 
 $products_result = $conn->query($products_query);
 
@@ -119,20 +98,19 @@ if (!$products_result) {
         .product-image { max-width: 80px; max-height: 80px; object-fit: cover; border-radius: 4px; }
         .status-active { color: #28a745; font-weight: bold; }
         .status-inactive { color: #dc3545; font-weight: bold; }
-        .counts { font-size: 0.9em; color: #666; }
         .no-products { text-align: center; padding: 40px; color: #666; }
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        .header { display: flex; justify-content: between; align-items: center; margin-bottom: 20px; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .search-box { padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1 class="mr-5">Product Management</h1>
+            <h1>Product Management</h1>
             <div>
                 <input type="text" class="search-box" placeholder="Search products..." id="searchBox">
-              
+                <a href="add_product.php" class="btn btn-success">Add New Product</a>
             </div>
         </div>
         
@@ -152,19 +130,19 @@ if (!$products_result) {
                         <th>Image</th>
                         <th>Product Name</th>
                         <th>Description</th>
-                        <th>Variants</th>
                         <th>Status</th>
                         <th>Created</th>
+                        <th>Updated</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php while ($product = $products_result->fetch_assoc()): ?>
                         <tr>
-                            <td><?php echo htmlspecialchars($product['product_id']); ?></td>
+                            <td><?php echo htmlspecialchars($product['id']); ?></td>
                             <td>
-                                <?php if (!empty($product['main_image'])): ?>
-                                    <img src="../../<?php echo htmlspecialchars($product['main_image']); ?>" 
+                                <?php if (!empty($product['main_image_blob'])): ?>
+                                    <img src="data:<?php echo htmlspecialchars($product['main_image_type']); ?>;base64,<?php echo base64_encode($product['main_image_blob']); ?>" 
                                          alt="<?php echo htmlspecialchars($product['product_name']); ?>" 
                                          class="product-image">
                                 <?php else: ?>
@@ -181,24 +159,24 @@ if (!$products_result) {
                                 ?>
                             </td>
                             <td>
-                                <div class="counts">
-                                    <?php echo $product['types_count']; ?> Types<br>
-                                    <?php echo $product['colors_count']; ?> Colors<br>
-                                    <?php echo $product['sizes_count']; ?> Sizes
-                                </div>
-                            </td>
-                            <td>
                                 <span class="status-<?php echo strtolower($product['status']); ?>">
                                     <?php echo htmlspecialchars($product['status']); ?>
                                 </span>
                             </td>
                             <td><?php echo date('M j, Y', strtotime($product['created_at'])); ?></td>
                             <td>
-                                <a href="updateforproduct.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary" title="Edit Product">Edit</a>
-                                <a href="?delete_id=<?php echo $product['product_id']; ?>" 
+                                <?php if (!empty($product['updated_at'])): ?>
+                                    <?php echo date('M j, Y', strtotime($product['updated_at'])); ?>
+                                <?php else: ?>
+                                    -
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <a href="updateforproduct.php?id=<?php echo $product['id']; ?>" class="btn btn-primary" title="Edit Product">Edit</a>
+                                <a href="?delete_id=<?php echo $product['id']; ?>" 
                                    class="btn btn-danger" 
                                    title="Delete Product"
-                                   onclick="return confirm('Are you sure you want to delete this product and all its variants?')">Delete</a>
+                                   onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
                             </td>
                         </tr>
                     <?php endwhile; ?>
@@ -208,6 +186,7 @@ if (!$products_result) {
             <div class="no-products">
                 <h3>No products found</h3>
                 <p>Start by adding your first product to the system.</p>
+                <a href="add_product.php" class="btn btn-success">Add New Product</a>
             </div>
         <?php endif; ?>
     </div>

@@ -2,17 +2,30 @@
 session_start();
 include '../../connection/connection.php';
 
+// Validate and sanitize the ID parameter
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
+    echo "<div class='min-h-screen flex items-center justify-center bg-gray-100'>
+            <div class='text-center'>
+                <h1 class='text-2xl font-bold text-gray-700 mb-4'>Invalid product ID</h1>
+                <a href='../product_cabinet.php' class='bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700'>Back to Products</a>
+            </div>
+          </div>";
+    exit;
+}
+
 $id = intval($_GET['id']);
 
-// First, let's get the product info
-$product_sql = "SELECT * FROM products WHERE product_id = $id";
-$product_result = $conn->query($product_sql);
+// Get main product
+$product_stmt = $conn->prepare("SELECT * FROM products WHERE id = ?");
+$product_stmt->bind_param("i", $id);
+$product_stmt->execute();
+$product_result = $product_stmt->get_result();
 
 if ($product_result->num_rows === 0) {
     echo "<div class='min-h-screen flex items-center justify-center bg-gray-100'>
             <div class='text-center'>
                 <h1 class='text-2xl font-bold text-gray-700 mb-4'>Product not found</h1>
-                <a href='index.php' class='bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700'>Back to Products</a>
+                <a href='../product_cabinet.php' class='bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700'>Back to Products</a>
             </div>
           </div>";
     exit;
@@ -20,73 +33,90 @@ if ($product_result->num_rows === 0) {
 
 $product = $product_result->fetch_assoc();
 
-// Get product types
-$types_sql = "SELECT * FROM product_types WHERE product_id = $id ORDER BY type_name ASC";
-$types_result = $conn->query($types_sql);
-$product_types = [];
-while ($row = $types_result->fetch_assoc()) {
-    $product_types[$row['type_id']] = $row;
+// Fetch product types
+$all_data = [];
+$types_stmt = $conn->prepare("SELECT id, type_name, type_image_blob, type_image_type, base_price FROM product_types WHERE product_id = ? ORDER BY type_name ASC");
+$types_stmt->bind_param("i", $id);
+$types_stmt->execute();
+$types_result = $types_stmt->get_result();
+
+while ($type_row = $types_result->fetch_assoc()) {
+    $type_id = $type_row['id'];
+
+    // Handle type image blob
+    $type_image = '';
+    if (!empty($type_row['type_image_blob'])) {
+        $image_type = $type_row['type_image_type'] ?? 'image/jpeg';
+        $type_image = "data:" . $image_type . ";base64," . base64_encode($type_row['type_image_blob']);
+    }
+
+    $all_data[$type_id] = [
+        'type_id' => $type_id,
+        'type_name' => $type_row['type_name'] ?? 'Unnamed Type',
+        'type_image' => $type_image,
+        'price' => $type_row['base_price'] ?? 0
+    ];
 }
 
-// Try to get product colors (gracefully handle if table doesn't exist)
-$type_colors = [];
-$colors_query_success = false;
+// Fetch product sizes
+$sizes_data = [];
+$sizes_stmt = $conn->prepare("
+    SELECT ps.id, ps.product_type_id, ps.size_name, ps.dimensions, ps.extra_price 
+    FROM product_sizes ps 
+    INNER JOIN product_types pt ON ps.product_type_id = pt.id 
+    WHERE pt.product_id = ? 
+    ORDER BY ps.product_type_id, ps.size_name ASC
+");
+$sizes_stmt->bind_param("i", $id);
+$sizes_stmt->execute();
+$sizes_result = $sizes_stmt->get_result();
 
-if (!empty($product_types)) {
-    try {
-        $colors_sql = "SELECT pc.*, pt.type_id 
-                       FROM product_colors pc 
-                       INNER JOIN product_types pt ON pc.type_id = pt.type_id 
-                       WHERE pt.product_id = $id 
-                       ORDER BY pc.color_name ASC";
-        $colors_result = $conn->query($colors_sql);
-
-        if ($colors_result) {
-            $colors_query_success = true;
-            while ($row = $colors_result->fetch_assoc()) {
-                $type_colors[$row['type_id']][] = [
-                    'color_id' => $row['id'],
-                    'color_name' => $row['color_name'],
-                    'color_code' => $row['color_code'],
-                    'color_image' => $row['color_image'],
-                    'price' => $row['price']
-                ];
-            }
-        }
-    } catch (Exception $e) {
-        // Table doesn't exist or there's an error, continue without colors
-        $colors_query_success = false;
+while ($size_row = $sizes_result->fetch_assoc()) {
+    $type_id = $size_row['product_type_id'];
+    if (!isset($sizes_data[$type_id])) {
+        $sizes_data[$type_id] = [];
     }
+    $sizes_data[$type_id][] = [
+        'id' => $size_row['id'],
+        'size_name' => $size_row['size_name'],
+        'dimensions' => $size_row['dimensions'],
+        'extra_price' => $size_row['extra_price'] ?? 0
+    ];
 }
 
-// Try to get product sizes (gracefully handle if table doesn't exist)
-$type_sizes = [];
-$sizes_query_success = false;
+// Fetch product colors
+$colors_data = [];
+$colors_stmt = $conn->prepare("
+    SELECT pc.id, pc.product_type_id, pc.color_name, pc.color_code, pc.extra_price, pc.color_image_blob, pc.color_image_type
+    FROM product_colors pc 
+    INNER JOIN product_types pt ON pc.product_type_id = pt.id 
+    WHERE pt.product_id = ? 
+    ORDER BY pc.product_type_id, pc.color_name ASC
+");
+$colors_stmt->bind_param("i", $id);
+$colors_stmt->execute();
+$colors_result = $colors_stmt->get_result();
 
-if (!empty($product_types)) {
-    try {
-        $sizes_sql = "SELECT ps.*, pt.type_id 
-                      FROM product_sizes ps 
-                      INNER JOIN product_types pt ON ps.type_id = pt.type_id 
-                      WHERE pt.product_id = $id 
-                      ORDER BY ps.size_name ASC";
-        $sizes_result = $conn->query($sizes_sql);
-
-        if ($sizes_result) {
-            $sizes_query_success = true;
-            while ($row = $sizes_result->fetch_assoc()) {
-                $type_sizes[$row['type_id']][] = [
-                    'size_id' => $row['id'],
-                    'size_name' => $row['size_name'],
-                    'dimensions' => $row['dimensions'],
-                    'price' => $row['price']
-                ];
-            }
-        }
-    } catch (Exception $e) {
-        // Table doesn't exist or there's an error, continue without sizes
-        $sizes_query_success = false;
+while ($color_row = $colors_result->fetch_assoc()) {
+    $type_id = $color_row['product_type_id'];
+    if (!isset($colors_data[$type_id])) {
+        $colors_data[$type_id] = [];
     }
+
+    // Handle color image blob
+    $color_image = '';
+    if (!empty($color_row['color_image_blob'])) {
+        $image_type = $color_row['color_image_type'] ?? 'image/jpeg';
+        $color_image = "data:" . $image_type . ";base64," . base64_encode($color_row['color_image_blob']);
+    }
+
+    $colors_data[$type_id][] = [
+        'id' => $color_row['id'],
+        'color_name' => $color_row['color_name'],
+        'color_code' => $color_row['color_code'],
+        'color_image' => $color_image,
+        'extra_price' => $color_row['extra_price'] ?? 0
+    ];
 }
 
 $conn->close();
@@ -97,143 +127,31 @@ $conn->close();
 
 <head>
     <meta charset="UTF-8">
-    <title>Customize <?= htmlspecialchars($product['product_name']) ?></title>
+    <title>Customize <?= htmlspecialchars($product['product_name'] ?? 'Product') ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Montserrat&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="design/get_products.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css ">
+ 
 </head>
 
-<script>
-    module.exports = {
-        theme: {
-            extend: {
-                fontFamily: {
-                    montserrat: ['Montserrat', 'serif'],
-                    crimson: ['Crimson Pro', 'serif'],
-                },
-            },
-        },
-    }
-</script>
-
-
 <body>
-    <!-- Header -->
-   <header class="sticky top-0 text-black bg-gray-100 shadow-md relative z-50 bg-cover bg-center font-[Montserrat]">
-
-    <nav class="flex justify-between items-end py-4 px-6 md:px-5">
-        <!-- Logo -->
-        <div class="flex items-center space-x-3">
-            <a href="#">
-                <img src="../../realivingpage/img/logo.png" alt="Realiving Logo" class="h-10">
-            </a>
-        </div>
-
-
-        <!-- Desktop Navigation + Get Quote Button -->
-        <div class="hidden md:flex items-center space-x-5 text-orange-900 font-[montserrat]">
-            <!-- Navigation Links -->
-            <div class="flex space-x-5">
-                <a href="index" class="flex items-center hover:text-yellow-500">
-                    HOME
-                </a>
-                <a href="product_cabinet" class="flex items-center hover:text-yellow-500">
-                    CABINET
-                </a>
-                <a href="#" class="flex items-center hover:text-yellow-500">
-                    DIY MODULAR
-                </a>
-                <a href="all-projects" class="flex items-center hover:text-yellow-500">
-                    PROJECTS
-                </a>
-                <a href="#" class="flex items-center hover:text-yellow-500">
-                    WHAT'S NEW
-                </a>
-                <a href="contact" class="flex items-center hover:text-yellow-500">
-                    CONTACT
-                </a>
-                <a href="header/billingpage/billing" class="flex items-center hover:text-yellow-500">
-                    BILLING
-                </a>
-                <a href="about" class="flex items-center hover:text-yellow-500">
-                    ABOUT
-                </a>
-            </div>
-
-            <!-- Get Quote Button -->
-            <button class="ml-6 bg-yellow-400 text-black px-6 py-2 font-medium flex items-center">
-                <i class="fas fa-file-invoice-dollar mr-2"></i>GET QUOTE
-            </button>
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <div class="md:hidden">
-            <button id="mobile-menu-button" class="text-black">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 text-orange-900 font-[montserrat]">
-        <div class="flex flex-col space-y-4">
-            <a href="index" class="flex items-center hover:text-yellow-500">
-                <i class="fas fa-home mr-2 w-6"></i>HOME
-            </a>
-            <a href="#" class="flex items-center hover:text-yellow-500">
-                SERVICES
-            </a>
-            <a href="all-project" class="flex items-center hover:text-yellow-500">
-                PROJECTS
-            </a>
-            <a href="#" class="flex items-center hover:text-yellow-500">
-                WHAT'S NEW
-            </a>
-            <a href="contact" class="flex items-center hover:text-yellow-500">
-                CONTACT
-            </a>
-            <a href="#" class="flex items-center hover:text-yellow-500">
-                <i class="fas fa-info-circle mr-2 w-6"></i>ABOUT
-            </a>
-            <button class="bg-yellow-400 text-black px-6 py-2 font-medium w-full flex items-center justify-center">
-                <i class="fas fa-file-invoice-dollar mr-2"></i>GET QUOTE
-            </button>
-        </div>
-    </div>
-</header>
-
-
-
-<script>
-    // Mobile menu toggle functionality
-    document.getElementById('mobile-menu-button').addEventListener('click', function() {
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenu.classList.toggle('hidden');
-    });
-</script>
-
     <div class="header">
         <div class="header-container">
             <div class="header-content">
-                 
                 <a href="../product_cabinet.php" class="back-link">
                     <i class="fas fa-arrow-left"></i>
                 </a>
                 <div>
-                     
                     <h1 class="font-[montserrat]">CREATE YOUR STYLE</h1>
-                    <p><?= htmlspecialchars($product['product_name']) ?></p>
+                    <p><?= htmlspecialchars($product['product_name'] ?? 'Product') ?></p>
                 </div>
             </div>
-           
             <div class="header-info">
                 <i class="fas fa-palette"></i>
                 <span class="font-[montserrat]">Choose your preferred variant</span>
             </div>
-          
         </div>
     </div>
 
@@ -244,9 +162,19 @@ $conn->close();
                 <!-- Main Product Image -->
                 <div class="card">
                     <div class="image-container">
+                        <?php
+                        $image_src = '';
+                        if (!empty($product['main_image'])) {
+                            $image_src = "../../" . htmlspecialchars($product['main_image']);
+                        } elseif (!empty($product['main_image_blob'])) {
+                            $image_src = "data:" . ($product['main_image_type'] ?? 'image/jpeg') . ";base64," . base64_encode($product['main_image_blob']);
+                        } else {
+                            $image_src = "../../images/placeholder.jpg";
+                        }
+                        ?>
                         <img id="main-image"
-                            src="../../<?= htmlspecialchars($product['main_image']) ?>"
-                            alt="<?= htmlspecialchars($product['product_name']) ?>"
+                            src="<?= $image_src ?>"
+                            alt="<?= htmlspecialchars($product['product_name'] ?? 'Product') ?>"
                             class="image-preview" />
                         <div class="image-overlay">
                             <span id="selected-variant-name">Main Product</span>
@@ -266,7 +194,7 @@ $conn->close();
                     <div class="product-meta">
                         <div>
                             <i class="fas fa-calendar-alt"></i>
-                            Added on <?= date('F d, Y', strtotime($product['created_at'])) ?>
+                            Added on <?= date('F d, Y', strtotime($product['created_at'] ?? 'now')) ?>
                         </div>
                     </div>
                 </div>
@@ -276,13 +204,9 @@ $conn->close();
                     <h3><i class="fas fa-check-circle"></i>Your Selection</h3>
                     <div id="selection-summary" class="summary-content">
                         <p><strong>Type:</strong> <span id="selected-type-summary">Please select a type</span></p>
-                        <?php if ($sizes_query_success): ?>
-                            <p><strong>Size:</strong> <span id="selected-size-summary">Please select a size</span></p>
-                        <?php endif; ?>
-                        <?php if ($colors_query_success): ?>
-                            <p><strong>Color:</strong> <span id="selected-color-summary">Please select a color</span></p>
-                        <?php endif; ?>
-                        <p><strong>Unit Price:</strong> <span id="selected-price" class="price-display">₱0.00</span></p>
+                        <p><strong>Size:</strong> <span id="selected-size-summary">Please select a size</span></p>
+                        <p><strong>Color:</strong> <span id="selected-color-summary">Please select a color</span></p>
+                        <p><strong>Unit Price:</strong> <span id="unit-price" class="price-display">₱0.00</span></p>
                         <p><strong>Quantity:</strong> <span id="quantity-summary">1</span></p>
                         <div class="total-section">
                             <p><strong>Total:</strong> <span id="total-price" class="price-display total-price">₱0.00</span></p>
@@ -296,7 +220,7 @@ $conn->close();
                 <div class="card">
                     <h2><i class="fas fa-cogs"></i>Choose Your Variant</h2>
 
-                    <?php if (empty($product_types)): ?>
+                    <?php if (empty($all_data)): ?>
                         <div class="no-variants">
                             <i class="fas fa-exclamation-triangle"></i>
                             <h3>No Variants Available</h3>
@@ -304,28 +228,33 @@ $conn->close();
                         </div>
                     <?php else: ?>
                         <form method="POST" action="process_customization.php" id="customization-form">
-                            <!-- ... [same hidden inputs as before] ... -->
+                            <input type="hidden" name="product_id" value="<?= $product['id'] ?? 0 ?>">
+                            <input type="hidden" name="selected_type_id" id="selected_type_id">
+                            <input type="hidden" name="selected_size_id" id="selected_size_id">
+                            <input type="hidden" name="selected_color_id" id="selected_color_id">
 
-                            <!-- Step 1: Product Types -->
+                            <!-- Product Types -->
                             <div class="step-section">
                                 <h3><span>1</span>Choose Product Type</h3>
                                 <div class="type-grid">
-                                    <?php foreach ($product_types as $type): ?>
+                                    <?php foreach ($all_data as $type_id => $type_data): ?>
                                         <div class="type-card"
-                                            onclick="selectType(<?= $type['type_id'] ?>, '<?= htmlspecialchars($type['type_name'], ENT_QUOTES) ?>', '<?= addslashes($type['type_image']) ?>', <?= $type['price'] ?>)"
-                                            data-type-id="<?= $type['type_id'] ?>">
-                                            <?php if (!empty($type['type_image'])): ?>
+                                            onclick="selectType(<?= $type_id ?>)"
+                                            data-type-id="<?= $type_id ?>">
+                                            <?php if (!empty($type_data['type_image'])): ?>
                                                 <div class="type-image">
-                                                    <img src="../../<?= htmlspecialchars($type['type_image']) ?>"
-                                                        alt="<?= htmlspecialchars($type['type_name']) ?>" />
+                                                    <img src="<?= $type_data['type_image'] ?>"
+                                                        alt="<?= htmlspecialchars($type_data['type_name']) ?>" />
+                                                </div>
+                                            <?php else: ?>
+                                                <div class="type-image placeholder">
+                                                    <i class="fas fa-image"></i>
+                                                    <span>No Image</span>
                                                 </div>
                                             <?php endif; ?>
                                             <div class="type-info">
-                                                <h4><?= htmlspecialchars($type['type_name']) ?></h4>
-                                                <p class="type-price">₱<?= number_format($type['price'], 2) ?></p>
-                                                <?php if (!empty($type['description'])): ?>
-                                                    <p class="type-description"><?= htmlspecialchars($type['description']) ?></p>
-                                                <?php endif; ?>
+                                                <h4><?= htmlspecialchars($type_data['type_name']) ?></h4>
+                                                <p class="type-price">₱<?= number_format($type_data['price'], 2) ?></p>
                                             </div>
                                             <div class="selection-indicator">
                                                 <i class="fas fa-check-circle"></i>
@@ -335,25 +264,25 @@ $conn->close();
                                 </div>
                             </div>
 
-                            <?php if ($sizes_query_success): ?>
-                                <!-- Step 2: Sizes -->
-                                <div id="size-selection" class="step-section hidden">
-                                    <h3><span>2</span>Choose Size</h3>
-                                    <div id="sizes-container" class="size-grid"></div>
+                            <!-- Product Sizes -->
+                            <div id="size-options" class="step-section hidden">
+                                <h3><span>2</span>Choose Size</h3>
+                                <div id="size-grid" class="size-grid">
+                                    <!-- Sizes will be populated by JavaScript -->
                                 </div>
-                            <?php endif; ?>
+                            </div>
 
-                            <?php if ($colors_query_success): ?>
-                                <!-- Step 3: Colors -->
-                                <div id="color-selection" class="step-section hidden">
-                                    <h3><span><?= $sizes_query_success ? '3' : '2' ?></span>Choose Color</h3>
-                                    <div id="colors-container" class="color-grid"></div>
+                            <!-- Product Colors -->
+                            <div id="color-options" class="step-section hidden">
+                                <h3><span>3</span>Choose Color</h3>
+                                <div id="color-grid" class="color-grid">
+                                    <!-- Colors will be populated by JavaScript -->
                                 </div>
-                            <?php endif; ?>
+                            </div>
 
-                            <!-- Final Step: Quantity and Options -->
-                            <div id="quantity-options" class="step-section <?= ($sizes_query_success || $colors_query_success) ? 'hidden' : '' ?>">
-                                <h3><span><?= $sizes_query_success ? ($colors_query_success ? '4' : '3') : '2' ?></span>Quantity & Options</h3>
+                            <!-- Quantity Options -->
+                            <div id="quantity-options" class="step-section hidden">
+                                <h3><span>4</span>Quantity & Options</h3>
                                 <div class="quantity-section">
                                     <div>
                                         <label>Quantity</label>
@@ -372,9 +301,9 @@ $conn->close();
                             </div>
 
                             <!-- Action Buttons -->
-                            <div id="action-buttons" class="<?= ($sizes_query_success || $colors_query_success) ? 'hidden' : '' ?>">
+                            <div id="action-buttons" class="hidden">
                                 <button type="submit" name="action" value="add_to_cart">
-                                    SUBMIT
+                                    Add to Cart
                                 </button>
                             </div>
                         </form>
@@ -384,84 +313,284 @@ $conn->close();
         </div>
     </div>
 
-    <section class="why-us-alternating">
-        <div class="container">
-            <h1>WHY CHOOSE US?</h1>
-            <p class="intro">At Realiving Design Center, we redefine modular cabinetry with innovative designs, premium craftsmanship, and unmatched customization.</p>
-
-            <!-- Benefit 1: Text LEFT + Image RIGHT -->
-            <div class="benefit-section left">
-                <div class="benefit-text">
-                    <h2>Tailored for You</h2>
-                    <p>Our modular cabinets are fully customizable in size, finish, and functionality to match your exact needs.</p>
-                </div>
-                <div class="benefit-image">
-                    <img src="images/custom-cabinets.jpg" alt="Custom cabinets">
-                </div>
-            </div>
-
-            <!-- Benefit 2: Text RIGHT + Image LEFT -->
-            <div class="benefit-section right">
-                <div class="benefit-image">
-                    <img src="images/space-saving.jpg" alt="Space-saving design">
-                </div>
-                <div class="benefit-text">
-                    <h2>Smart & Space-Saving</h2>
-                    <p>Engineered for modern living, our designs maximize storage while enhancing aesthetics.</p>
-                </div>
-            </div>
-
-            <!-- Benefit 3: Text LEFT + Image RIGHT -->
-            <div class="benefit-section left">
-                <div class="benefit-text">
-                    <h2>Premium Quality</h2>
-                    <p>Built with durable, eco-friendly materials that ensure longevity without compromising on style.</p>
-                </div>
-                <div class="benefit-image">
-                    <img src="images/eco-friendly.jpg" alt="Eco-friendly materials">
-                </div>
-            </div>
-
-            <!-- Benefit 4: Text RIGHT + Image LEFT -->
-            <div class="benefit-section right">
-                <div class="benefit-image">
-                    <img src="images/easy-install.jpg" alt="Easy installation">
-                </div>
-                <div class="benefit-text">
-                    <h2>Hassle-Free Experience</h2>
-                    <p>From seamless installation to easy reconfiguration, we make upgrading your space effortless.</p>
-                </div>
-            </div>
-        </div>
-        <!-- Benefit 5: Text LEFT + Image RIGHT -->
-        <div class="benefit-section left">
-            <div class="benefit-text">
-                <h2>Affordable Luxury</h2>
-                <p>High-end modular solutions at competitive prices, offering exceptional value.</p>
-            </div>
-            <div class="benefit-image">
-                <img src="../images/Installation.png" alt="Eco-friendly materials">
-            </div>
-        </div>
-        <p class="closing">
-            Transform your space with <strong>Realiving Design Center</strong>—where <em>modular meets magnificent!</em>
-        </p>
-    </section>
-
     <script>
-        window.ProductConfig = {
-            product: <?= json_encode([
-                            'id' => $product['product_id'],
-                            'name' => $product['product_name'],
-                            'main_image' => $product['main_image']
-                        ]) ?>,
-            typeColors: <?= json_encode($type_colors) ?>,
-            typeSizes: <?= json_encode($type_sizes) ?>,
-            hasColors: <?= $colors_query_success ? 'true' : 'false' ?>,
-            hasSizes: <?= $sizes_query_success ? 'true' : 'false' ?>
-        };
+     // Pass data to JavaScript
+window.ProductConfig = {
+    product: <?= json_encode([
+                    'id' => $product['id'] ?? 0,
+                    'name' => $product['product_name'] ?? 'Product',
+                    'main_image' => $product['main_image'] ?? '',
+                    'main_image_src' => $image_src  // Add the actual image source
+                ]) ?>,
+    allData: <?= json_encode($all_data) ?>,
+    sizesData: <?= json_encode($sizes_data) ?>,
+    colorsData: <?= json_encode($colors_data) ?>
+};
+
+let selectedTypeId = null;
+let selectedSizeId = null;
+let selectedColorId = null;
+
+function updateMainImage() {
+    const mainImage = document.getElementById('main-image');
+    const variantName = document.getElementById('selected-variant-name');
+    
+    // Priority order: Color image > Type image > Product main image
+    let imageToShow = window.ProductConfig.product.main_image_src;
+    let imageName = 'Main Product';
+    
+    // Check if type is selected and has image
+    if (selectedTypeId && window.ProductConfig.allData[selectedTypeId].type_image) {
+        imageToShow = window.ProductConfig.allData[selectedTypeId].type_image;
+        imageName = window.ProductConfig.allData[selectedTypeId].type_name;
+    }
+    
+    // Check if color is selected and has image (highest priority)
+    if (selectedColorId) {
+        const colors = window.ProductConfig.colorsData[selectedTypeId] || [];
+        const selectedColor = colors.find(color => color.id == selectedColorId);
+        if (selectedColor && selectedColor.color_image) {
+            imageToShow = selectedColor.color_image;
+            imageName = `${selectedColor.color_name} Variant`;
+        } else if (selectedColor) {
+            // If color doesn't have image but is selected, keep the type image but update name
+            imageName = `${selectedColor.color_name} - ${window.ProductConfig.allData[selectedTypeId].type_name}`;
+        }
+    }
+    
+    mainImage.src = imageToShow;
+    variantName.textContent = imageName;
+}
+
+function selectType(typeId) {
+    selectedTypeId = typeId;
+    selectedSizeId = null; // Reset size selection
+    selectedColorId = null; // Reset color selection
+
+    // Remove previous selections
+    document.querySelectorAll('.type-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+
+    // Add selection to clicked card
+    document.querySelector(`[data-type-id="${typeId}"]`).classList.add('selected');
+
+    // Update hidden inputs
+    document.getElementById('selected_type_id').value = typeId;
+    document.getElementById('selected_size_id').value = '';
+    document.getElementById('selected_color_id').value = '';
+
+    // Update summary
+    const typeData = window.ProductConfig.allData[typeId];
+    document.getElementById('selected-type-summary').textContent = typeData.type_name;
+
+    // Reset other summary fields
+    document.getElementById('selected-size-summary').textContent = 'Please select a size';
+    document.getElementById('selected-color-summary').textContent = 'Please select a color';
+    document.getElementById('unit-price').textContent = `₱${parseFloat(typeData.price).toFixed(2)}`;
+
+    // Update main image
+    updateMainImage();
+
+    // Show size options
+    loadSizes(typeId);
+    document.getElementById('size-options').classList.remove('hidden');
+
+    // Hide subsequent options
+    document.getElementById('color-options').classList.add('hidden');
+    document.getElementById('quantity-options').classList.add('hidden');
+    document.getElementById('action-buttons').classList.add('hidden');
+
+    updateTotal();
+}
+
+function loadSizes(typeId) {
+    const sizeGrid = document.getElementById('size-grid');
+    sizeGrid.innerHTML = '';
+
+    const sizes = window.ProductConfig.sizesData[typeId] || [];
+
+    if (sizes.length === 0) {
+        sizeGrid.innerHTML = '<p class="text-gray-500">No sizes available for this type.</p>';
+        return;
+    }
+
+    sizes.forEach(size => {
+        const sizeCard = document.createElement('div');
+        sizeCard.className = 'size-card';
+        sizeCard.setAttribute('data-size-id', size.id);
+        sizeCard.onclick = () => selectSize(size.id, size.size_name, size.extra_price);
+
+        sizeCard.innerHTML = `
+<div class="size-info">
+    <h4>${size.size_name}</h4>
+    ${size.dimensions ? `<div class="size-dimensions">${size.dimensions}</div>` : ''}
+</div>
+<div class="selection-indicator">
+    <i class="fas fa-check-circle"></i>
+</div>
+`;
+
+        sizeGrid.appendChild(sizeCard);
+    });
+}
+
+function selectSize(sizeId, sizeName, extraPrice) {
+    selectedSizeId = sizeId;
+    selectedColorId = null; // Reset color selection
+
+    // Remove previous size selections
+    document.querySelectorAll('.size-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+
+    // Add selection to clicked card
+    document.querySelector(`[data-size-id="${sizeId}"]`).classList.add('selected');
+
+    // Update hidden inputs
+    document.getElementById('selected_size_id').value = sizeId;
+    document.getElementById('selected_color_id').value = '';
+
+    // Update summary
+    document.getElementById('selected-size-summary').textContent = sizeName;
+
+    // Reset color summary
+    document.getElementById('selected-color-summary').textContent = 'Please select a color';
+
+    // Calculate unit price (base + size extra, color will be added when selected)
+    updateUnitPrice();
+
+    // Show color options
+    loadColors(selectedTypeId);
+    document.getElementById('color-options').classList.remove('hidden');
+
+    // Hide subsequent options
+    document.getElementById('quantity-options').classList.add('hidden');
+    document.getElementById('action-buttons').classList.add('hidden');
+
+    updateTotal();
+}
+
+function loadColors(typeId) {
+    const colorGrid = document.getElementById('color-grid');
+    colorGrid.innerHTML = '';
+
+    const colors = window.ProductConfig.colorsData[typeId] || [];
+
+    if (colors.length === 0) {
+        colorGrid.innerHTML = '<p class="text-gray-500">No colors available for this type.</p>';
+        return;
+    }
+
+    colors.forEach(color => {
+        const colorCard = document.createElement('div');
+        colorCard.className = 'color-card';
+        colorCard.setAttribute('data-color-id', color.id);
+        colorCard.onclick = () => selectColor(color.id, color.color_name, color.extra_price, color.color_image);
+
+        let colorPreview = '';
+        if (color.color_image) {
+            colorPreview = `<img src="${color.color_image}" alt="${color.color_name}" class="color-image" />`;
+        } else if (color.color_code) {
+            colorPreview = `<div class="color-preview" style="background-color: ${color.color_code};"></div>`;
+        } else {
+            colorPreview = `<div class="color-image placeholder"><i class="fas fa-palette"></i></div>`;
+        }
+
+        colorCard.innerHTML = `
+${colorPreview}
+<div class="color-info">
+    <h4>${color.color_name}</h4>
+</div>
+<div class="selection-indicator">
+    <i class="fas fa-check-circle"></i>
+</div>
+`;
+
+        colorGrid.appendChild(colorCard);
+    });
+}
+
+function selectColor(colorId, colorName, extraPrice, colorImage) {
+    selectedColorId = colorId;
+
+    // Remove previous color selections
+    document.querySelectorAll('.color-card').forEach(card => {
+        card.classList.remove('selected');
+    });
+
+    // Add selection to clicked card
+    document.querySelector(`[data-color-id="${colorId}"]`).classList.add('selected');
+
+    // Update hidden input
+    document.getElementById('selected_color_id').value = colorId;
+
+    // Update summary
+    document.getElementById('selected-color-summary').textContent = colorName;
+
+    // Update unit price
+    updateUnitPrice();
+
+    // Update main image
+    updateMainImage();
+
+    // Show quantity options and action buttons
+    document.getElementById('quantity-options').classList.remove('hidden');
+    document.getElementById('action-buttons').classList.remove('hidden');
+
+    updateTotal();
+}
+
+function updateUnitPrice() {
+    if (!selectedTypeId) return;
+
+    const basePrice = parseFloat(window.ProductConfig.allData[selectedTypeId].price);
+    let sizeExtra = 0;
+    let colorExtra = 0;
+
+    // Get size extra price
+    if (selectedSizeId) {
+        const sizes = window.ProductConfig.sizesData[selectedTypeId] || [];
+        const selectedSize = sizes.find(size => size.id == selectedSizeId);
+        if (selectedSize) {
+            sizeExtra = parseFloat(selectedSize.extra_price) || 0;
+        }
+    }
+
+    // Get color extra price
+    if (selectedColorId) {
+        const colors = window.ProductConfig.colorsData[selectedTypeId] || [];
+        const selectedColor = colors.find(color => color.id == selectedColorId);
+        if (selectedColor) {
+            colorExtra = parseFloat(selectedColor.extra_price) || 0;
+        }
+    }
+
+    const unitPrice = basePrice + sizeExtra + colorExtra;
+    document.getElementById('unit-price').textContent = `₱${unitPrice.toFixed(2)}`;
+}
+
+function changeQuantity(change) {
+    const quantityInput = document.getElementById('quantity');
+    let newQuantity = parseInt(quantityInput.value) + change;
+    if (newQuantity < 1) newQuantity = 1;
+    quantityInput.value = newQuantity;
+    document.getElementById('quantity-summary').textContent = newQuantity;
+    updateTotal();
+}
+
+function updateTotal() {
+    if (!selectedTypeId || !selectedSizeId || !selectedColorId) {
+        document.getElementById('total-price').textContent = '₱0.00';
+        return;
+    }
+
+    const unitPrice = parseFloat(document.getElementById('unit-price').textContent.replace('₱', '').replace(',', ''));
+    const quantity = parseInt(document.getElementById('quantity').value);
+    const total = unitPrice * quantity;
+    document.getElementById('total-price').textContent = `₱${total.toFixed(2)}`;
+}
     </script>
-    <script src="js/getcabinetproducts/getproduct.js"></script>
 </body>
 
 </html>

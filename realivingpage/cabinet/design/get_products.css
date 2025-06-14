@@ -217,7 +217,7 @@ body {
 
 .type-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 1rem;
 }
 
@@ -315,7 +315,7 @@ body {
 /* Color selection */
 .color-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 1rem;
 }
 
@@ -598,6 +598,7 @@ button.loading {
     z-index: 1;
     padding: 0;
 }
+
 .benefit-image::before {
     content: '';
     position: absolute;
@@ -642,6 +643,7 @@ button.loading {
     position: relative;
     line-height: 1.3;
 }
+
 .benefit-text h2:after {
     content: '';
     position: absolute;

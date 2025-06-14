@@ -21,34 +21,40 @@ if (isset($_SESSION['error_msg'])) {
 include '../checkrole.php';
 include '../design/mainbody.php';
 
-// Reset AUTO_INCREMENT if empty
-$result = $conn->query("SELECT COUNT(*) AS count FROM products");
-$row = $result->fetch_assoc();
-if ($row['count'] == 0) {
-    $conn->query("ALTER TABLE products AUTO_INCREMENT = 1");
+// Reset AUTO_INCREMENT if empty for all tables
+$tables = ['products', 'product_colors', 'product_types', 'product_sizes'];
+foreach ($tables as $table) {
+    $result = $conn->query("SELECT COUNT(*) AS count FROM $table");
+    $row = $result->fetch_assoc();
+    if ($row['count'] == 0) {
+        $conn->query("ALTER TABLE $table AUTO_INCREMENT = 1");
+    }
 }
 
-
-// Reset AUTO_INCREMENT if empty
-$result = $conn->query("SELECT COUNT(*) AS count FROM product_colors");
-$row = $result->fetch_assoc();
-if ($row['count'] == 0) {
-    $conn->query("ALTER TABLE product_colors AUTO_INCREMENT = 1");
+// Function to convert image to BLOB with metadata
+function imageToBlob($file) {
+    if (!empty($file['tmp_name']) && is_uploaded_file($file['tmp_name'])) {
+        // Validate file type
+        $allowed_types = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+        $file_type = mime_content_type($file['tmp_name']);
+        
+        if (!in_array($file_type, $allowed_types)) {
+            throw new Exception("Invalid file type. Only JPEG, PNG, GIF, and WebP are allowed.");
+        }
+        
+        // Check file size (max 20MB)
+        if ($file['size'] > 20 * 1024 * 1024) {
+            throw new Exception("File too large. Maximum size is 20MB.");
+        }
+        
+        return [
+            'blob' => file_get_contents($file['tmp_name']),
+            'type' => $file_type,
+            'name' => $file['name']
+        ];
+    }
+    return null;
 }
-
-// Reset AUTO_INCREMENT if empty
-$result = $conn->query("SELECT COUNT(*) AS count FROM product_types");
-$row = $result->fetch_assoc();
-if ($row['count'] == 0) {
-    $conn->query("ALTER TABLE product_types AUTO_INCREMENT = 1");
-}
-
-$result = $conn->query("SELECT COUNT(*) AS count FROM product_sizes");
-$row = $result->fetch_assoc();
-if ($row['count'] == 0) {
-    $conn->query("ALTER TABLE product_sizes AUTO_INCREMENT = 1");
-}
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product_name = $conn->real_escape_string($_POST['product_name']);
@@ -56,35 +62,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $conn->real_escape_string($_POST['status']);
     $created_at = date('Y-m-d H:i:s');
 
-    // Handle main product image
-    $upload_dir = "../../uploads/";
-    if (!is_dir($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
+    try {
+        // Handle main product image as BLOB with metadata
+        $main_image_data = imageToBlob($_FILES['main_image']);
+        
+        // Validate required fields
+        if (empty($product_name) || $main_image_data === null) {
+            $_SESSION['error_msg'] = "Please fill in all required fields: Product Name and Main Image.";
+        } else {
+            // Start transaction
+            $conn->begin_transaction();
 
-    $main_image_path = "";
-    if (!empty($_FILES['main_image']['name'])) {
-        $main_image_file = time() . "_main_" . basename($_FILES['main_image']['name']);
-        $main_image_path = $upload_dir . $main_image_file;
-        move_uploaded_file($_FILES['main_image']['tmp_name'], $main_image_path);
-    }
-
-    // Validate required fields
-    if (empty($product_name) || empty($main_image_path)) {
-        $_SESSION['error_msg'] = "Please fill in all required fields: Product Name and Main Image.";
-    } else {
-        $main_image_rel = str_replace('../../', '', $main_image_path);
-
-        // Start transaction
-        $conn->begin_transaction();
-
-        try {
-            // 1. Insert into products table
-            $insertProduct = "INSERT INTO products (product_name, main_image, description, status, created_at) 
-                              VALUES ('$product_name', '$main_image_rel', '$description', '$status', '$created_at')";
-
-            if ($conn->query($insertProduct) === TRUE) {
+            // 1. Insert into products table using prepared statement with corrected column names
+            $stmt = $conn->prepare("INSERT INTO products (product_name, main_image_blob, main_image_type, main_image_name, description, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssssss", 
+                $product_name, 
+                $main_image_data['blob'], 
+                $main_image_data['type'], 
+                $main_image_data['name'], 
+                $description, 
+                $status, 
+                $created_at
+            );
+            
+            if ($stmt->execute()) {
                 $product_id = $conn->insert_id;
+                $stmt->close();
 
                 // 2. Handle multiple product types
                 if (isset($_POST['type_names']) && is_array($_POST['type_names'])) {
@@ -98,32 +101,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $type_price = floatval($type_prices[$t]);
                             $type_desc = $conn->real_escape_string($type_descriptions[$t]);
 
-                            // Handle type-specific image
-                            $type_image_rel = "";
-                            if (!empty($_FILES['type_images']['name'][$t])) {
-                                $type_image_file = time() . "_type_" . $t . "_" . basename($_FILES['type_images']['name'][$t]);
-                                $type_image_path = $upload_dir . $type_image_file;
-                                if (move_uploaded_file($_FILES['type_images']['tmp_name'][$t], $type_image_path)) {
-                                    $type_image_rel = str_replace('../../', '', $type_image_path);
-                                }
+                            // Handle type-specific image as BLOB with metadata
+                            $type_image_data = null;
+                            if (!empty($_FILES['type_images']['tmp_name'][$t])) {
+                                $type_file = [
+                                    'tmp_name' => $_FILES['type_images']['tmp_name'][$t],
+                                    'size' => $_FILES['type_images']['size'][$t],
+                                    'name' => $_FILES['type_images']['name'][$t]
+                                ];
+                                $type_image_data = imageToBlob($type_file);
                             }
 
-                            // Insert product type
-                            $insertType = "INSERT INTO product_types 
-                                            (product_id, type_name, type_image, price, description, created_at) 
-                                            VALUES (
-                                                $product_id, 
-                                                '$type_name', 
-                                                '$type_image_rel', 
-                                                 $type_price, 
-                                                '$type_desc', 
-                                                '$created_at'
-                                            )";
+                            // Insert product type using prepared statement with corrected column names
+                            if ($type_image_data) {
+                                $type_stmt = $conn->prepare("INSERT INTO product_types (product_id, type_name, base_price, type_description, type_image_blob, type_image_type, type_image_name, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                                $type_stmt->bind_param("isdsssss", 
+                                    $product_id, 
+                                    $type_name, 
+                                    $type_price, 
+                                    $type_desc, 
+                                    $type_image_data['blob'], 
+                                    $type_image_data['type'], 
+                                    $type_image_data['name'], 
+                                    $created_at
+                                );
+                            } else {
+                                $type_stmt = $conn->prepare("INSERT INTO product_types (product_id, type_name, base_price, type_description, created_at) VALUES (?, ?, ?, ?, ?)");
+                                $type_stmt->bind_param("isdss", $product_id, $type_name, $type_price, $type_desc, $created_at);
+                            }
 
-                            if ($conn->query($insertType)) {
+                            if ($type_stmt->execute()) {
                                 $type_id = $conn->insert_id;
+                                $type_stmt->close();
 
-                                // 3. Handle sizes for this specific type
+                                // 3. Handle sizes for this specific type (corrected foreign key reference)
                                 if (isset($_POST['sizes'][$t]) && is_array($_POST['sizes'][$t])) {
                                     $type_sizes = $_POST['sizes'][$t];
 
@@ -133,20 +144,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             $size_dimensions = $conn->real_escape_string($size_data['dimensions']);
                                             $size_price = floatval($size_data['price']);
 
-                                            // Insert product size
-                                            $insertSize = "INSERT INTO product_sizes 
-                                                (type_id, size_name, dimensions, price, created_at) 
-                                                VALUES (
-                                                    $type_id, 
-                                                    '$size_name', 
-                                                    '$size_dimensions', 
-                                                     $size_price, 
-                                                    '$created_at'
-                                                )";
+                                            // Insert product size using corrected column name
+                                            $size_stmt = $conn->prepare("INSERT INTO product_sizes (product_type_id, size_name, dimensions, extra_price, created_at) VALUES (?, ?, ?, ?, ?)");
+                                            $size_stmt->bind_param("issds", $type_id, $size_name, $size_dimensions, $size_price, $created_at);
 
-                                            if (!$conn->query($insertSize)) {
+                                            if (!$size_stmt->execute()) {
+                                                $size_stmt->close();
                                                 throw new Exception("Failed to insert product size: " . $conn->error);
                                             }
+                                            $size_stmt->close();
                                         }
                                     }
                                 }
@@ -161,35 +167,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                             $color_code = $conn->real_escape_string($color_data['code']);
                                             $color_price = floatval($color_data['price']);
 
-                                            // Handle color-specific image
-                                            $color_image_rel = "";
-                                            if (!empty($_FILES['color_images']['name'][$t][$color_index])) {
-                                                $color_image_file = time() . "_color_" . $t . "_" . $color_index . "_" . basename($_FILES['color_images']['name'][$t][$color_index]);
-                                                $color_image_path = $upload_dir . $color_image_file;
-                                                if (move_uploaded_file($_FILES['color_images']['tmp_name'][$t][$color_index], $color_image_path)) {
-                                                    $color_image_rel = str_replace('../../', '', $color_image_path);
-                                                }
+                                            // Handle color-specific image as BLOB with metadata
+                                            $color_image_data = null;
+                                            if (!empty($_FILES['color_images']['tmp_name'][$t][$color_index])) {
+                                                $color_file = [
+                                                    'tmp_name' => $_FILES['color_images']['tmp_name'][$t][$color_index],
+                                                    'size' => $_FILES['color_images']['size'][$t][$color_index],
+                                                    'name' => $_FILES['color_images']['name'][$t][$color_index]
+                                                ];
+                                                $color_image_data = imageToBlob($color_file);
                                             }
 
-                                            // Insert product color
-                                            $insertColor = "INSERT INTO product_colors 
-                                                                        (type_id, color_name, color_code, color_image, price, created_at) 
-                                                                        VALUES (
-                                                                            $type_id, 
-                                                                            '$color_name', 
-                                                                            '$color_code', 
-                                                                            '$color_image_rel', 
-                                                                             $color_price, 
-                                                                            '$created_at'
-                                                                        )";
+                                            // Insert product color using corrected column names
+                                            if ($color_image_data) {
+                                                $color_stmt = $conn->prepare("INSERT INTO product_colors (product_type_id, color_name, color_code, extra_price, color_image_blob, color_image_type, color_image_name, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                                                $color_stmt->bind_param("issdssss", 
+                                                    $type_id, 
+                                                    $color_name, 
+                                                    $color_code, 
+                                                    $color_price, 
+                                                    $color_image_data['blob'], 
+                                                    $color_image_data['type'], 
+                                                    $color_image_data['name'], 
+                                                    $created_at
+                                                );
+                                            } else {
+                                                $color_stmt = $conn->prepare("INSERT INTO product_colors (product_type_id, color_name, color_code, extra_price, created_at) VALUES (?, ?, ?, ?, ?)");
+                                                $color_stmt->bind_param("issds", $type_id, $color_name, $color_code, $color_price, $created_at);
+                                            }
 
-                                            if (!$conn->query($insertColor)) {
+                                            if (!$color_stmt->execute()) {
+                                                $color_stmt->close();
                                                 throw new Exception("Failed to insert product color: " . $conn->error);
                                             }
+                                            $color_stmt->close();
                                         }
                                     }
                                 }
                             } else {
+                                $type_stmt->close();
                                 throw new Exception("Failed to insert product type: " . $conn->error);
                             }
                         }
@@ -204,12 +220,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit();
                 
             } else {
+                $stmt->close();
                 throw new Exception("Failed to insert product: " . $conn->error);
             }
-        } catch (Exception $e) {
-            $conn->rollback();
-            $_SESSION['error_msg'] = " " . $e->getMessage();
         }
+    } catch (Exception $e) {
+        if (isset($conn)) {
+            $conn->rollback();
+        }
+        $_SESSION['error_msg'] = "Error: " . $e->getMessage();
     }
     
     // Redirect after any POST processing (success or error)
@@ -279,50 +298,48 @@ $conn->close();
       box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
     }
 
-  
-/* Auto-hide animation styles */
-.alert-success {
-  animation: slideInDown 0.5s ease-out;
-}
+    /* Auto-hide animation styles */
+    .alert-success {
+      animation: slideInDown 0.5s ease-out;
+    }
 
-.alert-success.fade-out {
-  animation: slideOutUp 0.5s ease-in forwards;
-}
+    .alert-success.fade-out {
+      animation: slideOutUp 0.5s ease-in forwards;
+    }
 
-@keyframes slideInDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+    @keyframes slideInDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
 
-@keyframes slideOutUp {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-}
+    @keyframes slideOutUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
 
-/* Progress bar for countdown */
-.progress-bar {
-  height: 4px;
-  background: linear-gradient(90deg, #10B981, #059669);
-  animation: shrink 5s linear forwards;
-}
+    /* Progress bar for countdown */
+    .progress-bar {
+      height: 4px;
+      background: linear-gradient(90deg, #10B981, #059669);
+      animation: shrink 5s linear forwards;
+    }
 
-@keyframes shrink {
-  from { width: 100%; }
-  to { width: 0%; }
-}
-
+    @keyframes shrink {
+      from { width: 100%; }
+      to { width: 0%; }
+    }
   </style>
 </head>
 
@@ -349,43 +366,41 @@ $conn->close();
       </div>
     </div>
 
- <div id="success-message" class="mb-4 p-4 bg-green-100 text-green-800 rounded-lg alert-success relative <?php echo $success_msg ? '' : 'hidden'; ?>">
-  <div class="flex items-center justify-between">
-    <div class="flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-      </svg>
-      <span id="success-text"><?php echo $success_msg; ?></span>
+    <div id="success-message" class="mb-4 p-4 bg-green-100 text-green-800 rounded-lg alert-success relative <?php echo $success_msg ? '' : 'hidden'; ?>">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+          </svg>
+          <span id="success-text"><?php echo $success_msg; ?></span>
+        </div>
+        <button onclick="hideSuccessMessage()" class="text-green-600 hover:text-green-800 ml-4">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+      <!-- Progress bar showing countdown -->
+      <?php if ($success_msg): ?>
+      <div class="progress-bar mt-2"></div>
+      <?php endif; ?>
     </div>
-    <button onclick="hideSuccessMessage()" class="text-green-600 hover:text-green-800 ml-4">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-      </svg>
-    </button>
-  </div>
-  <!-- Progress bar showing countdown -->
-  <?php if ($success_msg): ?>
-  <div class="progress-bar mt-2"></div>
-  <?php endif; ?>
-</div>
 
-<div id="error-message" class="mb-4 p-4 bg-red-100 text-red-800 rounded-lg <?php echo $error_msg ? '' : 'hidden'; ?>">
-  <div class="flex items-center justify-between">
-    <div class="flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
-      </svg>
-      <span id="error-text"><?php echo $error_msg; ?></span>
+    <div id="error-message" class="mb-4 p-4 bg-red-100 text-red-800 rounded-lg <?php echo $error_msg ? '' : 'hidden'; ?>">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+          </svg>
+          <span id="error-text"><?php echo $error_msg; ?></span>
+        </div>
+        <button onclick="hideErrorMessage()" class="text-red-600 hover:text-red-800 ml-4">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
     </div>
-    <button onclick="hideErrorMessage()" class="text-red-600 hover:text-red-800 ml-4">
-      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-      </svg>
-    </button>
-  </div>
-</div>
-
-
 
     <form id="product-form" method="POST" action="" enctype="multipart/form-data">
 
@@ -418,6 +433,7 @@ $conn->close();
           <div>
             <label class="block mb-2 font-medium text-gray-700" for="main_image">Main Product Image <span class="text-red-600">*</span></label>
             <input type="file" id="main_image" name="main_image" accept="image/*" required class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+            <div class="text-sm text-gray-500 mt-1">Supported formats: JPEG, PNG, GIF, WebP. Max size: 5MB</div>
             <div id="main_image_preview" class="mt-4"></div>
           </div>
         </div>
@@ -466,6 +482,7 @@ $conn->close();
               <div>
                 <label class="block mb-2 font-medium">Type Image</label>
                 <input type="file" name="type_images[]" accept="image/*" class="w-full border border-gray-300 rounded-lg px-3 py-2" onchange="previewTypeImage(this)" />
+                <div class="text-sm text-gray-500 mt-1">Max size: 5MB</div>
                 <div class="type-image-preview mt-2"></div>
               </div>
 
@@ -549,6 +566,7 @@ $conn->close();
                     <div>
                       <label class="block mb-1 text-sm">Color Image</label>
                       <input type="file" name="color_images[0][0]" accept="image/*" class="w-full border border-gray-300 rounded px-2 py-1 text-sm" onchange="previewColorImageInType(this)" />
+                      <div class="text-xs text-gray-500">Max: 5MB</div>
                       <div class="color-image-preview-small mt-1"></div>
                     </div>
                   </div>
@@ -590,71 +608,7 @@ $conn->close();
  
 <script src="js/editproduct/editproduct.js"></script>
 
-<script>
-  
-let successTimeout;
-let errorTimeout;
 
-// Function to manually hide success message
-function hideSuccessMessage() {
-  const successDiv = document.getElementById('success-message');
-  successDiv.classList.add('fade-out');
-  
-  setTimeout(() => {
-    successDiv.classList.add('hidden');
-    successDiv.classList.remove('fade-out');
-  }, 500);
-  
-  if (successTimeout) {
-    clearTimeout(successTimeout);
-  }
-}
 
-// Function to manually hide error message
-function hideErrorMessage() {
-  const errorDiv = document.getElementById('error-message');
-  errorDiv.classList.add('hidden');
-  
-  if (errorTimeout) {
-    clearTimeout(errorTimeout);
-  }
-}
-
-// Auto-hide messages on page load
-document.addEventListener('DOMContentLoaded', function() {
-  const successDiv = document.getElementById('success-message');
-  const errorDiv = document.getElementById('error-message');
-  
-  // Auto-hide success message after 5 seconds
-  if (!successDiv.classList.contains('hidden')) {
-    successTimeout = setTimeout(() => {
-      hideSuccessMessage();
-    }, 5000);
-    
-    // Pause auto-hide when hovering
-    successDiv.addEventListener('mouseenter', function() {
-      if (successTimeout) {
-        clearTimeout(successTimeout);
-      }
-      this.querySelector('.progress-bar').style.animationPlayState = 'paused';
-    });
-    
-    successDiv.addEventListener('mouseleave', function() {
-      this.querySelector('.progress-bar').style.animationPlayState = 'running';
-      successTimeout = setTimeout(() => {
-        hideSuccessMessage();
-      }, 2000);
-    });
-  }
-  
-  // Auto-hide error message after 7 seconds  
-  if (!errorDiv.classList.contains('hidden')) {
-    errorTimeout = setTimeout(() => {
-      hideErrorMessage();
-    }, 7000);
-  }
-});
-</script>
 </body>
-
 </html>
