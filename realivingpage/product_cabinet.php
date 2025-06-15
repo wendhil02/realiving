@@ -33,12 +33,13 @@ if (!$result) {
 }
 
 // Function to display BLOB image
-function displayBlobImage($blob, $type, $name, $alt = '') {
-    if (!empty($blob)) {
-        $base64 = base64_encode($blob);
-        return "data:$type;base64,$base64";
-    }
-    return null;
+function displayBlobImage($blob, $type, $name, $alt = '')
+{
+  if (!empty($blob)) {
+    $base64 = base64_encode($blob);
+    return "data:$type;base64,$base64";
+  }
+  return null;
 }
 ?>
 
@@ -82,9 +83,20 @@ function displayBlobImage($blob, $type, $name, $alt = '') {
       overflow: hidden;
     }
 
-    .status-active { background-color: #dcfce7; color: #166534; }
-    .status-inactive { background-color: #fef3c7; color: #92400e; }
-    .status-draft { background-color: #e0e7ff; color: #3730a3; }
+    .status-active {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+
+    .status-inactive {
+      background-color: #fef3c7;
+      color: #92400e;
+    }
+
+    .status-draft {
+      background-color: #e0e7ff;
+      color: #3730a3;
+    }
   </style>
 </head>
 
@@ -132,7 +144,7 @@ function displayBlobImage($blob, $type, $name, $alt = '') {
         while ($row = $result->fetch_assoc()):
           $imageUrl = displayBlobImage($row['main_image_blob'], $row['main_image_type'], $row['main_image_name']);
       ?>
-          <div class="product-card bg-white rounded-lg shadow-lg hover:shadow-xl overflow-hidden border border-gray-200" 
+          <div class="product-card bg-white rounded-lg shadow-lg hover:shadow-xl overflow-hidden border border-gray-200"
             data-name="<?= strtolower(htmlspecialchars($row['product_name'] ?? '')) ?>"
             data-status="<?= htmlspecialchars($row['status'] ?? '') ?>">
 
@@ -141,7 +153,7 @@ function displayBlobImage($blob, $type, $name, $alt = '') {
               <?php if ($imageUrl): ?>
                 <img src="<?= $imageUrl ?>"
                   alt="<?= htmlspecialchars($row['product_name'] ?? 'Product') ?>"
-                  class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" 
+                  class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                   loading="lazy" />
               <?php else: ?>
                 <div class="w-full h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
@@ -164,14 +176,11 @@ function displayBlobImage($blob, $type, $name, $alt = '') {
                   </span>
                 </div>
               <?php endif; ?>
-
-              <!-- Hover Overlay -->
-              <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
-                <a href="cabinet/get_products.php?id=<?= $row['product_id'] ?? 0 ?>"
-                  class="opacity-0 group-hover:opacity-100 bg-white text-indigo-600 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 hover:bg-indigo-50">
-                  <i class="fas fa-eye mr-2"></i>View Details
-                </a>
-              </div>
+              <a href="cabinet/get_products.php?id=<?= $row['product_id'] ?? 0 ?>" class="opacity-0 group-hover:opacity-100 text-indigo-600 px-4 py-2 rounded-lg font-medium transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 hover:bg-white">
+                <!-- Hover Overlay -->
+                <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                </div>
+              </a>
             </div>
 
             <!-- Product Info -->
@@ -312,7 +321,7 @@ function displayBlobImage($blob, $type, $name, $alt = '') {
       cards.forEach((card, index) => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
-        
+
         setTimeout(() => {
           card.style.transition = 'all 0.5s ease';
           card.style.opacity = '1';

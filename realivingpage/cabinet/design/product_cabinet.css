@@ -106,7 +106,7 @@
 /* Product Image */
 .product-image-container {
   position: relative;
-  height: 200px;
+  height: 100px;
   overflow: hidden;
 }
 

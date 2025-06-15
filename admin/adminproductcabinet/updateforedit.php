@@ -110,7 +110,7 @@ if (!$products_result) {
             <h1>Product Management</h1>
             <div>
                 <input type="text" class="search-box" placeholder="Search products..." id="searchBox">
-                <a href="add_product.php" class="btn btn-success">Add New Product</a>
+                <a href="editproduct.php" class="btn btn-success">Add New Product</a>
             </div>
         </div>
         
@@ -186,7 +186,7 @@ if (!$products_result) {
             <div class="no-products">
                 <h3>No products found</h3>
                 <p>Start by adding your first product to the system.</p>
-                <a href="add_product.php" class="btn btn-success">Add New Product</a>
+                <a href="editproduct.php" class="btn btn-success">Add New Product</a>
             </div>
         <?php endif; ?>
     </div>

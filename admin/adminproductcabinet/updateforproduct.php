@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $image_data = file_get_contents($_FILES['main_image']['tmp_name']);
         $image_type = $_FILES['main_image']['type'];
         $image_name = $_FILES['main_image']['name'];
-        
+
         $main_image_update = ", main_image_blob = ?, main_image_type = ?, main_image_name = ?";
     }
 
@@ -60,8 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                   $main_image_update 
                                   WHERE id = ?";
                 $stmt = $conn->prepare($updateProduct);
-                $stmt->bind_param("ssssssi", $product_name, $description, $status, $updated_at, 
-                                 $image_data, $image_type, $image_name, $product_id);
+                $stmt->bind_param(
+                    "ssssssi",
+                    $product_name,
+                    $description,
+                    $status,
+                    $updated_at,
+                    $image_data,
+                    $image_type,
+                    $image_name,
+                    $product_id
+                );
             } else {
                 $updateProduct = "UPDATE products SET 
                                   product_name = ?, 
@@ -92,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $type_image_data = null;
                             $type_image_type = null;
                             $type_image_name = null;
-                            
+
                             if (!empty($_FILES['type_images']['name'][$t]) && $_FILES['type_images']['error'][$t] === UPLOAD_ERR_OK) {
                                 $type_image_data = file_get_contents($_FILES['type_images']['tmp_name'][$t]);
                                 $type_image_type = $_FILES['type_images']['type'][$t];
@@ -111,8 +120,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                    type_image_name = ?
                                                    WHERE id = ?";
                                     $stmt = $conn->prepare($updateType);
-                                    $stmt->bind_param("sdsssi", $type_name, $type_price, $type_desc, 
-                                                     $type_image_data, $type_image_type, $type_image_name, $existing_type_id);
+                                    $stmt->bind_param(
+                                        "sdsssi",
+                                        $type_name,
+                                        $type_price,
+                                        $type_desc,
+                                        $type_image_data,
+                                        $type_image_type,
+                                        $type_image_name,
+                                        $existing_type_id
+                                    );
                                 } else {
                                     $updateType = "UPDATE product_types SET 
                                                    type_name = ?, 
@@ -130,8 +147,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                (product_id, type_name, base_price, type_description, type_image_blob, type_image_type, type_image_name, created_at) 
                                                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                                 $stmt = $conn->prepare($insertType);
-                                $stmt->bind_param("isdsssss", $product_id, $type_name, $type_price, $type_desc, 
-                                                 $type_image_data, $type_image_type, $type_image_name, $updated_at);
+                                $stmt->bind_param(
+                                    "isdsssss",
+                                    $product_id,
+                                    $type_name,
+                                    $type_price,
+                                    $type_desc,
+                                    $type_image_data,
+                                    $type_image_type,
+                                    $type_image_name,
+                                    $updated_at
+                                );
                                 $stmt->execute();
                                 $type_id = $conn->insert_id;
                             }
@@ -161,64 +187,74 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             }
 
                             // Handle colors for this type - FIXED: Preserve existing images when not uploading new ones
-if (isset($_POST['colors'][$t]) && is_array($_POST['colors'][$t])) {
-    // Get existing colors for this type first
-    $existing_colors_query = "SELECT id, color_image_blob, color_image_type FROM product_colors WHERE product_type_id = ?";
-    $existing_colors_stmt = $conn->prepare($existing_colors_query);
-    $existing_colors_stmt->bind_param("i", $type_id);
-    $existing_colors_stmt->execute();
-    $existing_colors_result = $existing_colors_stmt->get_result();
-    
-    $existing_color_images = [];
-    while ($existing_color = $existing_colors_result->fetch_assoc()) {
-        $existing_color_images[$existing_color['id']] = [
-            'blob' => $existing_color['color_image_blob'],
-            'type' => $existing_color['color_image_type']
-        ];
-    }
-    
-    // Delete existing colors for this type
-    $deleteStmt = $conn->prepare("DELETE FROM product_colors WHERE product_type_id = ?");
-    $deleteStmt->bind_param("i", $type_id);
-    $deleteStmt->execute();
+                            if (isset($_POST['colors'][$t]) && is_array($_POST['colors'][$t])) {
+                                // Get existing colors for this type first
+                                $existing_colors_query = "SELECT id, color_image_blob, color_image_type FROM product_colors WHERE product_type_id = ?";
+                                $existing_colors_stmt = $conn->prepare($existing_colors_query);
+                                $existing_colors_stmt->bind_param("i", $type_id);
+                                $existing_colors_stmt->execute();
+                                $existing_colors_result = $existing_colors_stmt->get_result();
 
-    $type_colors = $_POST['colors'][$t];
-    foreach ($type_colors as $color_index => $color_data) {
-        if (!empty($color_data['name'])) {
-            $color_name = $color_data['name'];
-            $color_code = $color_data['code'];
-            $color_price = floatval($color_data['price']);
+                                $existing_color_images = [];
+                                while ($existing_color = $existing_colors_result->fetch_assoc()) {
+                                    $existing_color_images[$existing_color['id']] = [
+                                        'blob' => $existing_color['color_image_blob'],
+                                        'type' => $existing_color['color_image_type']
+                                    ];
+                                }
 
-            $color_image_data = null;
-            $color_image_type = null;
+                                // Delete existing colors for this type
+                                $deleteStmt = $conn->prepare("DELETE FROM product_colors WHERE product_type_id = ?");
+                                $deleteStmt->bind_param("i", $type_id);
+                                $deleteStmt->execute();
 
-            // Check if new image is uploaded
-            if (!empty($_FILES['color_images']['name'][$t][$color_index]) && 
-                $_FILES['color_images']['error'][$t][$color_index] === UPLOAD_ERR_OK) {
-                // New image uploaded
-                $color_image_data = file_get_contents($_FILES['color_images']['tmp_name'][$t][$color_index]);
-                $color_image_type = $_FILES['color_images']['type'][$t][$color_index];
-            } else {
-                // No new image uploaded, check if we have existing color ID to preserve image
-                if (isset($_POST['existing_color_ids'][$t][$color_index])) {
-                    $existing_color_id = intval($_POST['existing_color_ids'][$t][$color_index]);
-                    if (isset($existing_color_images[$existing_color_id])) {
-                        $color_image_data = $existing_color_images[$existing_color_id]['blob'];
-                        $color_image_type = $existing_color_images[$existing_color_id]['type'];
-                    }
-                }
-            }
+                                $type_colors = $_POST['colors'][$t];
+                                foreach ($type_colors as $color_index => $color_data) {
+                                    if (!empty($color_data['name'])) {
+                                        $color_name = $color_data['name'];
+                                        $color_code = $color_data['code'];
+                                        $color_price = floatval($color_data['price']);
 
-            $insertColor = "INSERT INTO product_colors 
+                                        $color_image_data = null;
+                                        $color_image_type = null;
+
+                                        // Check if new image is uploaded
+                                        if (
+                                            !empty($_FILES['color_images']['name'][$t][$color_index]) &&
+                                            $_FILES['color_images']['error'][$t][$color_index] === UPLOAD_ERR_OK
+                                        ) {
+                                            // New image uploaded
+                                            $color_image_data = file_get_contents($_FILES['color_images']['tmp_name'][$t][$color_index]);
+                                            $color_image_type = $_FILES['color_images']['type'][$t][$color_index];
+                                        } else {
+                                            // No new image uploaded, check if we have existing color ID to preserve image
+                                            if (isset($_POST['existing_color_ids'][$t][$color_index])) {
+                                                $existing_color_id = intval($_POST['existing_color_ids'][$t][$color_index]);
+                                                if (isset($existing_color_images[$existing_color_id])) {
+                                                    $color_image_data = $existing_color_images[$existing_color_id]['blob'];
+                                                    $color_image_type = $existing_color_images[$existing_color_id]['type'];
+                                                }
+                                            }
+                                        }
+
+                                        $insertColor = "INSERT INTO product_colors 
                             (product_type_id, color_name, color_code, extra_price, color_image_blob, color_image_type, created_at) 
                             VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($insertColor);
-            $stmt->bind_param("issdsss", $type_id, $color_name, $color_code, $color_price, 
-                             $color_image_data, $color_image_type, $updated_at);
-            $stmt->execute();
-        }
-    }
-}
+                                        $stmt = $conn->prepare($insertColor);
+                                        $stmt->bind_param(
+                                            "issdsss",
+                                            $type_id,
+                                            $color_name,
+                                            $color_code,
+                                            $color_price,
+                                            $color_image_data,
+                                            $color_image_type,
+                                            $updated_at
+                                        );
+                                        $stmt->execute();
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -324,7 +360,8 @@ while ($type_row = $types_result->fetch_assoc()) {
 }
 
 // Function to display image from BLOB
-function displayImage($imageBlob, $imageType, $imageName, $maxWidth = 150, $maxHeight = 150) {
+function displayImage($imageBlob, $imageType, $imageName, $maxWidth = 150, $maxHeight = 150)
+{
     if (!empty($imageBlob)) {
         $base64 = base64_encode($imageBlob);
         return "<img src='data:$imageType;base64,$base64' alt='$imageName' style='max-width: {$maxWidth}px; max-height: {$maxHeight}px;'>";
@@ -472,7 +509,7 @@ function displayImage($imageBlob, $imageType, $imageName, $maxWidth = 150, $maxH
                                         <div class="col-md-4">
                                             <label class="form-label">Type Image</label>
                                             <input type="file" name="type_images[<?php echo $index; ?>]" class="form-control" accept="image/*">
-                                            <?php 
+                                            <?php
                                             // Fetch type image from database
                                             $type_image_query = "SELECT type_image_blob, type_image_type, type_image_name FROM product_types WHERE id = ?";
                                             $stmt = $conn->prepare($type_image_query);
@@ -480,7 +517,7 @@ function displayImage($imageBlob, $imageType, $imageName, $maxWidth = 150, $maxH
                                             $stmt->execute();
                                             $type_image_result = $stmt->get_result();
                                             $type_image_data = $type_image_result->fetch_assoc();
-                                            
+
                                             if (!empty($type_image_data['type_image_blob'])): ?>
                                                 <div class="mt-2">
                                                     <?php echo displayImage($type_image_data['type_image_blob'], $type_image_data['type_image_type'], $type_image_data['type_image_name'], 80, 80); ?>
@@ -532,62 +569,62 @@ function displayImage($imageBlob, $imageType, $imageName, $maxWidth = 150, $maxH
                                         </button>
                                     </div>
 
-                                   <!-- Colors for this type -->
-<div class="mb-3">
-    <h6><i class="fas fa-palette"></i> Colors</h6>
-    <div class="colors-container" data-type-index="<?php echo $index; ?>">
-        <?php foreach ($type['colors'] as $color_index => $color): ?>
-            <div class="color-item">
-                <!-- Hidden field to store existing color ID -->
-                <input type="hidden" name="existing_color_ids[<?php echo $index; ?>][<?php echo $color_index; ?>]" value="<?php echo $color['id']; ?>">
-                
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" name="colors[<?php echo $index; ?>][<?php echo $color_index; ?>][name]"
-                            class="form-control" placeholder="Color Name"
-                            value="<?php echo htmlspecialchars($color['name']); ?>">
-                    </div>
-                    <div class="col-md-2">
-                        <input type="color" name="colors[<?php echo $index; ?>][<?php echo $color_index; ?>][code]"
-                            class="form-control" value="<?php echo htmlspecialchars($color['code']); ?>">
-                    </div>
-                    <div class="col-md-3">
-                        <input type="file" name="color_images[<?php echo $index; ?>][<?php echo $color_index; ?>]"
-                            class="form-control" accept="image/*">
-                        <?php 
-                        // Fetch color image from database
-                        $color_image_query = "SELECT color_image_blob, color_image_type FROM product_colors WHERE id = ?";
-                        $stmt = $conn->prepare($color_image_query);
-                        $stmt->bind_param("i", $color['id']);
-                        $stmt->execute();
-                        $color_image_result = $stmt->get_result();
-                        $color_image_data = $color_image_result->fetch_assoc();
-                        
-                        if (!empty($color_image_data['color_image_blob'])): ?>
-                            <div class="mt-2">
-                                <?php echo displayImage($color_image_data['color_image_blob'], $color_image_data['color_image_type'], 'Color Image', 50, 50); ?>
-                                <small class="text-muted d-block">Current image (will be kept if no new image uploaded)</small>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="number" step="0.01" name="colors[<?php echo $index; ?>][<?php echo $color_index; ?>][price]"
-                            class="form-control" placeholder="Extra Price"
-                            value="<?php echo $color['price']; ?>">
-                    </div>
-                    <div class="col-md-2">
-                        <button type="button" class="btn btn-remove remove-color">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-    <button type="button" class="btn btn-secondary btn-sm add-color" data-type-index="<?php echo $index; ?>">
-        <i class="fas fa-plus"></i> Add Color
-    </button>
-</div>
+                                    <!-- Colors for this type -->
+                                    <div class="mb-3">
+                                        <h6><i class="fas fa-palette"></i> Colors</h6>
+                                        <div class="colors-container" data-type-index="<?php echo $index; ?>">
+                                            <?php foreach ($type['colors'] as $color_index => $color): ?>
+                                                <div class="color-item">
+                                                    <!-- Hidden field to store existing color ID -->
+                                                    <input type="hidden" name="existing_color_ids[<?php echo $index; ?>][<?php echo $color_index; ?>]" value="<?php echo $color['id']; ?>">
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <input type="text" name="colors[<?php echo $index; ?>][<?php echo $color_index; ?>][name]"
+                                                                class="form-control" placeholder="Color Name"
+                                                                value="<?php echo htmlspecialchars($color['name']); ?>">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="color" name="colors[<?php echo $index; ?>][<?php echo $color_index; ?>][code]"
+                                                                class="form-control" value="<?php echo htmlspecialchars($color['code']); ?>">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <input type="file" name="color_images[<?php echo $index; ?>][<?php echo $color_index; ?>]"
+                                                                class="form-control" accept="image/*">
+                                                            <?php
+                                                            // Fetch color image from database
+                                                            $color_image_query = "SELECT color_image_blob, color_image_type FROM product_colors WHERE id = ?";
+                                                            $stmt = $conn->prepare($color_image_query);
+                                                            $stmt->bind_param("i", $color['id']);
+                                                            $stmt->execute();
+                                                            $color_image_result = $stmt->get_result();
+                                                            $color_image_data = $color_image_result->fetch_assoc();
+
+                                                            if (!empty($color_image_data['color_image_blob'])): ?>
+                                                                <div class="mt-2">
+                                                                    <?php echo displayImage($color_image_data['color_image_blob'], $color_image_data['color_image_type'], 'Color Image', 50, 50); ?>
+                                                                    <small class="text-muted d-block">Current image (will be kept if no new image uploaded)</small>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <input type="number" step="0.01" name="colors[<?php echo $index; ?>][<?php echo $color_index; ?>][price]"
+                                                                class="form-control" placeholder="Extra Price"
+                                                                value="<?php echo $color['price']; ?>">
+                                                        </div>
+                                                        <div class="col-md-2">
+                                                            <button type="button" class="btn btn-remove remove-color">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary btn-sm add-color" data-type-index="<?php echo $index; ?>">
+                                            <i class="fas fa-plus"></i> Add Color
+                                        </button>
+                                    </div>
 
                                     <button type="button" class="btn btn-danger btn-sm remove-type">
                                         <i class="fas fa-trash"></i> Remove Type
